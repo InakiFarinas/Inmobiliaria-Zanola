@@ -1,0 +1,138 @@
+:root {
+  --azul-principal: #0A0A70;
+  --beige-suave: #F5EFD7;
+  --celeste: #668096;
+  --blanco: #ffffff;
+  --negro: #000000;
+}
+/*Aca va la seccion de donde estan los productos*/
+.grid-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.producto {
+  background-color: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.producto:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+}
+
+.producto img {
+  width: 100%;
+  height: 320px; 
+  object-fit: cover;
+}
+
+
+.info {
+  padding: 1rem;
+  text-align: center;
+}
+
+.info h4 {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0.5rem 0;
+}
+
+.precio {
+  font-size: 1.1rem;
+  color:#668096;
+  margin-bottom: 0.8rem;
+}
+
+.btn-agregar {
+  background-color:#668096;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-agregar:hover {
+  background-color: #668096;
+}
+
+/*Estilos Menu*/
+
+.titulo-productos {
+  font-size: 2rem;     
+  color: var(--azul-principal); 
+  margin-bottom: 1rem;   
+  text-align: center;   
+  font-weight: bold;   
+}
+
+.contenedor-productos-con-menu {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.menu-lateral {
+  width: 260px;
+  padding: 1rem;
+  background-color: var(--beige-suave);
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-family: sans-serif;
+}
+
+.menu-lateral h2 {
+  font-size: 1.3rem;
+  color: var(--azul-principal);
+  margin-bottom: 1rem;
+}
+
+.menu-categorias {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+
+.menu-categorias li {
+  margin-bottom: 0.7rem;
+}
+
+.menu-categorias a {
+  text-decoration: none;
+  color: var(--azul-principal);
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.menu-categorias a:hover {
+  color: var(--celeste);
+}
+
+
+
+
+.color-circulo {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-left: 8px;
+  border: 1px solid #999;
+}
+
+
+
