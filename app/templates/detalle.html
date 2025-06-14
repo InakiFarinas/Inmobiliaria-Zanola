@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Detalle de propiedad{% endblock %}
+{% block content %}
+<h2>{{ propiedad.titulo }}</h2>
+<p>{{ propiedad.descripcion }}</p>
+<p>Ubicación: {{ propiedad.ubicacion }}</p>
+<p>Precio: ${{ propiedad.precio }}</p>
+<a href="/">Volver al listado</a>
+{% endblock %}
