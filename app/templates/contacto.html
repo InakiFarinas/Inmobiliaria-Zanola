@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Contacto - Inmobiliaria{% endblock %}
+
+{% block content %}
+<section class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <h1 class="display-6 fw-bold mb-4 text-center">Contactanos</h1>
+        <p class="lead text-center mb-4">¿Tenés dudas o querés que te asesoremos? Completá el formulario y te responderemos a la brevedad.</p>
+        <form method="post" class="p-4 rounded-4 shadow-sm bg-white">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre y apellido</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono (opcional)</label>
+                <input type="tel" class="form-control" id="telefono" name="telefono">
+            </div>
+            <div class="mb-3">
+                <label for="mensaje" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required></textarea>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">Enviar consulta</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

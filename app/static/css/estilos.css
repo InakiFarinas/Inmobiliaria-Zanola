@@ -1,17 +1,126 @@
-body {
-    font-family: Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* Reset básico */
+body, h1, h2, h5, p, a {
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    box-sizing: border-box;
 }
 
-header, footer {
-    background-color: #222;
-    color: white;
-    padding: 1em;
-    text-align: center;
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f9fafa;
+    color: #222;
+    line-height: 1.6;
 }
 
-main {
-    padding: 2em;
+/* Navbar */
+.navbar {
+    background: #fff !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: #007bff !important;
+    font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+    color: #222 !important;
+    font-weight: 500;
+    margin: 0 1rem;
+    transition: color 0.2s;
+}
+
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link:hover {
+    color: #007bff !important;
+}
+
+@media (max-width: 991.98px) {
+    .navbar .navbar-collapse {
+        justify-content: start;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        text-align: left;
+    }
+
+    .d-none.d-lg-flex {
+        display: none !important;
+    }
+}
+
+/* Tipografía landing */
+.display-4 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #222;
+}
+.lead {
+    color: #666;
+    font-size: 1.15rem;
+}
+
+/* Botones */
+.btn-primary, .btn-outline-primary {
+    border-radius: 100px;
+    padding: 0.6rem 2rem;
+    font-weight: 600;
+    font-size: 1rem;
+}
+.btn-primary {
+    background: #007bff;
+    border: none;
+}
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease-in-out;
+}
+.card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+.card-img-top {
+    height: 220px;
+    object-fit: cover;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+.card-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+.card-text {
+    color: #555;
+}
+
+/* Footer */
+footer {
+    background: #fefefe;
+    border-top: 1px solid #eee;
+    color: #888;
+    font-size: 0.9rem;
+    padding-top: 1rem;
+}
+
+/* Responsivo */
+@media (max-width: 767.98px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    .card-img-top {
+        height: 160px;
+    }
 }
