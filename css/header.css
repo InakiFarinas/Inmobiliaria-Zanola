@@ -1,0 +1,46 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* asegura que esté por encima de todo */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* sutil sombra al hacer scroll */
+}
+.col {
+  flex: 1;
+}
+.logo {
+  width: 200px;
+  height: 60px;
+}
+.centro {
+  text-align: center;
+}
+.centro a {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.centro a:hover {
+  color: #007BFF;
+}
+.derecha {
+  text-align: right;
+}
+.icono {
+  width: 24px;
+  height: 24px;
+}
+/* Divisor bajo el header */
+.divisor {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 0;
+}
