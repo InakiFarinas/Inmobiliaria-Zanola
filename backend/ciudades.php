@@ -1,9 +1,12 @@
 <?php
 include("db.php");
 header('Content-Type: application/json');
-$resultado = $conexion->query("SELECT nombre FROM ciudades");
+$resultado = $conexion->query("SELECT id_ciudad, nombre FROM ciudades");
 $ciudades = [];
 while ($fila = $resultado->fetch_assoc()) {
-    $ciudades[] = $fila['nombre'];
+    $ciudades[] = [
+        'id_ciudad' => $fila['id_ciudad'],
+        'nombre' => $fila['nombre']
+    ];
 }
 echo json_encode($ciudades);

@@ -1,8 +1,8 @@
 <?php
-include("db.php");
+require '../db.php';
 header('Content-Type: application/json');
 
-$result = $conexion->query("SHOW COLUMNS FROM propiedades LIKE 'tipo'");
+$result = $conexion->query("SHOW COLUMNS FROM propiedades LIKE 'estado'");
 $row = $result->fetch_assoc();
 preg_match("/^enum\((.*)\)$/", $row['Type'], $matches);
 $enum = [];
