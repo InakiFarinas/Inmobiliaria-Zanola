@@ -1,11 +1,15 @@
+<?php
+session_start();
+if (!isset($_SESSION['admin'])) {
+    header("Location: login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Crear Propiedad</title>
-  <link rel="stylesheet" href="../../public/css/admin.css">
-</head>
+<?php include('../includes/head_admin.php'); ?>
 <body>
+  <?php include('../includes/header_admin.php'); ?>
   <h1>Cargar nueva propiedad</h1>
   <form id="form-crear-propiedad" method="POST" enctype="multipart/form-data">
     <select name="id_ciudad" id="ciudad-select" required>
