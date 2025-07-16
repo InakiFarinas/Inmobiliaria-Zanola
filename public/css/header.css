@@ -15,18 +15,43 @@
   flex: 1;
 }
 .logo {
-  width:  150px;
-  height: 75px;
+  width:  auto;
+  height: 80px;
 }
 .centro {
-  text-align: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
+
 .centro a {
+  position: relative;
   margin: 0 1rem;
   text-decoration: none;
   color: #444;
   font-weight: 500;
   transition: color 0.3s ease;
+  padding-bottom: 0.5rem; /* Espacio para la línea */
+}
+
+.centro a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #007BFF;
+  bottom: -35px; /* Ajusta para que la línea quede justo al borde del header */
+  opacity: 0;
+  transition: opacity 0.2s;
+  border-radius: 2px;
+}
+
+.centro a:hover::after,
+.centro a:focus::after {
+  opacity: 1;
 }
 .centro a:hover {
   color: #007BFF;

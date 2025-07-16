@@ -1,4 +1,3 @@
-<?php include("../backend/db.php"); ?>
 <?php $titulo = "Propiedades"; ?>
 <!DOCTYPE html>
 <html lang="es">

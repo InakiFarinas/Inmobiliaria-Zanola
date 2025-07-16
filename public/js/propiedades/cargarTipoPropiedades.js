@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-  fetch('/inmobiliaria/backend/propiedades/tipos.php')
+  fetch('/inmobiliaria/backend/controladores/obtenerTipoPropiedad.php')
     .then(response => response.json())
     .then(tipos => {
       const select = document.getElementById('tipo-select');

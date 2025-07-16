@@ -1,6 +1,6 @@
 <header class="header">
   <div class="col izquierda">
-    <img src="../../public/images/logo1.png" alt="Villafañe Propiedades" class="logo">
+    <img src="../../public/images/logo.png" alt="Villafañe Propiedades" class="logo">
   </div>
   <nav class="col centro">
     <a href="cargarPropiedades.php">Cargar Propiedad</a>

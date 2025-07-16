@@ -4,7 +4,7 @@ document.getElementById('form-crear-propiedad').addEventListener('submit', funct
   const form = e.target;
   const formData = new FormData(form);
 
-  fetch('/inmobiliaria/backend/propiedades/crear.php', {
+  fetch('/inmobiliaria/backend/controladores/insertarPropiedad.php', {
     method: 'POST',
     body: formData
   })

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-  fetch('/inmobiliaria/backend/ciudades.php')
+  fetch('/inmobiliaria/backend/controladores/obtenerCiudades.php')
     .then(response => response.json())
     .then(ciudades => {
       const select = document.getElementById('ciudad-select');

@@ -2,7 +2,7 @@
   <div class="footer__contenedor">
 
     <div class="footer__col">
-      <h2>Demaio Propiedades</h2>
+      <h2>Villafañe Propiedades</h2>
       <p>Conectamos personas con hogares. Tu nuevo comienzo empieza con nosotros.</p>
     </div>
 
@@ -31,6 +31,6 @@
     </div>
   </div>
   <div class="footer__bottom">
-    <p>&copy; 2025 Demaio Propiedades. Todos los derechos reservados.</p>
+    <p>&copy; 2025 Villafañe Propiedades. Todos los derechos reservados.</p>
   </div>
 </footer>
