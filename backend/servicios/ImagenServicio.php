@@ -19,9 +19,16 @@ class ImagenServicio {
                 $rutaDestino = $rutaBase . $nombreFinal;
 
                 if (move_uploaded_file($filesArray['tmp_name'][$i], $rutaDestino)) {
+                    // ✅ Aquí asegurate que $nombreFinal es string
                     ImagenRepositorio::guardarImagen($conexion, $id_propiedad, $nombreFinal);
                 }
             }
         }
     }
+    
+
+    public function guardarImagen($conexion, $id_propiedad, $nombreArchivo) {
+        ImagenRepositorio::guardarImagen($conexion, $id_propiedad, $nombreArchivo);
+    }
 }
+

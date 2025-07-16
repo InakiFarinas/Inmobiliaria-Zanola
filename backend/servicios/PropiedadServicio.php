@@ -1,8 +1,12 @@
 <?php
 require_once __DIR__ . '/../infraestructura/PropiedadRepositorio.php';
+require_once __DIR__ . '/ImagenServicio.php';
 
 class PropiedadServicio {
-    
+    private $imagenServicio;
+    public function __construct() {
+        $this->imagenServicio = new ImagenServicio();
+    }
     public function crearPropiedad($datos, $archivos) {
         // Validación básica (podés mejorarla o hacerla en otro método)
         $camposRequeridos = ['calle', 'altura', 'precio', 'estado', 'tipo', 'id_ciudad'];
@@ -31,12 +35,26 @@ class PropiedadServicio {
 
         // Guardar imágenes si las hay
         if (!empty($archivos['imagenes'])) {
-            guardar_imagenes(Conexion::obtenerConexion(), $id_propiedad, $archivos['imagenes']);
+            $this->imagenServicio->guardarImagenes(Conexion::obtenerConexion(), $id_propiedad, $archivos['imagenes']);
         }
 
         return $id_propiedad;
     }
+    public function obtenerPorId($id_propiedad) {
+        $propiedad = PropiedadRepositorio::buscarPorId($id_propiedad);
+        if (!$propiedad) return null;
 
+        $imagenes = ImagenRepositorio::obtenerPorPropiedad($id_propiedad);
+        $propiedad['imagenes'] = $imagenes;
+
+        return $propiedad;
+    }
+    public function obtenerFiltradas($filtros) {
+    return PropiedadRepositorio::listarFiltradas($filtros);
+    }
+    public function obtenerPropiedades() {
+        return PropiedadRepositorio::listarTodas();
+    }
     public function obtenerValoresEnumEstado() {
         return PropiedadRepositorio::obtenerValoresEnumEstado();
     }

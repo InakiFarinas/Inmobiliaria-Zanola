@@ -8,7 +8,7 @@
   </nav>
   <div class="col derecha">
     <a href="https://wa.me/5491112345678" target="_blank" aria-label="WhatsApp Villafañe Propiedades" rel="noopener noreferrer">
-        <img src="../public/images/icono-wsp.svg" alt="WhatsApp">
+        <img src="../public/images/icons/icono-wsp.svg" alt="WhatsApp">
     </a>
   </div>
 </header>

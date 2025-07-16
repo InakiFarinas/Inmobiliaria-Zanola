@@ -19,13 +19,13 @@
         <p><strong>Email:</strong> contacto@inmobiliaria.com</p>
         <div class="footer__redes">
             <a href="https://facebook.com" target="_blank" aria-label="Facebook">
-                <img src="../public/images/icono-fb.svg" alt="Facebook">
+                <img src="../public/images/icons/icono-fb.svg" alt="Facebook">
             </a>
             <a href="https://instagram.com" target="_blank" aria-label="Instagram">
-                <img src="../public/images/icono-ig.svg" alt="Instagram">
+                <img src="../public/images/icons/icono-ig.svg" alt="Instagram">
             </a>
             <a href="https://wa.me/5491112345678" target="_blank" aria-label="WhatsApp Demaio Propiedades" rel="noopener noreferrer">
-                <img src="../public/images/icono-wsp.svg" alt="WhatsApp">
+                <img src="../public/images/icons/icono-wsp.svg" alt="WhatsApp">
             </a>
         </div>
     </div>

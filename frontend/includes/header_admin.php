@@ -3,6 +3,7 @@
     <img src="../../public/images/logo.png" alt="Villafañe Propiedades" class="logo">
   </div>
   <nav class="col centro">
+    <a href="index.php">Inicio</a>
     <a href="cargarPropiedades.php">Cargar Propiedad</a>
   </nav>
   <div class="col derecha">

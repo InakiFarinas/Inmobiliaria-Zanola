@@ -1,6 +1,7 @@
+console.log('JS cargado');
 document.getElementById('form-crear-propiedad').addEventListener('submit', function(e) {
   e.preventDefault();
-
+  console.log('Submit capturado');
   const form = e.target;
   const formData = new FormData(form);
 
