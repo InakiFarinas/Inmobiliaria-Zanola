@@ -71,17 +71,41 @@ class PropiedadRepositorio {
             $tipos .= "i";
             $parametros[] = $filtros['ciudad'];
         }
-
+        // Tipo de propiedad (apartamento, terreno, etc.)
         if (!empty($filtros['tipo'])) {
             $condiciones[] = "p.tipo = ?";
             $tipos .= "s";
             $parametros[] = $filtros['tipo'];
         }
 
+        // Estado (venta o alquiler)
         if (!empty($filtros['estado'])) {
             $condiciones[] = "p.estado = ?";
             $tipos .= "s";
             $parametros[] = $filtros['estado'];
+        }
+        if (
+            isset($filtros['precio_min'], $filtros['precio_max']) &&
+            $filtros['precio_min'] !== '' &&
+            $filtros['precio_max'] !== ''
+        ) {
+            if ((int)$filtros['precio_min'] > (int)$filtros['precio_max']) {
+                // No ejecutar la consulta, devolver resultado vacío o error
+                return []; // o lanzar una excepción o mensaje de error
+            }
+        }
+        // Precio mínimo
+        if (isset($filtros['precio_min']) && $filtros['precio_min'] !== '') {
+            $condiciones[] = "p.precio >= ?";
+            $tipos .= "i";
+            $parametros[] = (int)$filtros['precio_min'];
+        }
+
+        // Precio máximo
+        if (isset($filtros['precio_max']) && $filtros['precio_max'] !== '') {
+            $condiciones[] = "p.precio <= ?";
+            $tipos .= "i";
+            $parametros[] = (int)$filtros['precio_max'];
         }
 
         if ($condiciones) {

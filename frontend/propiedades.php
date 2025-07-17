@@ -22,6 +22,16 @@
           <option value="">Todas las ciudades</option>
           <!-- Opciones cargadas por JS -->
         </select>
+        <div class="filtro-precio">
+          <label for="precio-min">Precio mínimo:</label>
+          <input type="range" id="precio-min" name="precio_min" min="0" max="1000000" step="10000" value="0" oninput="actualizarPrecio('min')">
+          <span id="precio-min-valor">$0</span>
+
+          <label for="precio-max">Precio máximo:</label>
+          <input type="range" id="precio-max" name="precio_max" min="0" max="1000000" step="10000" value="1000000" oninput="actualizarPrecio('max')">
+          <span id="precio-max-valor">$1.000.000</span>
+        </div>
+
 
         <button type="submit">Filtrar</button>
       </form>
