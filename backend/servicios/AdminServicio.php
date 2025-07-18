@@ -5,7 +5,7 @@ class AdminServicio {
     public function autenticar($usuario, $contrasena) {
         $admin = AdminRepositorio::obtenerAdminPorUsuario($usuario);
 
-        if ($admin && password_verify($contrasena, $admin['contraseña'])) {
+        if ($admin && password_verify($contrasena, $admin['contrasena'])) {
             return $admin;
         }
         return null;

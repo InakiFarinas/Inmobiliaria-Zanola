@@ -44,7 +44,6 @@
   <script src="../public/js/propiedades/cargarEstados.js"></script>
   <script src="../public/js/propiedades/cargarPropiedades.js"></script>
   <script src="../public/js/propiedades/filtrarPropiedades.js"></script>
-
 </body>
 </html>
 

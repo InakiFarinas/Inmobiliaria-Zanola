@@ -1,169 +1,76 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 03-07-2025 a las 09:20:37
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
-
+-- Configuraciones iniciales
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+-- Charset global
+SET NAMES utf8mb4;
+SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT;
+SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS;
+SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+-- Base de datos
+CREATE DATABASE IF NOT EXISTS `sys_inmobiliaria` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `sys_inmobiliaria`;
 
---
--- Base de datos: `sys_inmobiliaria`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `administradores`
---
-
+-- Tabla: administradores
 CREATE TABLE `administradores` (
-  `id_administrador` int(11) NOT NULL,
-  `usuario` varchar(50) NOT NULL,
-  `contraseña` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id_administrador` INT(11) NOT NULL AUTO_INCREMENT,
+  `usuario` VARCHAR(50) NOT NULL UNIQUE,
+  `contrasena` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id_administrador`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+-- Datos iniciales: administradores
+INSERT INTO `administradores` (`id_administrador`, `usuario`, `contrasena`) VALUES
+  (1, 'admin', '$2y$10$RbcG7pgsRaGunmHghpprIusoX4JSMeA0bTslJeAuOUbFGxrmmzlUm'); -- el hash de la contraseña es 'admin'
 
---
--- Estructura de tabla para la tabla `ciudades`
---
-
+-- Tabla: ciudades
 CREATE TABLE `ciudades` (
-  `id_ciudad` int(11) NOT NULL,
-  `nombre` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id_ciudad` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(100) NOT NULL UNIQUE,
+  PRIMARY KEY (`id_ciudad`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `ciudades`
---
-
+-- Datos iniciales: ciudades
 INSERT INTO `ciudades` (`id_ciudad`, `nombre`) VALUES
-(2, 'Castelar'),
-(1, 'Ituzaingo'),
-(4, 'Merlo'),
-(3, 'Moron');
+  (1, 'Ituzaingo'),
+  (2, 'Castelar'),
+  (3, 'Moron'),
+  (4, 'Merlo');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `imagenes_propiedad`
---
-
-CREATE TABLE `imagenes_propiedad` (
-  `id_imagen` int(11) NOT NULL,
-  `id_propiedad` int(11) NOT NULL,
-  `ruta_imagen` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `propiedades`
---
-
+-- Tabla: propiedades
 CREATE TABLE `propiedades` (
-  `id_propiedad` int(11) NOT NULL,
-  `calle` varchar(100) NOT NULL,
-  `altura` varchar(10) NOT NULL,
-  `precio` decimal(12,2) NOT NULL,
-  `estado` enum('venta','alquiler') NOT NULL,
-  `tipo` enum('Casa','Departamento','Terreno','Local') NOT NULL,
-  `ambientes` int(11) DEFAULT 0,
-  `garaje` tinyint(1) DEFAULT 0,
-  `baños` int(11) DEFAULT 0,
-  `descripcion` text DEFAULT NULL,
-  `fecha_publicacion` date DEFAULT curdate(),
-  `id_ciudad` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id_propiedad` INT(11) NOT NULL AUTO_INCREMENT,
+  `calle` VARCHAR(100) NOT NULL,
+  `altura` VARCHAR(10) NOT NULL,
+  `precio` DECIMAL(12,2) NOT NULL,
+  `estado` ENUM('Venta','Alquiler') NOT NULL,
+  `tipo` ENUM('Casa','Departamento','Terreno','Local') NOT NULL,
+  `ambientes` INT(11) DEFAULT 0,
+  `garaje` TINYINT(1) DEFAULT 0,
+  `baños` INT(11) DEFAULT 0,
+  `descripcion` TEXT DEFAULT NULL,
+  `fecha_publicacion` DATE DEFAULT CURDATE(),
+  `id_ciudad` INT(11),
+  PRIMARY KEY (`id_propiedad`),
+  KEY `id_ciudad` (`id_ciudad`),
+  CONSTRAINT `propiedades_ibfk_1` FOREIGN KEY (`id_ciudad`) REFERENCES `ciudades` (`id_ciudad`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Índices para tablas volcadas
---
+-- Tabla: imagenes_propiedad
+CREATE TABLE `imagenes_propiedad` (
+  `id_imagen` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_propiedad` INT(11) NOT NULL,
+  `ruta_imagen` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id_imagen`),
+  KEY `id_propiedad` (`id_propiedad`),
+  CONSTRAINT `imagenes_propiedad_ibfk_1` FOREIGN KEY (`id_propiedad`) REFERENCES `propiedades` (`id_propiedad`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Indices de la tabla `administradores`
---
-ALTER TABLE `administradores`
-  ADD PRIMARY KEY (`id_administrador`),
-  ADD UNIQUE KEY `usuario` (`usuario`);
-
---
--- Indices de la tabla `ciudades`
---
-ALTER TABLE `ciudades`
-  ADD PRIMARY KEY (`id_ciudad`),
-  ADD UNIQUE KEY `nombre` (`nombre`);
-
---
--- Indices de la tabla `imagenes_propiedad`
---
-ALTER TABLE `imagenes_propiedad`
-  ADD PRIMARY KEY (`id_imagen`),
-  ADD KEY `id_propiedad` (`id_propiedad`);
-
---
--- Indices de la tabla `propiedades`
---
-ALTER TABLE `propiedades`
-  ADD PRIMARY KEY (`id_propiedad`),
-  ADD KEY `id_ciudad` (`id_ciudad`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `administradores`
---
-ALTER TABLE `administradores`
-  MODIFY `id_administrador` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `ciudades`
---
-ALTER TABLE `ciudades`
-  MODIFY `id_ciudad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `imagenes_propiedad`
---
-ALTER TABLE `imagenes_propiedad`
-  MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `propiedades`
---
-ALTER TABLE `propiedades`
-  MODIFY `id_propiedad` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `imagenes_propiedad`
---
-ALTER TABLE `imagenes_propiedad`
-  ADD CONSTRAINT `imagenes_propiedad_ibfk_1` FOREIGN KEY (`id_propiedad`) REFERENCES `propiedades` (`id_propiedad`) ON DELETE CASCADE;
-
---
--- Filtros para la tabla `propiedades`
---
-ALTER TABLE `propiedades`
-  ADD CONSTRAINT `propiedades_ibfk_1` FOREIGN KEY (`id_ciudad`) REFERENCES `ciudades` (`id_ciudad`);
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- Restaurar configuraciones de charset
+SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT;
+SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS;
+SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION;

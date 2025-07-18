@@ -24,19 +24,19 @@ body {
   z-index: -1;
 }
 
-.hero__contenido {
+.hero-contenido {
   max-width: 600px;
   z-index: 1;
 }
 
-.hero__contenido h1 {
+.hero-contenido h1 {
   font-size: 3.2rem;
   font-weight: 800;
   margin-bottom: 1rem;
   line-height: 1.2;
 }
 
-.hero__contenido p {
+.hero-contenido p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
   color: #e0e0e0;

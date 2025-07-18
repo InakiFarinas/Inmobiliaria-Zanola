@@ -7,7 +7,7 @@
     <a href="cargarPropiedades.php">Cargar Propiedad</a>
   </nav>
   <div class="col derecha">
-    <form action="../../backend/admin/logout.php" method="post" style="display:inline;">
+    <form action="../../backend/controladores/logoutAdmin.php" method="post" style="display:inline;">
       <button type="submit" class="btn-logout">Cerrar sesión</button>
     </form>
   </div>
