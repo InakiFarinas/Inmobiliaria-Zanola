@@ -5,7 +5,7 @@ mostrarPropiedades();
 
 function mostrarPropiedades() {
 
-    const respuesta = fetch('/Proyecto-Practicas-main/backend/propiedades/mostrarPropiedades.php')
+    const respuesta = fetch('/Proyecto-Practicas/backend/propiedades/mostrarPropiedades.php')
     
     //parsea la respuesta del query del archivo de php 
 
