@@ -1,8 +1,24 @@
 function cargarPropiedades(url = '/inmobiliaria/backend/controladores/obtenerPropiedad.php') {
   fetch(url)
-    .then((response) => response.json())
-    .then((data) => renderizarPropiedades(data))
-    .catch((error) => console.error('Error al cargar propiedades:', error));
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+      }
+      return response.text(); // Cambia a text() para ver el contenido real
+    })
+    .then((text) => {
+      try {
+        const data = JSON.parse(text);
+        renderizarPropiedades(data);
+      } catch (e) {
+        console.error('Respuesta no es JSON:', text);
+        alert('Respuesta inesperada del servidor:\n' + text);
+      }
+    })
+    .catch((error) => {
+      console.error('Error al cargar propiedades:', error);
+      alert('Error al cargar propiedades: ' + error.message);
+    });
 }
 
 function renderizarPropiedades(data) {

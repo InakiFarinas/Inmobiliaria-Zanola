@@ -4,14 +4,14 @@ require_once __DIR__ . '/Conexion.php';
 class PropiedadRepositorio {
     public static function insertarPropiedad(
         $calle, $altura, $precio, $estado, $tipo,
-        $ambientes, $garaje, $banos, $descripcion, $id_ciudad
+        $ambientes,$dormitorios, $garaje, $banos, $descripcion,$superficie,$antiguedad, $id_ciudad
     ) {
         $conexion = Conexion::obtenerConexion();
 
         $stmt = $conexion->prepare("INSERT INTO propiedades 
-            (calle, altura, precio, estado, tipo, ambientes, garaje, baños, descripcion, id_ciudad) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssdssiiisi", $calle, $altura, $precio, $estado, $tipo, $ambientes, $garaje, $banos, $descripcion, $id_ciudad);
+            (calle, altura, precio, estado, tipo, ambientes,dormitorios, garaje, baños, descripcion,superficie,antiguedad, id_ciudad) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssdssiiiiiisi", $calle, $altura, $precio, $estado, $tipo, $ambientes,$dormitorios, $garaje, $banos, $descripcion,$superficie,$antiguedad, $id_ciudad);
         $stmt->execute();
 
         return $conexion->insert_id;
@@ -43,8 +43,7 @@ class PropiedadRepositorio {
         $conexion = Conexion::obtenerConexion();
         $stmt = $conexion->prepare("
             SELECT 
-                p.id_propiedad, p.calle, p.altura, p.precio, p.estado, p.tipo,
-                p.ambientes, p.garaje, p.baños, p.descripcion, p.fecha_publicacion,
+                p.*,
                 c.nombre AS ciudad
             FROM propiedades p
             JOIN ciudades c ON p.id_ciudad = c.id_ciudad
@@ -56,86 +55,83 @@ class PropiedadRepositorio {
         return $resultado->fetch_assoc();
     }
     public static function listarFiltradas($filtros) {
-        $conexion = Conexion::obtenerConexion();
+    $conexion = Conexion::obtenerConexion();
 
-        $query = "SELECT p.*, c.nombre AS ciudad 
-                FROM propiedades p 
-                JOIN ciudades c ON p.id_ciudad = c.id_ciudad";
-        
-        $condiciones = [];
-        $parametros = [];
-        $tipos = "";
+    $query = "SELECT p.*, c.nombre AS ciudad FROM propiedades p JOIN ciudades c ON p.id_ciudad = c.id_ciudad";
 
-        if (!empty($filtros['ciudad'])) {
-            $condiciones[] = "p.id_ciudad = ?";
-            $tipos .= "i";
-            $parametros[] = $filtros['ciudad'];
-        }
-        // Tipo de propiedad (apartamento, terreno, etc.)
-        if (!empty($filtros['tipo'])) {
-            $condiciones[] = "p.tipo = ?";
-            $tipos .= "s";
-            $parametros[] = $filtros['tipo'];
-        }
+    $condiciones = [];
+    $parametros = [];
+    $tipos = "";
 
-        // Estado (venta o alquiler)
-        if (!empty($filtros['estado'])) {
-            $condiciones[] = "p.estado = ?";
-            $tipos .= "s";
-            $parametros[] = $filtros['estado'];
-        }
-        if (
-            isset($filtros['precio_min'], $filtros['precio_max']) &&
-            $filtros['precio_min'] !== '' &&
-            $filtros['precio_max'] !== ''
-        ) {
-            if ((int)$filtros['precio_min'] > (int)$filtros['precio_max']) {
-                // No ejecutar la consulta, devolver resultado vacío o error
-                return []; // o lanzar una excepción o mensaje de error
-            }
-        }
-        // Precio mínimo
-        if (isset($filtros['precio_min']) && $filtros['precio_min'] !== '') {
-            $condiciones[] = "p.precio >= ?";
-            $tipos .= "i";
-            $parametros[] = (int)$filtros['precio_min'];
-        }
+    $mapaFiltros = [
+        'ciudad' => ['campo' => 'p.id_ciudad', 'tipo' => 'i'],
+        'tipo' => ['campo' => 'p.tipo', 'tipo' => 's'],
+        'estado' => ['campo' => 'p.estado', 'tipo' => 's'],
+        'ambientes' => ['campo' => 'p.ambientes', 'tipo' => 'i'],
+        'dormitorios' => ['campo' => 'p.dormitorios', 'tipo' => 'i'],
+        'garaje' => ['campo' => 'p.garaje', 'tipo' => 'i'],
+        'baños' => ['campo' => 'p.baños', 'tipo' => 'i'],
+        'antiguedad' => ['campo' => 'p.antiguedad', 'tipo' => 'i'],
+        'superficie_min' => ['campo' => 'p.superficie >=', 'tipo' => 'i'],
+        'superficie_max' => ['campo' => 'p.superficie <=', 'tipo' => 'i'],
+        'precio_min' => ['campo' => 'p.precio >=', 'tipo' => 'i'],
+        'precio_max' => ['campo' => 'p.precio <=', 'tipo' => 'i'],
+    ];
 
-        // Precio máximo
-        if (isset($filtros['precio_max']) && $filtros['precio_max'] !== '') {
-            $condiciones[] = "p.precio <= ?";
-            $tipos .= "i";
-            $parametros[] = (int)$filtros['precio_max'];
-        }
-
-        if ($condiciones) {
-            $query .= " WHERE " . implode(" AND ", $condiciones);
-        }
-
-        $stmt = $conexion->prepare($query);
-
-        if (!empty($parametros)) {
-            $stmt->bind_param($tipos, ...$parametros);
-        }
-
-        $stmt->execute();
-        $resultado = $stmt->get_result();
-
-        $propiedades = [];
-
-        while ($fila = $resultado->fetch_assoc()) {
-            $imagenes = [];
-            $resImg = $conexion->query("SELECT ruta_imagen FROM imagenes_propiedad WHERE id_propiedad = {$fila['id_propiedad']}");
-            while ($img = $resImg->fetch_assoc()) {
-                $imagenes[] = $img['ruta_imagen'];
-            }
-            $fila['imagenes'] = $imagenes;
-            $propiedades[] = $fila;
-        }
-
-        return $propiedades;
+    if (
+        isset($filtros['precio_min'], $filtros['precio_max']) &&
+        $filtros['precio_min'] !== '' && $filtros['precio_max'] !== '' &&
+        (int)$filtros['precio_min'] > (int)$filtros['precio_max']
+    ) {
+        return []; // Validación temprana
+    }
+    if (
+        isset($filtros['superficie_min'], $filtros['superficie_max']) &&
+        $filtros['superficie_min'] !== '' && $filtros['superficie_max'] !== '' &&
+        (int)$filtros['superficie_min'] > (int)$filtros['superficie_max']
+    ) {
+        return []; // Validación temprana
     }
 
+    foreach ($mapaFiltros as $clave => $info) {
+        if (isset($filtros[$clave]) && $filtros[$clave] !== '') {
+            // Si el campo ya tiene un operador (>=, <=), no agregues '='
+            if (strpos($info['campo'], '>=') !== false || strpos($info['campo'], '<=') !== false) {
+                $condiciones[] = "{$info['campo']} ?";
+            } else {
+                $condiciones[] = "{$info['campo']} = ?";
+            }
+            $tipos .= $info['tipo'];
+            $parametros[] = $info['tipo'] === 'i' ? (int)$filtros[$clave] : $filtros[$clave];
+        }
+    }
+
+    if ($condiciones) {
+        $query .= " WHERE " . implode(" AND ", $condiciones);
+    }
+
+    $stmt = $conexion->prepare($query);
+
+    if (!empty($parametros)) {
+        $stmt->bind_param($tipos, ...$parametros);
+    }
+
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    $propiedades = [];
+    while ($fila = $resultado->fetch_assoc()) {
+        $imagenes = [];
+        $resImg = $conexion->query("SELECT ruta_imagen FROM imagenes_propiedad WHERE id_propiedad = {$fila['id_propiedad']}");
+        while ($img = $resImg->fetch_assoc()) {
+            $imagenes[] = $img['ruta_imagen'];
+        }
+        $fila['imagenes'] = $imagenes;
+        $propiedades[] = $fila;
+    }
+
+    return $propiedades;
+}
     public static function obtenerValoresEnumEstado() {
         $conexion = Conexion::obtenerConexion();
         $resultado = $conexion->query("SHOW COLUMNS FROM propiedades LIKE 'estado'");

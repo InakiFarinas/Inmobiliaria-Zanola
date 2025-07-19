@@ -1,5 +1,4 @@
 .contenedor-propiedades {
-  display: flex;
   gap: 16px; /* espacio entre tarjetas */
   justify-content: flex-start;
   padding: 20px;
@@ -113,3 +112,7 @@
 
 .carousel-prev { left: 8px; }
 .carousel-next { right: 8px; }
+
+.filtro-item {
+  display: flex;
+}

@@ -48,10 +48,13 @@ CREATE TABLE `propiedades` (
   `estado` ENUM('Venta','Alquiler') NOT NULL,
   `tipo` ENUM('Casa','Departamento','Terreno','Local') NOT NULL,
   `ambientes` INT(11) DEFAULT 0,
+  `dormitorios` INT(11) DEFAULT 0,
   `garaje` TINYINT(1) DEFAULT 0,
   `baños` INT(11) DEFAULT 0,
   `descripcion` TEXT DEFAULT NULL,
   `fecha_publicacion` DATE DEFAULT CURDATE(),
+  `superficie` INT(11) NOT NULL,
+  `antiguedad` INT(11) NOT NULL, /* en años */
   `id_ciudad` INT(11),
   PRIMARY KEY (`id_propiedad`),
   KEY `id_ciudad` (`id_ciudad`),

@@ -27,12 +27,18 @@
           <option value="">Estado</option>
         </select>
       </div>
-
+      <div class="form-row">
+        <input type="number" name="dormitorios" placeholder="Dormitorios" class="form-input">
+        <input type="number" name="ambientes" placeholder="Ambientes" class="form-input">
+      </div>
+      <div class="form-row">
+        <input type="number" name="superficie" placeholder="Superficie" required class="form-input">
+        <input type="number" name="antiguedad" placeholder="Antigüedad" required class="form-input">
+      </div>
       <div class="form-row">
         <select name="tipo" id="tipo-select" required class="form-select">
           <option value="">Tipo de vivienda</option>
         </select>
-        <input type="number" name="ambientes" placeholder="Ambientes" class="form-input">
       </div>
 
       <div class="form-group checkbox-group">

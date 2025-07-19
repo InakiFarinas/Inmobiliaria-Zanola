@@ -9,28 +9,29 @@ class PropiedadServicio {
     }
     public function crearPropiedad($datos, $archivos) {
         // Validación básica (podés mejorarla o hacerla en otro método)
-        $camposRequeridos = ['calle', 'altura', 'precio', 'estado', 'tipo', 'id_ciudad'];
+        $camposRequeridos = ['calle', 'altura', 'precio', 'estado', 'tipo','superficie','antiguedad', 'id_ciudad'];
         foreach ($camposRequeridos as $campo) {
             if (empty($datos[$campo])) {
                 throw new Exception("El campo $campo es obligatorio.");
             }
         }
-
         $calle = $datos['calle'];
         $altura = $datos['altura'];
         $precio = $datos['precio'];
         $estado = $datos['estado'];
         $tipo = $datos['tipo'];
         $ambientes = isset($datos['ambientes']) ? (int)$datos['ambientes'] : 0;
+        $dormitorios = isset($datos['dormitorios']) ? (int)$datos['dormitorios'] : 0;
         $garaje = isset($datos['garaje']) && $datos['garaje'] ? 1 : 0;
         $banos = isset($datos['baños']) ? (int)$datos['baños'] : 0;
         $descripcion = $datos['descripcion'] ?? '';
+        $superficie = $datos['superficie'];
+        $antiguedad = $datos['antiguedad'];
         $id_ciudad = $datos['id_ciudad'];
 
         // Insertar propiedad en BD
         $id_propiedad = PropiedadRepositorio::insertarPropiedad(
-            $calle, $altura, $precio, $estado, $tipo,
-            $ambientes, $garaje, $banos, $descripcion, $id_ciudad
+            $calle, $altura, $precio, $estado, $tipo,$ambientes,$dormitorios, $garaje, $banos, $descripcion,$superficie,$antiguedad, $id_ciudad
         );
 
         // Guardar imágenes si las hay

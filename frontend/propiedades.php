@@ -12,27 +12,34 @@
           <option value="">Todos los tipos</option>
           <!-- Opciones cargadas por JS -->
         </select>
-
         <select name="estado" id="estado-select">
           <option value="">Todos los estados</option>
           <!-- Opciones cargadas por JS -->
         </select>
-
         <select name="ciudad" id="ciudad-select">
           <option value="">Todas las ciudades</option>
           <!-- Opciones cargadas por JS -->
         </select>
-        <div class="filtro-precio">
-          <label for="precio-min">Precio mínimo:</label>
-          <input type="range" id="precio-min" name="precio_min" min="0" max="1000000" step="10000" value="0" oninput="actualizarPrecio('min')">
-          <span id="precio-min-valor">$0</span>
-
-          <label for="precio-max">Precio máximo:</label>
-          <input type="range" id="precio-max" name="precio_max" min="0" max="1000000" step="10000" value="1000000" oninput="actualizarPrecio('max')">
-          <span id="precio-max-valor">$1.000.000</span>
+        <label for="ambientes">Ambientes:</label>
+        <input type="number" id="ambientes-number" name="ambientes" min="0" max="5" value="0">
+        <label for="dormitorios">Dormitorios:</label>
+        <input type="number" id="dormitorios-number" name="dormitorios" min="0" max="5" value="0">
+        <label for="baños">Baños:</label>
+        <input type="number" id="baños-number" name="baños" min="0" max="5" value="0">
+        <label for="antiguedad">Antigüedad:</label>
+        <input type="number" id="antiguedad-number" name="antiguedad" min="0" max="100" value="0">
+        <div>
+          <label for="garaje">Garaje:</label>
+          <input type="checkbox" id="garaje-checkbox" name="garaje" value="1">
         </div>
-
-
+        <div class="filtro-item">
+          <input type="number" id="precio-min" name="precio_min" placeholder="Precio Mínimo">
+          <input type="number" id="precio-max" name="precio_max" placeholder="Precio Máximo">
+        </div>
+        <div class="filtro-item">
+          <input type="number" id="superficie-min" name="superficie_min" placeholder="Superficie Mínima">
+          <input type="number" id="superficie-max" name="superficie_max" placeholder="Superficie Máxima">
+        </div>
         <button type="submit">Filtrar</button>
       </form>
       <div id="propiedades-listado" class="contenedor-propiedades"></div>
