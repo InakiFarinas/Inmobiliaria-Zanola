@@ -65,11 +65,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Render del contenido
       container.innerHTML = `
-        <h1>${prop.ciudad}, ${prop.calle} ${prop.altura}</h1>
+        <h1 id="direccion">${prop.ciudad}, ${prop.calle} ${prop.altura}</h1>
         ${galeriaHtml}
-        <h2 class="tipo-ambientes">${prop.tipo} · ${prop.ambientes} Ambientes</h2>
         <p class="precio">${prop.estado} $${prop.precio}</p>
         <div class="caracteristicas-propiedad">
+          <div class="item">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-building"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l18 0" /><path d="M9 8l1 0" /><path d="M9 12l1 0" /><path d="M9 16l1 0" /><path d="M14 8l1 0" /><path d="M14 12l1 0" /><path d="M14 16l1 0" /><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /></svg>
+            <span>${prop.tipo}</span>
+          </div>
           <div class="item">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 20a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M15 20a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M5 20h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" /><path d="M3 6l9 -4l9 4" /></svg>
             <span>${prop.garaje == 1 ? 'Sí' : 'No'}</span>
@@ -85,13 +88,22 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="item">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bed-double-icon lucide-bed-double"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v6"/><path d="M2 18h20"/></svg>
             <span>${prop.dormitorios} dormitorio${prop.dormitorios > 1 ? 's' : ''}</span>
+          </div>
+          <div class="item">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-squares"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 10a2 2 0 0 1 2 -2h9a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-9a2 2 0 0 1 -2 -2z" /><path d="M16 8v-3a2 2 0 0 0 -2 -2h-9a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h3" /></svg>
+            <span>${prop.superficie} m²</span>
+          </div>
+          <div class="item">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-stats"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" /><path d="M18 14v4h4" /><path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M15 3v4" /><path d="M7 3v4" /><path d="M3 11h16" /></svg>
+            <span>${prop.antiguedad} años</span>
+          </div>
         </div>
         <section class= "descripcion">
           <h2>Descripción</h2>
           <p>${prop.descripcion}</p>
         </section>
       `;
-
+      cargarMapa();
       // Listener para cerrar modal al click afuera
       const modal = document.getElementById('modal-galeria');
       if (modal) {
@@ -114,4 +126,60 @@ function abrirModal() {
 }
 function cerrarModal() {
   document.getElementById('modal-galeria').style.display = 'none';
+}
+
+// Funciones para mapa
+async function obtenerCoordenadas(direccion) {
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(direccion)}`;
+
+  try {
+    const respuesta = await fetch(url, {
+      headers: {
+        'User-Agent': 'TuAppWeb/1.0 (tuemail@ejemplo.com)'
+      }
+    });
+    const resultados = await respuesta.json();
+    if (resultados.length > 0) {
+      const { lat, lon } = resultados[0];
+      return { lat, lon };
+    } else {
+      console.warn('No se encontraron coordenadas para:', direccion);
+      return null;
+    }
+  } catch (error) {
+    console.error('Error al obtener coordenadas:', error);
+    return null;
+  }
+}
+
+function cargarMapa() {
+  const direccion = document.getElementById('direccion')?.textContent;
+  if (!direccion) {
+    console.error("No se encontró la dirección");
+    return;
+  }
+
+  // Usar Geocodificación de Nominatim (OpenStreetMap)
+  fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(direccion)}`)
+    .then(res => res.json())
+    .then(data => {
+      if (!data || data.length === 0) {
+        console.error("No se encontraron coordenadas para la dirección");
+        return;
+      }
+
+      const { lat, lon } = data[0];
+      const map = L.map('map').setView([lat, lon], 16);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+
+      L.marker([lat, lon]).addTo(map)
+        .bindPopup(direccion)
+        .openPopup();
+    })
+    .catch(err => {
+      console.error("Error al geocodificar dirección:", err);
+    });
 }

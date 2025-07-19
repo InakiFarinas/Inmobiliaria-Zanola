@@ -8,4 +8,8 @@
   <link rel="stylesheet" href="../public/css/estilos.css">
   <link rel="stylesheet" href="../public/css/propiedades.css">
   <link rel="stylesheet" href="../public/css/propiedadDetalle.css">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
 </head>
