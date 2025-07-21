@@ -1,0 +1,122 @@
+#detalle-propiedad {
+  padding: 0 10px 0 10px;
+}
+.galeria-propiedad {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.imagen-principal {
+  flex: 1;
+  height: 500px;
+  overflow: hidden;
+}
+
+.imagen-principal img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.imagenes-secundarias {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: calc(50% - 4px) calc(50% - 4px);
+  gap: 8px;
+  height: 500px;
+}
+
+.imagenes-secundarias img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+
+.ver-mas {
+  position: relative;
+}
+.overlay {
+  position: absolute;
+  bottom: 0;
+  right: 16px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  text-align: center;
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px 5px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.85);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.modal-contenido {
+  background: white;
+  padding: 20px;
+  max-width: 80vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 10px;
+  position: relative;
+}
+.modal .cerrar {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.galeria-modal img {
+  width: 100%;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+.tipo-ambientes {
+    font-size: 16px;
+    font-weight: 500;
+    color: #727272;
+    margin-top: 0;
+    margin-bottom: 16px;
+    line-height: 26px;
+}
+.precio {
+  font-size: 24px;
+  font-weight: 600;
+}
+.caracteristicas-propiedad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.caracteristicas-propiedad .item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.caracteristicas-propiedad .item img {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 6px;
+}

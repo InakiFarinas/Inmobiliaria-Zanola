@@ -1,0 +1,228 @@
+/* public/css/index.css */
+
+/* Estilos para la sección Hero */
+.hero-index {
+  position: relative;
+  background: url('../images/icons/casaindex.jpg') no-repeat center / cover;
+  height: 100vh;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.hero-index::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* Oscurece la imagen de fondo */
+  z-index: -1;
+}
+
+.hero-contenido-index {
+  max-width: 900px;
+  z-index: 1;
+}
+
+.hero-contenido-index h1 {
+  font-size: 3.8rem; /* Título grande */
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra para legibilidad */
+}
+
+.hero-contenido-index p {
+  font-size: 1.4rem;
+  margin-bottom: 2.5rem;
+  color: #e0e0e0;
+  line-height: 1.6;
+}
+
+/* Estilos para la barra de búsqueda */
+.barra-busqueda {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0;
+  max-width: 1200px;
+  margin: 20px auto;
+  overflow: hidden;
+}
+
+.barra-busqueda select,
+.barra-busqueda input {
+  border: none;
+  padding: 16px;
+  font-size: 15px;
+  outline: none;
+  background-color: transparent;
+  color: #000;
+}
+
+.barra-busqueda select {
+  width: 160px;
+  border-right: 1px solid #e0e0e0;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,<svg fill='black' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 12px;
+  cursor: pointer;
+}
+
+.barra-busqueda input {
+  flex: 1;
+  padding-left: 16px;
+  border-right: 1px solid #e0e0e0;
+}
+
+.barra-busqueda .btn-buscar {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 16px 28px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.barra-busqueda .btn-buscar:hover {
+  background-color: #222;
+}
+
+
+/* Estilos para la sección de Características/Servicios */
+.caracteristicas-index {
+  padding: 80px 20px;
+  background-color: #f8f8f8; /* Fondo gris claro */
+  text-align: center;
+}
+
+.seccion-titulo {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 60px;
+}
+
+.contenedor-caracteristicas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.caracteristica-item {
+  flex: 1 1 300px; /* Ajuste en columnas */
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.caracteristica-item:hover {
+  transform: translateY(-10px); /* Efecto al pasar el mouse */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.caracteristica-item img {
+  width: 80px; /* Tamaño de los íconos */
+  height: 80px;
+  margin-bottom: 20px;
+}
+
+.caracteristica-item h3 {
+  font-size: 1.8rem;
+  color: #007BFF;
+  margin-bottom: 15px;
+}
+
+.caracteristica-item p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #555;
+}
+
+/* Estilos para la sección de Novedades */
+.novedades-index {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.novedades-index .seccion-titulo {
+  margin-bottom: 60px;
+}
+
+.contenedor-propiedades {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.propiedad-item {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 300px; /* Ancho de cada propiedad */
+  text-align: left;
+  transition: transform 0.3s;
+}
+
+.propiedad-item:hover {
+  transform: translateY(-5px); /* Efecto al pasar el mouse */
+}
+
+.propiedad-item img {
+  width: 100%; /* Imagen ocupa todo el ancho */
+  border-radius: 10px;
+}
+
+.ver-mas-propiedades {
+  margin-top: 60px;
+}
+
+.btn-secundario {
+  background: #6c757d; /* Color secundario */
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  transition: background 0.3s, transform 0.2s;
+  display: inline-block;
+}
+
+.btn-secundario:hover {
+  background: #5a6268; /* Color al pasar el mouse */
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .hero-contenido-index h1 { font-size: 3rem; }
+  .hero-contenido-index p { font-size: 1.2rem; }
+  .seccion-titulo { font-size: 2.2rem; }
+}
+
+@media (max-width: 768px) {
+  .hero-index { height: 70vh; }
+  .hero-contenido-index h1 { font-size: 2.5rem; }
+  .hero-contenido-index p { font-size: 1.1rem; }
+}
+
+@media (max-width: 576px) {
+  .hero-index { height: 60vh; }
+  .hero-contenido-index h1 { font-size: 2rem; }
+  .hero-contenido-index p { font-size: 1rem; }
+}

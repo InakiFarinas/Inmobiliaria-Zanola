@@ -1,0 +1,115 @@
+.contenedor-propiedades {
+  display: flex;
+  gap: 16px; /* espacio entre tarjetas */
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+.tarjeta-propiedad {
+  background: #eeeeee;
+  border: 3px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  width: 100%;
+  max-width: 420px;
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  cursor: pointer;
+}
+.enlace-propiedad {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  padding: 0;
+  height: 100%;
+}
+.tarjeta-propiedad:hover {
+  transform: scale(1.02);
+}
+
+
+.tarjeta-propiedad h3 {
+  margin: 16px;
+  font-size: 18px;
+  color: #333;
+}
+
+.tarjeta-propiedad p {
+  margin: 4px 16px 8px;
+  font-size: 14px;
+  color: #666;
+}
+
+.tarjeta-propiedad .precio {
+  font-weight: bold;
+  color: #2e7d32
+}
+
+.tarjeta-propiedad .estado {
+  color: #333;
+}
+
+.tarjeta-propiedad .ciudad {
+  color: #333;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+/* Oculta los botones por defecto */
+.carousel-prev,
+.carousel-next {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Al hacer hover en el contenedor, muestra los botones */
+.carousel:hover .carousel-prev,
+.carousel:hover .carousel-next {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.imagen-base {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+.carousel-img.active {
+  opacity: 1;
+}
+
+.carousel-prev,
+.carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  font-size: 18px;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  z-index: 2;
+}
+
+.carousel-prev { left: 8px; }
+.carousel-next { right: 8px; }
