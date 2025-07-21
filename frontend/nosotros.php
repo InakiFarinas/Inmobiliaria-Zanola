@@ -46,7 +46,7 @@
         <p>
           Nuestro objetivo es construir relaciones de confianza con nuestros clientes, brindando asesoramiento claro y 
             transparente en cada etapa del proceso. Estamos aquí para resolver todas tus dudas y hacer que la experiencia de 
-            venta sea lo más sencilla y exitosa posible.
+            venta sea lo más sencilla y exitosa posible para VOS!
 
         </p>
     </div>
