@@ -5,6 +5,29 @@
   padding: 20px;
 }
 
+/* Contenedor padre que centra las tarjetas */
+.contenedor-propiedades {
+  display: flex;
+  justify-content: center;   /* Centra horizontalmente */
+  align-items: flex-start;   /* Arriba */
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 40px 16px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* Contenedor de tarjetas estilo grilla */
+.contenedor-propiedades {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+  padding: 40px 16px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* Tarjeta individual */
 .tarjeta-propiedad {
   background: #eeeeee;
   border: 3px solid #e0e0e0;
@@ -12,13 +35,13 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   overflow: hidden;
   width: 100%;
-  max-width: 420px;
   transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
   text-align: left;
   cursor: pointer;
 }
+
 .enlace-propiedad {
   color: inherit;
   text-decoration: none;
@@ -26,10 +49,10 @@
   padding: 0;
   height: 100%;
 }
+
 .tarjeta-propiedad:hover {
   transform: scale(1.02);
 }
-
 
 .tarjeta-propiedad h3 {
   margin: 16px;
@@ -45,15 +68,14 @@
 
 .tarjeta-propiedad .precio {
   font-weight: bold;
-  color: #2e7d32
+  color: #2e7d32;
+  margin: 0 16px 12px;
 }
 
-.tarjeta-propiedad .estado {
-  color: #333;
-}
-
+.tarjeta-propiedad .estado,
 .tarjeta-propiedad .ciudad {
   color: #333;
+  margin: 0 16px 4px;
 }
 
 .carousel {

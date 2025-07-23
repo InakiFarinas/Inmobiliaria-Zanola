@@ -6,18 +6,20 @@
   <?php include("includes/header.php"); ?>
   <main>
     <h1>Listado de Propiedades</h1>
-    <div class="contenido-flex">
-      <form id="form-filtros" method="get" class="filtros">
-        <select name="tipo" id="tipo-select">
-          <option value="">Todos los tipos</option>
-          <!-- Opciones cargadas por JS -->
-        </select>
+<div class="contenido-flex">
+       <form id="form-filtros" method="get" class="filtros">
++        <h3>Encuentra tu propiedad ideal</h3>
+         <select name="tipo" id="tipo-select">
+           <option value="">Todos los tipos</option>
+           <!-- Opciones cargadas por JS -->
+         </select>
 
         <select name="estado" id="estado-select">
           <option value="">Todos los estados</option>
           <!-- Opciones cargadas por JS -->
         </select>
 
+        
         <select name="ciudad" id="ciudad-select">
           <option value="">Todas las ciudades</option>
           <!-- Opciones cargadas por JS -->

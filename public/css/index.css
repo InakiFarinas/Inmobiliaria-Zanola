@@ -1,4 +1,7 @@
 /* public/css/index.css */
+body {
+  margin: 0;
+}
 
 /* Estilos para la sección Hero */
 .hero-index {
