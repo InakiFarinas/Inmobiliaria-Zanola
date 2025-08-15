@@ -46,7 +46,9 @@
       </div>
     </section>
 
-    <!-- Sección de Novedades/Propiedades Destacadas -->
+
+    <!-- Sección de Propiedades Destacadas -->
+
     <section class="novedades-index">
       <h2 class="seccion-titulo">Nuestras Últimas Propiedades</h2>
       <div id="propiedades-listado" class="contenedor-propiedades">
@@ -73,7 +75,6 @@
         <a href="propiedades.php" class="btn-secundario">Ver Todas las Propiedades</a>
       </div>
     </section>
-
   </main>
 
   <?php include('includes/footer.php'); ?>

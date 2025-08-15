@@ -2,54 +2,73 @@
 <!DOCTYPE html>
 <html lang="es">
 <?php include("includes/head.php"); ?>
+  <head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../public/css/nosotros.css">
+</head>
+
+
 <body>
   <?php include('includes/header.php'); ?>
 <section class="nosotros">
-    <div class="contenido-nosotros">
-        <h1>Sobre Nosotros</h1>
+  <div class="contenido-nosotros">
+    <h1>Sobre Nosotros</h1>
+    <p>
+      En Villafañe Propiedades, acompañamos a cada cliente en la búsqueda de su lugar ideal.  
+      Nos destacamos por ofrecer un asesoramiento honesto, cercano y adaptado a las necesidades reales de quienes confían en nosotros.
+    </p>
+
+    <div class="bloques-nosotros">
+      <div class="bloque">
+        <h2>Nuestra Misión</h2>
         <p>
-            En Villafañe Propiedades, nos dedicamos a ofrecer las mejores opciones en el mercado inmobiliario. 
-            Nuestro equipo de expertos está comprometido a ayudarte a encontrar la propiedad ideal que se ajuste a tus necesidades y presupuesto.
+          Con más de 10 años de experiencia en el sector inmobiliario, nuestra misión es ofrecer un servicio personalizado y transparente,  
+          garantizando que cada persona se sienta acompañada y segura en todo momento.
         </p>
+      </div>
+      <div class="bloque">
+        <h2>Nuestros Valores</h2>
         <p>
-            Con más de 10 años de experiencia en el sector, nuestra misión es brindar un servicio excepcional y transparente, 
-            asegurando que cada cliente se sienta valorado y atendido en cada paso del proceso.
+          Creemos en el valor de la confianza, la honestidad y el compromiso.  
+          Apostamos a relaciones a largo plazo, construidas con diálogo, empatía y resultados concretos.  
+          Queremos ayudarte a dar el paso hacia tu nuevo hogar con tranquilidad.
         </p>
-        <p>
-            Creemos en la importancia de construir relaciones duraderas y en la confianza como base de nuestro trabajo. 
-            ¡Déjanos ayudarte a encontrar tu nuevo hogar!
-        </p>
+      </div>
     </div>
-    
+  </div>
+</section>
+
+
+
 <section class="por-que-vender">
-    <div class="contenido-por-que-vender">
-        <h2>¿Por qué vender con nosotros?</h2>
-        <p>
-          En nuestra inmobiliaria de Castelar, estamos comprometidos a ofrecer un servicio personalizado y cercano. 
-            Aunque somos nuevos en el mercado, nuestro equipo está formado por profesionales apasionados y dedicados a ayudarte 
-            a vender tu propiedad de la mejor manera posible.
-        </p>
-        <p>
-           Nos enfocamos en entender tus necesidades y ofrecerte un acompañamiento integral durante todo el proceso de venta. 
-            Cada propiedad es única, y trabajamos para resaltar sus características y potencial, asegurando que obtengas el mejor 
-            valor por tu inmueble.
-        </p>
-        <p>
-          A pesar de ser una inmobiliaria nueva, contamos con estrategias de marketing efectivas que incluyen presencia en 
-            redes sociales y plataformas digitales, lo que nos permite llegar a un público amplio y aumentar la visibilidad de 
-            tu propiedad.
+  <div class="contenido-por-que-vender">
+    <h2>¿Por qué vender con nosotros?</h2>
 
-        </p>
-        <p>
-            Somos líderes en emprendimientos residenciales en Zona Oeste.
-        </p>
-        <p>
-          Nuestro objetivo es construir relaciones de confianza con nuestros clientes, brindando asesoramiento claro y 
-            transparente en cada etapa del proceso. Estamos aquí para resolver todas tus dudas y hacer que la experiencia de 
-            venta sea lo más sencilla y exitosa posible para VOS!
+    <p>
+      En nuestra inmobiliaria de Castelar, estamos comprometidos a ofrecer un servicio personalizado y cercano.
+      Aunque somos nuevos en el mercado, nuestro equipo está formado por profesionales apasionados y dedicados a ayudarte a vender tu propiedad de la mejor manera posible.
+    </p>
 
-        </p>
+    <p>
+      Nos enfocamos en entender tus necesidades y ofrecerte un acompañamiento integral durante todo el proceso de venta.
+      Cada propiedad es única, y trabajamos para resaltar sus características y potencial, asegurando que obtengas el mejor valor por tu inmueble.
+    </p>
+
+    <div class="destacado">
+      <strong>Somos líderes en emprendimientos residenciales en Zona Oeste.</strong>
+      <p>
+        Nuestro objetivo es construir relaciones de confianza con nuestros clientes, brindando asesoramiento claro y transparente en cada etapa del proceso.
+        Estamos aquí para resolver todas tus dudas y hacer que la experiencia de venta sea lo más sencilla y exitosa posible para VOS!
+      </p>
     </div>
+
+    <a href="https://wa.me/5491123456789?text=Hola%20quiero%20consultar%20sobre%20la%20venta%20de%20mi%20propiedad"
+       class="boton-whatsapp"
+       target="_blank" rel="noopener noreferrer">
+      Consultar Ahora
+    </a>
+  </div>
+</section>
 
 <div class="mapa-nosotros" style="width:100%;max-width:900px;margin:0 auto 2rem auto;">
     <h3>Nuestra Ubicación</h3>
@@ -60,6 +79,7 @@
  
 
 </section>
+
  <?php include('includes/footer.php'); ?>
 </body>
 </html>
