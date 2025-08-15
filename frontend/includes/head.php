@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="../public/css/footer.css">
   <link rel="stylesheet" href="../public/css/estilos.css">
   <link rel="stylesheet" href="../public/css/propiedades.css">
-  <link rel="stylesheet" href="../public/css/propiedadDetalle.css">
   <link rel="stylesheet" href="../public/css/index.css"> 
+    <link rel="stylesheet" href="../public/css/propiedadDetalle.css">
+
 </head>

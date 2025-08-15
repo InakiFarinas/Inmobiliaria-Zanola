@@ -86,7 +86,8 @@ const textoPrecio = estado === 'alquiler'
 </a>
       </div>
   <h3>Descripción</h3>
-      <p>${prop.descripcion}</p>
+  <p class="descripcion-propiedad">${prop.descripcion}</p>
+  
     </div>
   </div>
 
