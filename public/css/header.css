@@ -9,8 +9,9 @@
   position: sticky;
   top: 0;
   z-index: 1000; /* asegura que esté por encima de todo */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* sutil sombra al hacer scroll */
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18); /* sombra más notoria */
 }
+
 .col {
   flex: 1;
 }
@@ -19,16 +20,17 @@
   height: 80px;
 }
 .centro {
-  position: relative;
+  flex: 2; /* Da más espacio al centro */
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; /* Esto centra horizontalmente los elementos hijos */
+  gap: 2rem; /* Espacio entre los enlaces */
   height: 100%;
 }
 
 .centro a {
   position: relative;
-  margin: 0 1rem;
+  margin: 0; /* Elimina margen lateral, usa gap en el contenedor */
   text-decoration: none;
   color: #444;
   font-weight: 500;
@@ -42,7 +44,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: #007BFF;
+  background: #000000;
   bottom: -35px; /* Ajusta para que la línea quede justo al borde del header */
   opacity: 0;
   transition: opacity 0.2s;
@@ -54,7 +56,7 @@
   opacity: 1;
 }
 .centro a:hover {
-  color: #007BFF;
+  color: #000000;
 }
 .derecha {
   text-align: right;
@@ -68,4 +70,26 @@
   border: none;
   border-top: 1px solid #eee;
   margin: 0;
+}
+.whatsapp-header-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 15px;
+  width: 28px;
+  height: 28px;
+}
+
+.whatsapp-header-btn img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: grayscale(1);
+  opacity: 0.7;
+  transition: filter 0.3s, opacity 0.3s;
+}
+
+.whatsapp-header-btn:hover img {
+  filter: none;
+  opacity: 1;
 }

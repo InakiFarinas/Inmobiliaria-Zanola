@@ -13,36 +13,32 @@ document.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('detalle-propiedad');
       const imagenes = prop.imagenes || [];
 
-      let galeriaHtml = '';
-      if (imagenes.length > 0) {
-        const imgPrincipal = imagenes[0];
-        const secundarias = imagenes.slice(1, 5); // 2 a 5
+    let galeriaHtml = '';
+if (imagenes.length > 0) {
+  const imgPrincipal = imagenes[0];
 
-        galeriaHtml = `
-          <div class="galeria-propiedad">
-            <div class="imagen-principal">
-              <img src="/inmobiliaria/public/images/propiedades/${imgPrincipal}" alt="Imagen principal" />
-            </div>
-            <div class="imagenes-secundarias">
-              ${secundarias
-                .map(
-                  (img, i) => `
-                    <img src="/inmobiliaria/public/images/propiedades/${img}" alt="Imagen secundaria ${i + 2}" />
-                  `
-                )
-                .join('')}
-            </div>
-            ${
-              imagenes.length > 5
-                ? `
-                <div class="ver-mas" onclick="abrirModal()">
-                  <div class="overlay">Ver todas las fotos</div>
-                </div>
-              `
-                : ''
-            }
-          </div>
-        `;
+  galeriaHtml = `
+    <div class="galeria-preview">
+      <div class="imagen-grande">
+        <img id="imagen-principal" src="/inmobiliaria/public/images/propiedades/${imgPrincipal}" alt="Imagen principal" />
+        <div class="contador-img" id="contador-img">1 / ${imagenes.length}</div>
+      </div>
+      <div class="miniaturas">
+        ${imagenes
+          .map(
+            (img, i) => `
+              <img 
+                src="/inmobiliaria/public/images/propiedades/${img}" 
+                alt="Miniatura ${i + 1}" 
+                class="miniatura ${i === 0 ? 'activa' : ''}" 
+                onclick="cambiarImagen(${i})"
+              />
+            `
+          )
+          .join('')}
+      </div>
+    </div>
+  `;
 
         // Modal: ahora contiene TODAS las imágenes
         galeriaHtml += `

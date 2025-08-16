@@ -62,7 +62,6 @@
       <button type="submit" class="admin-button">Crear Propiedad</button>
     </form>
   </main>
-
   <script src="../../public/js/propiedades/cargarCiudades.js"></script>
   <script src="../../public/js/propiedades/cargarTipoPropiedades.js"></script>
   <script src="../../public/js/propiedades/cargarEstados.js"></script>

@@ -1,36 +1,47 @@
 <footer class="footer">
   <div class="footer__contenedor">
-
     <div class="footer__col">
       <h2>Villafañe Propiedades</h2>
-      <p>Conectamos personas con hogares. Tu nuevo comienzo empieza con nosotros.</p>
+      <p>Tu socio de confianza en el mercado inmobiliario.<br>
+        Encontramos la propiedad perfecta para tu estilo de vida.</p>
+      <div class="footer__redes">
+        <a href="#"><img src="../public/images/icons/casaicono.png" alt="Inicio"></a>
+        <a href="#"><img src="../public/images/icons/buscar.png" alt="Propiedades"></a>
+        <a href="#"><img src="../public/images/icons/nosotrosicono.png" alt="Nosotros"></a>
+      </div>
     </div>
+<div class="footer__col">
+  <h3>Servicios</h3>
+  <ul>
+    <li><span>Propiedades</span></li>
+    <li><span>Venta</span></li>
+    <li><span>Alquiler</span></li>
+  </ul>
+</div>
+<div class="footer__col">
+  <h3>Síguenos</h3>
+  <ul class="footer__social-list">
+    <li>
+      <a href="https://www.instagram.com/villafañepropiedades" target="_blank" rel="noopener noreferrer">
+        <img src="../public/images/icons/instagram.png" alt="Instagram" />
+        Instagram
+      </a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/villafañepropiedades" target="_blank" rel="noopener noreferrer">
+        <img src="../public/images/icons/facebook.png" alt="Facebook" />
+        Facebook
+      </a>
+    </li>
+  </ul>
+</div>
 
-    <div class="footer__col">
-      <h3>Navegación</h3>
-      <ul>
-        <li><a href="index.php">Inicio</a></li>
-        <li><a href="propiedades.php">Propiedades</a></li>
-      </ul>
-    </div>
-    <div class="footer__col">
-        <h3>Contacto</h3>
-        <p><strong>Dirección:</strong> Calle Falsa 123, Buenos Aires</p>
-        <p><strong>Email:</strong> contacto@inmobiliaria.com</p>
-        <div class="footer__redes">
-            <a href="https://facebook.com" target="_blank" aria-label="Facebook">
-                <img src="../public/images/icons/icono-fb.svg" alt="Facebook">
-            </a>
-            <a href="https://instagram.com" target="_blank" aria-label="Instagram">
-                <img src="../public/images/icons/icono-ig.svg" alt="Instagram">
-            </a>
-            <a href="https://wa.me/5491112345678" target="_blank" aria-label="WhatsApp Demaio Propiedades" rel="noopener noreferrer">
-                <img src="../public/images/icons/icono-wsp.svg" alt="WhatsApp">
-            </a>
-        </div>
-    </div>
-  </div>
+
   <div class="footer__bottom">
-    <p>&copy; 2025 Villafañe Propiedades. Todos los derechos reservados.</p>
+    <p>&copy; 2024 Villafañe Propiedades. Todos los derechos reservados.</p>
+    <div class="footer__links">
+      <a href="#">Política de Privacidad</a> | 
+      <a href="#">Términos de Uso</a>
+    </div>
   </div>
 </footer>
