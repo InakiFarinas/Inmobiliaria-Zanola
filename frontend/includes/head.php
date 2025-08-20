@@ -5,7 +5,6 @@
   <link rel="icon" href="../public/images/icons/iconoarriba.png" type="image/x-icon">
   <link rel="stylesheet" href="../public/css/header.css">
   <link rel="stylesheet" href="../public/css/footer.css">
-  <link rel="stylesheet" href="../public/css/estilos.css">
   <link rel="stylesheet" href="../public/css/propiedades.css">
   <link rel="stylesheet" href="../public/css/index.css"> 
   <link rel="stylesheet" href="../public/css/propiedadDetalle.css">
@@ -15,3 +14,4 @@
   />
 
 </head>
+

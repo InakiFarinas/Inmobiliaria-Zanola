@@ -1,3 +1,4 @@
+/* Header base styles */
 .header {
   display: flex;
   justify-content: space-between;
@@ -12,6 +13,7 @@
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18); /* sombra más notoria */
 }
 
+/* Columnas del header */
 .col {
   flex: 1;
 }
@@ -71,6 +73,8 @@
   border-top: 1px solid #eee;
   margin: 0;
 }
+
+/* Botón WhatsApp */
 .whatsapp-header-btn {
   display: inline-flex;
   align-items: center;
@@ -92,4 +96,52 @@
 .whatsapp-header-btn:hover img {
   filter: none;
   opacity: 1;
+}
+
+/* Por defecto, oculta el menú hamburguesa en desktop */
+.menu-hamburguesa {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Responsive: menú hamburguesa para móviles */
+@media (max-width: 600px) {
+  .logo {
+    height: 45px;
+  }
+  .centro {
+    position: absolute;
+    min-height: min-content;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    z-index: 999;
+    padding: 0.5rem;
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .centro.activo {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .centro a {
+    font-size: 0.95rem;
+  }
+  .derecha {
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  .menu-hamburguesa {
+    display: inline-block;
+  }
 }

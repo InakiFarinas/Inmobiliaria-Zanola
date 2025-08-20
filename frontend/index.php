@@ -52,24 +52,7 @@
     <section class="novedades-index">
       <h2 class="seccion-titulo">Nuestras Últimas Propiedades</h2>
       <div id="propiedades-listado" class="contenedor-propiedades">
-        <div class="propiedad-item">
-          <img src="../public/images/propiedades/propiedad1.jpg" alt="Propiedad 1">
-          <h3>Casa en el Centro</h3>
-          <p>3 habitaciones, 2 baños, jardín.</p>
-          <span>$200,000</span>
-        </div>
-        <div class="propiedad-item">
-          <img src="../public/images/propiedades/propiedad2.jpg" alt="Propiedad 2">
-          <h3>Departamento Moderno</h3>
-          <p>2 habitaciones, 1 baño, balcón.</p>
-          <span>$150,000</span>
-        </div>
-        <div class="propiedad-item">
-          <img src="../public/images/propiedades/propiedad3.jpg" alt="Propiedad 3">
-          <h3>Casa de Campo</h3>
-          <p>4 habitaciones, 3 baños, piscina.</p>
-          <span>$300,000</span>
-        </div>
+        
       </div>
       <div class="ver-mas-propiedades">
         <a href="propiedades.php" class="btn-secundario">Ver Todas las Propiedades</a>
