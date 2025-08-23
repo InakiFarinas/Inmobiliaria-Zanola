@@ -1,11 +1,11 @@
 /* CONTENEDOR GENERAL */
 #detalle-propiedad {
   padding: 30px 40px;
-  max-width: 1300px;
+  max-width: 1000px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
   color: #333;
-  
+  min-width: 100%;
 }
 
 
@@ -265,38 +265,6 @@ hr {
   }
 }
 
-.contacto-grande {
-  background-color: #0050ff;
-  color: #fff;
-  padding: 30px 20px;
-  border-radius: 10px;
-  text-align: center;
-  margin: 40px auto;
-  max-width: 800px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.contacto-grande h3 {
-  font-size: 20px;
-  margin-bottom: 15px;
-}
-
-.btn-wpp-verde {
-  display: inline-block;
-  background-color: #25d366;
-  color: white;
-  padding: 14px 24px;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 16px;
-  text-decoration: none;
-  transition: background 0.2s ease;
-}
-
-.btn-wpp-verde:hover {
-  background-color: #1ebe5c;
-    box-shadow: 0 8px 24px rgba(37,211,102,0.4);
-}
 .galeria-y-detalle {
   display: flex;
   flex-wrap: wrap;
@@ -429,9 +397,3 @@ hr {
   margin-bottom: 20px;
 }
 
-.descripcion-propiedad {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #820000;
-  margin-bottom: 20px;
-}

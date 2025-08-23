@@ -59,6 +59,10 @@ if (imagenes.length > 0) {
         `;
       }
 
+      //mover imagenes 
+  
+
+
       // Render del contenido
       container.innerHTML = `
         <h1 id="direccion">${prop.ciudad}, ${prop.calle} ${prop.altura}</h1>
@@ -122,6 +126,20 @@ function abrirModal() {
 }
 function cerrarModal() {
   document.getElementById('modal-galeria').style.display = 'none';
+}
+
+// Cambiar imagenes
+window.cambiarImagen = function(indice) {
+  const imagenes = document.querySelectorAll('.miniatura');
+  const principal = document.getElementById('imagen-principal');
+  if (!imagenes[indice]) return;
+  imagenes.forEach(img => img.classList.remove('activa'));
+  imagenes[indice].classList.add('activa');
+  principal.src = imagenes[indice].src;
+
+  // Actualizacion del contador
+  const contador = document.getElementById('contador-img');
+  if (contador) contador.textContent = `${indice + 1} / ${imagenes.length}`;
 }
 
 // Funciones para mapa
