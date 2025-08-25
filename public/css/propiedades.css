@@ -6,6 +6,9 @@ body {
   color: #222;
   
 }
+.enlace-propiedad {
+  text-decoration: none;
+}
 
 .filtros-container {
   background: #e0e0e0;

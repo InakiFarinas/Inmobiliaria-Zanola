@@ -13,12 +13,14 @@ document.getElementById('form-filtros').addEventListener('submit', function (e) 
   const superficieMax = document.getElementById('superficie-max').value;
   const minStr = document.getElementById('precio-min').value;
   const maxStr = document.getElementById('precio-max').value;
-  // Parseo los valores para evitar errores
+
+  // Parseo valores numéricos
   const supMin = superficieMin === '' ? null : parseInt(superficieMin, 10);
   const supMax = superficieMax === '' ? null : parseInt(superficieMax, 10);
   const min = minStr === '' ? null : parseInt(minStr, 10);
   const max = maxStr === '' ? null : parseInt(maxStr, 10);
 
+  // Validaciones
   if (supMin !== null && supMax !== null && supMin > supMax) {
     alert("La superficie mínima no puede ser mayor que la superficie máxima.");
     return;
@@ -27,27 +29,51 @@ document.getElementById('form-filtros').addEventListener('submit', function (e) 
     alert("El precio mínimo no puede ser mayor que el precio máximo.");
     return;
   }
+
+  // Construcción de parámetros
   const params = new URLSearchParams();
   const filtros = [
-  ['tipo', tipo],
-  ['estado', estado],
-  ['ciudad', ciudad],
-  ['ambientes', ambientes],
-  ['dormitorios', dormitorios],
-  ['garaje', garaje ? 1 : ''], // Solo agrega si está chequeado
-  ['baños', baños],
-  ['antiguedad', antiguedad],
-  ['superficie_min', supMin],
-  ['superficie_max', supMax],
-  ['precio_min', min],
-  ['precio_max', max]
-];
-filtros.forEach(([clave, valor]) => {
-  if (valor !== null && valor !== '' && Number(valor) !== 0) {
-    params.append(clave, valor);
-  }
-});
+    ['tipo', tipo],
+    ['estado', estado],
+    ['ciudad', ciudad],
+    ['ambientes', ambientes],
+    ['dormitorios', dormitorios],
+    ['garaje', garaje ? 1 : ''],
+    ['baños', baños],
+    ['antiguedad', antiguedad],
+    ['superficie_min', supMin],
+    ['superficie_max', supMax],
+    ['precio_min', min],
+    ['precio_max', max]
+  ];
+
+  filtros.forEach(([clave, valor]) => {
+    if (valor !== null && valor !== '' && Number(valor) !== 0) {
+      params.append(clave, valor);
+    }
+  });
+
+  // URL del backend
   const url = '/inmobiliaria/backend/controladores/obtenerPropiedad.php?' + params.toString();
   console.log('URL filtro:', url);
+
+  // Llamamos a la función genérica
+  cargarPropiedades(url);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Tomar parámetros GET de la URL
+  const params = new URLSearchParams(window.location.search);
+  const ciudad = params.get('ciudad') || '';
+  const estado = params.get('estado') || '';
+
+  // Construir URL al backend con filtros
+  let url = '/inmobiliaria/backend/controladores/obtenerPropiedad.php';
+  let query = [];
+  if (ciudad) query.push('ciudad=' + encodeURIComponent(ciudad));
+  if (estado) query.push('estado=' + encodeURIComponent(estado));
+  if (query.length > 0) url += '?' + query.join('&');
+
+  // Llamar al backend con los filtros
   cargarPropiedades(url);
 });

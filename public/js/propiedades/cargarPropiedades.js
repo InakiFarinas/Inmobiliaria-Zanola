@@ -4,20 +4,31 @@ function cargarPropiedades(url = '/inmobiliaria/backend/controladores/obtenerPro
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
       }
-      return response.text(); // Cambia a text() para ver el contenido real
+      return response.text();
     })
     .then((text) => {
+      const cleanText = text.trim(); // elimina espacios extra
+
+      if (cleanText === '') {
+        console.warn('Respuesta vacía del servidor.');
+        renderizarPropiedades([]); // no rompe, solo lista vacío
+        return;
+      }
+
       try {
-        const data = JSON.parse(text);
+        const data = JSON.parse(cleanText);
         renderizarPropiedades(data);
       } catch (e) {
-        console.error('Respuesta no es JSON:', text);
-        alert('Respuesta inesperada del servidor:\n' + text);
+        console.error('Respuesta no es JSON válido:\n', cleanText);
+        // Mostramos error en el listado en vez de un alert
+        const contenedor = document.getElementById('propiedades-listado');
+        contenedor.innerHTML = `<p style="color:red;">Error en la respuesta del servidor. Ver consola.</p>`;
       }
     })
     .catch((error) => {
       console.error('Error al cargar propiedades:', error);
-      alert('Error al cargar propiedades: ' + error.message);
+      const contenedor = document.getElementById('propiedades-listado');
+      contenedor.innerHTML = `<p style="color:red;">Error al cargar propiedades: ${error.message}</p>`;
     });
 }
 
@@ -70,7 +81,7 @@ function renderizarPropiedades(data) {
   });
 
   // Código para activar los botones del carrusel sin que disparen la navegación
-  document.querySelectorAll('.carousel').forEach(carousel => {
+  document.querySelectorAll('.carousel').forEach((carousel) => {
     const imgs = carousel.querySelectorAll('.carousel-img');
     let index = 0;
 
@@ -100,5 +111,36 @@ function renderizarPropiedades(data) {
 
 // Cargar todas al iniciar
 document.addEventListener('DOMContentLoaded', function () {
-  cargarPropiedades();
+  // Si hay parámetros en la URL (ej: ciudad, estado, etc.)
+  const params = new URLSearchParams(window.location.search);
+
+  let url = '/inmobiliaria/backend/controladores/obtenerPropiedad.php';
+  if ([...params].length > 0) {
+    url += '?' + params.toString();
+  }
+
+  // Carga propiedades con filtros si existen
+  cargarPropiedades(url);
+
+  // Prellenar el formulario de filtros si está en la página
+  const form = document.getElementById('form-filtros');
+  if (form) {
+    params.forEach((value, key) => {
+      const input = form.elements[key];
+      if (input) input.value = value;
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const newParams = new URLSearchParams(new FormData(form));
+
+      // Actualizar la URL visible sin recargar
+      const newUrl = window.location.pathname + '?' + newParams.toString();
+      window.history.pushState({}, '', newUrl);
+
+      // Llamar de nuevo a la carga
+      cargarPropiedades('/inmobiliaria/backend/controladores/obtenerPropiedad.php?' + newParams.toString());
+    });
+  }
 });

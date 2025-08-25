@@ -118,7 +118,7 @@ body {
   }
 }
 
-.barra-busqueda input,
+.barra-busqueda #ciudad-select,
 .barra-busqueda select {
   border: none;
   padding: 18px 24px;
@@ -132,15 +132,15 @@ body {
   border-radius: var(--border-radius);
 }
 
-.barra-busqueda input {
+.barra-busqueda #ciudad-select {
   flex: 1;
 }
 
-.barra-busqueda input:focus {
+.barra-busqueda #ciudad-select:focus {
   background-color: rgba(247, 250, 252, 0.8);
 }
 
-.barra-busqueda input::placeholder {
+.barra-busqueda #ciudad-select::placeholder {
   color: var(--text-light);
   font-weight: 400;
 }
@@ -376,8 +376,7 @@ body {
     max-width: 400px;
     padding: 12px;
   }
-  .barra-busqueda select,
-  .barra-busqueda input {
+  .barra-busqueda select{
     width: 100%;
     margin-right: 0;
     margin-bottom: 8px;
@@ -466,7 +465,6 @@ body {
   outline-offset: 3px;
 }
 
-.barra-busqueda input:focus,
 .barra-busqueda select:focus {
   box-shadow: 0 0 0 3px rgba(74, 85, 104, 0.1);
 }

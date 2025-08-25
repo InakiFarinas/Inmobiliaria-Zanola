@@ -13,12 +13,14 @@
         <p>Explora propiedades exclusivas y encuentra el espacio perfecto para tu vida.</p>
         
         <!-- Barra de Búsqueda -->
-        <form class="barra-busqueda" action="propiedades.php" method="GET">
-          <input type="text" name="ubicacion" placeholder="Ubicación..." required>
-          <select name="tipo" required>
-            <option value="" disabled selected>Seleccionar...</option>
-            <option value="comprar">Comprar</option>
-            <option value="alquilar">Alquilar</option>
+        <form id="form-busqueda" class="barra-busqueda" method="GET">
+          <select name="ciudad" id="ciudad-select">
+            <option value="">Todas las ciudades</option>
+            <!-- Opciones cargadas por JS -->
+          </select>
+          <select name="estado" id="estado-select">
+            <option value="">Seleccionar...</option>
+            <!-- Opciones cargadas por JS -->
           </select>
           <button type="submit" class="btn-buscar">Buscar</button>
         </form>
@@ -62,5 +64,18 @@
 
   <?php include('includes/footer.php'); ?>
   <script src="../public/js/propiedades/cargarPropiedades.js"></script>
+  <script src="../public/js/propiedades/cargarEstados.js"></script>
+  <script src="../public/js/propiedades/cargarCiudades.js"></script>
 </body>
+<script>
+  document.getElementById('form-busqueda').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const ciudad = document.getElementById('ciudad-select').value;
+    const estado = document.getElementById('estado-select').value;
+    
+    // redirigimos a propiedades.php con los filtros
+    window.location.href = `propiedades.php?ciudad=${encodeURIComponent(ciudad)}&estado=${encodeURIComponent(estado)}`;
+  });
+</script>
 </html>
