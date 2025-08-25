@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=Alexandria:wght@100..900&family=Almarai:wght@300;400;700;800&family=Arimo:ital,wght@0,400..700;1,400..700&family=Bebas+Neue&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+/*Transicion gloval*/
+* {
+  transition: all 0.3s ease-in-out;
+}
 /* CONTENEDOR GENERAL */
 #detalle-propiedad {
   padding: 30px 40px;
@@ -8,9 +14,50 @@
   min-width: 100%;
 }
 
+/*TITULO (ubicacion)*/
+h1
+{
+   font-family: "Inter", sans-serif;
+   font-optical-sizing: auto;
+margin-top: -24px;
+   font-weight: 700;
+     padding-top: 2px;
+}
 
 
-/* GALERÍA */
+
+ /* descripcion de la propiedad */
+h2 {
+   font-family: "Inter", sans-serif;
+   font-optical-sizing: auto;
+   margin-bottom: 5px; 
+   font-weight: 700;
+   display: inline-block; 
+   border-bottom: 3px solid #222;
+   padding-bottom: 3px; 
+}
+
+p {
+  font-family: "Nunito Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 430;
+  font-size: 16px;
+  margin-top: 0;
+  text-shadow: 0 1px 9px rgba(69, 69, 69, 0.1);
+}
+
+p.precio {
+font-size: 22px;
+    font-family: "Lexend", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    color: #101010;
+    margin: 10px 0 20px 0;
+}
+
+
+
+  /* GALERÍA */
 .galeria-propiedad {
   display: flex;
   gap: 16px;
@@ -75,9 +122,8 @@
 
 /* INFO PRINCIPAL */
 .contenedor-informacion {
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  border: 2px solid #e2e8f0;
-  border-left: 5px solid #4b4b4b;
+  background: linear-gradient(135deg, #efefef 0%, #f8fafc 100%);
+  border: 2px solid #362e2e;
   border-radius: 12px;
   padding: 28px;
   margin: 25px 0;
@@ -88,6 +134,7 @@
 .col-izquierda {
   flex: 3;
 }
+
 
 .col-izquierda h1 {
   font-size: 24px;
@@ -110,24 +157,53 @@ hr {
 }
 
 /* FICHA TÉCNICA */
+/* Contenedor de todas las características */
 .caracteristicas-propiedad {
   display: flex;
+  justify-content: center;
+  gap: 20px;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 16px;
-  
+  margin: 30px 0;
 }
 
+/* Cada tarjeta (item) */
 .caracteristicas-propiedad .item {
-    font-size: 16px;
-  line-height: 1.7;
-  color: #444;
-  background: linear-gradient(135deg, #fff7e6, #ffe0b3);
-  border-left: 6px solid #0e0d0d;
+  flex: 1;
+  min-width: 160px;
+  max-width: 200px;
+  text-align: center;
+  background: #f9fafc;
+  border-radius: 12px;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  margin-bottom: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover efecto */
+.caracteristicas-propiedad .item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Ícono */
+.caracteristicas-propiedad .item i {
+  font-size: 30px;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+/* Label */
+.caracteristicas-propiedad .item .label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+/* Valor */
+.caracteristicas-propiedad .item .valor {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
 }
 
 /* PANEL DERECHO */
@@ -138,61 +214,6 @@ hr {
   gap: 20px;
 }
 
-/* PRECIO */
-.precio-box {
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.label-precio {
-  color: #727272;
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-.precio {
-  font-size: 24px;
-  font-weight: bold;
-  color: #000000;
-  margin: 0;
-}
-
-/* FORMULARIO */
-.formulario-consulta {
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.formulario-consulta h4 {
-  margin-bottom: 12px;
-  font-size: 16px;
-}
-
-.formulario-consulta textarea,
-.formulario-consulta input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-.formulario-consulta button {
-  background-color: #000000;
-  color: white;
-  padding: 12px;
-  width: 100%;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-}
 
 /* MODAL GALERÍA */
 .modal {
@@ -239,7 +260,7 @@ hr {
 
 .galeria-modal img {
   flex: 0 0 100%;
-  height: 90vh;
+  height: 100vh;
   object-fit: contain;
   scroll-snap-align: center;
   background: #000;
@@ -317,56 +338,18 @@ hr {
   cursor: pointer;
   border: 2px solid transparent;
   transition: 0.2s ease;
+      transition: transform 0.2s ease, border-color 0.3s ease, opacity 0.3s ease;
+
 }
 
 .miniatura.activa {
   opacity: 1;
   border-color: #000000;
 }
-
-.info-propiedad {
- background: linear-gradient(135deg, #ffffff, #ffffff);
-  border-left: 6px solid #000000;
-  padding: 20px 25px;
-  border-radius: 10px;
-  margin: 25px 0;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-.info-propiedad h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.precio-box {
-  background: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  margin: 20px 0;
-}
-
-.label-precio {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 5px;
-  display: block;
-}
-
-.precio {
-  font-size: 24px;
-  color: #000000;
-  font-weight: bold;
-}
-
-.btn-wpp-verde {
-  display: inline-block;
-  background-color: #25d366;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 6px;
-  font-weight: bold;
-  text-decoration: none;
-  margin-top: 15px;
+.miniatura:hover {
+  transform: scale(1.1);
+  opacity: 1;
+  border-color: #444;
 }
 
 /* Transicion suave de la imagen principal */
@@ -381,19 +364,75 @@ hr {
   padding-bottom: 5px;
 }
 
-.miniatura {
-  flex: 0 0 auto;
-}
+
 .direccion-principal {
   font-size: 28px;
-  font-weight: 500; /* menos grueso que bold (700) */
+  font-weight: 500; 
   margin-bottom: 8px;
   color: #222;
   line-height: 1.3;
 }
-.subinfo-propiedad {
-  font-size: 16px;
-  color: #666;
+
+/*MAPA*/
+#map {
+  width: 100%;
+  height: 250px;
   margin-bottom: 20px;
+  border-radius: 50px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12); /* Sombra suave */
+  overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.3s ease;
+}
+#map:hover {
+  transform: scale(1.02); /* zoom suave */
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
 }
 
+/* Animación de entrada para la galería */
+.galeria-propiedad img {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+/* Estilos para el carrusel */
+.flecha-carrusel {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, #fff 60%, #e0e7ff 100%);
+  color: #939393;
+  border: 2px solid #939393;
+  font-size: 2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+
+.flecha-carrusel.izquierda { left: 14px; }
+.flecha-carrusel.derecha { right: 14px; }
+
+.flecha-carrusel:hover {
+  background: linear-gradient(135deg, #e8efff 60%, #efefff 100%);
+  color: #fff;
+  border-color: #cfcfcf;
+  box-shadow: 0 8px 24px rgba(92, 92, 92, 0.22);
+  transform: translateY(-50%) scale(1.08);
+}
+.imagen-grande { position: relative; }

@@ -20,7 +20,9 @@ if (imagenes.length > 0) {
   galeriaHtml = `
     <div class="galeria-preview">
       <div class="imagen-grande">
+        <button class="flecha-carrusel izquierda" onclick="moverCarrusel(-1)">&lt;</button>
         <img id="imagen-principal" src="/inmobiliaria/public/images/propiedades/${imgPrincipal}" alt="Imagen principal" />
+        <button class="flecha-carrusel derecha" onclick="moverCarrusel(1)">&gt;</button>
         <div class="contador-img" id="contador-img">1 / ${imagenes.length}</div>
       </div>
       <div class="miniaturas">
@@ -127,8 +129,15 @@ function abrirModal() {
 function cerrarModal() {
   document.getElementById('modal-galeria').style.display = 'none';
 }
-
-// Cambiar imagenes
+//carrusel 
+let indiceActual = 0;
+window.moverCarrusel = function(direccion) {
+  const imagenes = document.querySelectorAll('.miniatura');
+  indiceActual += direccion;
+  if (indiceActual < 0) indiceActual = imagenes.length - 1;
+  if (indiceActual >= imagenes.length) indiceActual = 0;
+  cambiarImagen(indiceActual);
+}
 window.cambiarImagen = function(indice) {
   const imagenes = document.querySelectorAll('.miniatura');
   const principal = document.getElementById('imagen-principal');
@@ -136,8 +145,7 @@ window.cambiarImagen = function(indice) {
   imagenes.forEach(img => img.classList.remove('activa'));
   imagenes[indice].classList.add('activa');
   principal.src = imagenes[indice].src;
-
-  // Actualizacion del contador
+  indiceActual = indice;
   const contador = document.getElementById('contador-img');
   if (contador) contador.textContent = `${indice + 1} / ${imagenes.length}`;
 }
