@@ -42,7 +42,12 @@
         </div>
         <button type="submit">Filtrar</button>
       </form>
-      <div id="propiedades-listado" class="contenedor-propiedades"></div>
+      <div id="propiedades-listado" class="contenedor-propiedades">
+        <!-- Al renderizar en la sección de propiedades -->
+        <div class="tarjeta-propiedades">
+          <!-- contenido de la propiedad -->
+        </div>
+      </div>
     </div>
   </main>
   <?php include("includes/footer.php"); ?>

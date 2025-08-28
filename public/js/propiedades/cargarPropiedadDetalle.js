@@ -61,15 +61,30 @@ if (imagenes.length > 0) {
         `;
       }
 
-      //mover imagenes 
-  
-
 
       // Render del contenido
       container.innerHTML = `
-        <h1 id="direccion">${prop.ciudad}, ${prop.calle} ${prop.altura}</h1>
-        ${galeriaHtml}
-        <p class="precio">${prop.estado} $${prop.precio}</p>
+      <div class="galeria-y-detalle">
+    <div class="galeria-preview">
+      ${galeriaHtml}
+    </div>
+      <div class="detalle-derecha">
+  <div id="direccion" class="titulo-direccion">${prop.ciudad}, ${prop.calle} ${prop.altura}</div>   
+  <p class="precio">${prop.estado} $${prop.precio}</p>
+  <section class="descripcion">
+    <div class="titulo-descripcion">Descripción</div>
+    <p>${prop.descripcion}</p>
+    <a
+      href="https://wa.me/5491123456789?text=${encodeURIComponent('¡Hola villafañe propiedades, me interesa la propiedad ' + prop.ciudad + ', ' + prop.calle + ' ' + prop.altura + ', necesitaría más info! Gracias!')}"
+      target="_blank"
+      class="btn-whatsapp"
+    >
+      Consultar por WhatsApp
+    </a>
+  </section>    
+</div> 
+  </div>
+              <section class="tarjetas">
         <div class="caracteristicas-propiedad">
           <div class="item">
             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-building"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l18 0" /><path d="M9 8l1 0" /><path d="M9 12l1 0" /><path d="M9 16l1 0" /><path d="M14 8l1 0" /><path d="M14 12l1 0" /><path d="M14 16l1 0" /><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /></svg>
@@ -100,11 +115,10 @@ if (imagenes.length > 0) {
             <span>${prop.antiguedad} años</span>
           </div>
         </div>
-        <section class= "descripcion">
-          <h2>Descripción</h2>
-          <p>${prop.descripcion}</p>
-        </section>
+         </section>    
+       
       `;
+      setTimeout(cargarMapa, 0);
       cargarMapa();
       // Listener para cerrar modal al click afuera
       const modal = document.getElementById('modal-galeria');
