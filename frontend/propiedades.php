@@ -5,7 +5,7 @@
 <body>
   <?php include("includes/header.php"); ?>
   <main>
-    <h1>Listado de Propiedades</h1>
+    <h1 class="titulopropiedades">Listado de Propiedades</h1>
     <div class="contenido-flex">
       <form id="form-filtros" method="get" class="filtros">
         <select name="tipo" id="tipo-select">
