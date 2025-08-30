@@ -29,7 +29,8 @@ display: flex;
 
 /* Footer columns */
 .footer-col {
-  flex: 1 1 220px;
+flex: 1 1 220px;
+  max-width: 300px;          
   
 }
 .footer-col h2,
