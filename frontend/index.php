@@ -54,7 +54,7 @@
     <section class="novedades-index">
       <div class="tarjeta-index">
       <h2 class="seccion-titulo">Nuestras Últimas Propiedades</h2>
-      <div id="propiedades-listado" class="contenedor-propiedades">
+      <div id="propiedades-ultimas" class="contenedor-propiedades">
         </div>
       </div>
       <div class="ver-mas-propiedades">

@@ -47,7 +47,7 @@
       </div>
 
       <div class="form-group">
-        <input type="number" name="baños" placeholder="Baños" class="form-input">
+        <input type="number" name="banos" placeholder="Baños" class="form-input">
       </div>
 
       <div class="form-group">

@@ -9,9 +9,9 @@ class PropiedadRepositorio {
         $conexion = Conexion::obtenerConexion();
 
         $stmt = $conexion->prepare("INSERT INTO propiedades 
-            (calle, altura, precio, estado, tipo, ambientes,dormitorios, garaje, baños, descripcion,superficie,antiguedad, id_ciudad) 
+            (calle, altura, precio, estado, tipo, ambientes,dormitorios, garaje, banos, descripcion,superficie,antiguedad, id_ciudad) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssdssiiiiiisi", $calle, $altura, $precio, $estado, $tipo, $ambientes,$dormitorios, $garaje, $banos, $descripcion,$superficie,$antiguedad, $id_ciudad);
+        $stmt->bind_param("ssissiiiisisi", $calle, $altura, $precio, $estado, $tipo, $ambientes,$dormitorios, $garaje, $banos, $descripcion,$superficie,$antiguedad, $id_ciudad);
         $stmt->execute();
 
         return $conexion->insert_id;
@@ -54,6 +54,29 @@ class PropiedadRepositorio {
         $resultado = $stmt->get_result();
         return $resultado->fetch_assoc();
     }
+    public static function listarUltimas($limite = 5) {
+        $conexion = Conexion::obtenerConexion();
+        $query = "SELECT p.*, c.nombre AS ciudad 
+                FROM propiedades p
+                JOIN ciudades c ON p.id_ciudad = c.id_ciudad
+                ORDER BY p.id_propiedad DESC 
+                LIMIT ?";
+        $stmt = $conexion->prepare($query);
+        $stmt->bind_param("i", $limite);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $propiedades = [];
+        while ($fila = $resultado->fetch_assoc()) {
+            $imagenes = [];
+            $resImg = $conexion->query("SELECT ruta_imagen FROM imagenes_propiedad WHERE id_propiedad = {$fila['id_propiedad']}");
+            while ($img = $resImg->fetch_assoc()) {
+                $imagenes[] = $img['ruta_imagen'];
+            }
+            $fila['imagenes'] = $imagenes;
+            $propiedades[] = $fila;
+        }
+        return $propiedades;
+    }
     public static function listarFiltradas($filtros) {
     $conexion = Conexion::obtenerConexion();
 
@@ -70,7 +93,7 @@ class PropiedadRepositorio {
         'ambientes' => ['campo' => 'p.ambientes', 'tipo' => 'i'],
         'dormitorios' => ['campo' => 'p.dormitorios', 'tipo' => 'i'],
         'garaje' => ['campo' => 'p.garaje', 'tipo' => 'i'],
-        'baños' => ['campo' => 'p.baños', 'tipo' => 'i'],
+        'banos' => ['campo' => 'p.banos', 'tipo' => 'i'],
         'antiguedad' => ['campo' => 'p.antiguedad', 'tipo' => 'i'],
         'superficie_min' => ['campo' => 'p.superficie >=', 'tipo' => 'i'],
         'superficie_max' => ['campo' => 'p.superficie <=', 'tipo' => 'i'],
