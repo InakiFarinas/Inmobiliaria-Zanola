@@ -23,7 +23,7 @@ class PropiedadServicio {
         $ambientes = isset($datos['ambientes']) ? (int)$datos['ambientes'] : 0;
         $dormitorios = isset($datos['dormitorios']) ? (int)$datos['dormitorios'] : 0;
         $garaje = isset($datos['garaje']) && $datos['garaje'] ? 1 : 0;
-        $banos = isset($datos['baños']) ? (int)$datos['baños'] : 0;
+        $banos = isset($datos['banos']) ? (int)$datos['banos'] : 0;
         $descripcion = $datos['descripcion'] ?? '';
         $superficie = $datos['superficie'];
         $antiguedad = $datos['antiguedad'];
@@ -50,8 +50,11 @@ class PropiedadServicio {
 
         return $propiedad;
     }
+    public function obtenerUltimas($limite = 5) {
+        return PropiedadRepositorio::listarUltimas($limite);
+    }
     public function obtenerFiltradas($filtros) {
-    return PropiedadRepositorio::listarFiltradas($filtros);
+        return PropiedadRepositorio::listarFiltradas($filtros);
     }
     public function obtenerPropiedades() {
         return PropiedadRepositorio::listarTodas();

@@ -1,52 +1,52 @@
-function cargarPropiedades(url = '/inmobiliaria/backend/controladores/obtenerPropiedad.php') {
+function cargarPropiedades(url = '/inmobiliaria/backend/controladores/obtenerPropiedad.php', targetId = 'propiedades-listado') {
   fetch(url)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
-      }
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
       return response.text();
     })
     .then((text) => {
-      const cleanText = text.trim(); // elimina espacios extra
-
+      const cleanText = text.trim();
       if (cleanText === '') {
         console.warn('Respuesta vacía del servidor.');
-        renderizarPropiedades([]); // no rompe, solo lista vacío
+        renderizarPropiedades([], targetId);
         return;
       }
-
       try {
         const data = JSON.parse(cleanText);
-        renderizarPropiedades(data);
+        renderizarPropiedades(data, targetId);
       } catch (e) {
         console.error('Respuesta no es JSON válido:\n', cleanText);
-        // Mostramos error en el listado en vez de un alert
-        const contenedor = document.getElementById('propiedades-listado');
-        contenedor.innerHTML = `<p style="color:red;">Error en la respuesta del servidor. Ver consola.</p>`;
+        const contenedor = document.getElementById(targetId);
+        if (contenedor) contenedor.innerHTML = `<p style="color:red;">Error en la respuesta del servidor. Ver consola.</p>`;
       }
     })
     .catch((error) => {
       console.error('Error al cargar propiedades:', error);
-      const contenedor = document.getElementById('propiedades-listado');
-      contenedor.innerHTML = `<p style="color:red;">Error al cargar propiedades: ${error.message}</p>`;
+      const contenedor = document.getElementById(targetId);
+      if (contenedor) contenedor.innerHTML = `<p style="color:red;">Error al cargar propiedades: ${error.message}</p>`;
     });
 }
 
-function renderizarPropiedades(data) {
-  const contenedor = document.getElementById('propiedades-listado');
+function cargarUltimasPropiedades(targetId = 'propiedades-ultimas', limite = 5) {
+  const url = `/inmobiliaria/backend/controladores/obtenerPropiedad.php?ultimas=${limite}`;
+  cargarPropiedades(url, targetId);
+}
+
+function renderizarPropiedades(data, targetId = 'propiedades-listado') {
+  const contenedor = document.getElementById(targetId);
+  if (!contenedor) return;
+
   contenedor.innerHTML = '';
 
   data.forEach((prop) => {
     const div = document.createElement('div');
     div.className = 'tarjeta-propiedad';
 
-    // Si hay solo una imagen
     let imagenPrincipal = '';
     if (prop.imagenes && prop.imagenes.length === 1) {
       imagenPrincipal = `<img src="/inmobiliaria/public/images/propiedades/${prop.imagenes[0]}" alt="Imagen de propiedad" class="imagen-base" />`;
     }
 
-    // Si hay más de una imagen, preparamos el carrusel fuera del enlace
     let carruselHtml = '';
     if (prop.imagenes && prop.imagenes.length > 1) {
       carruselHtml = `
@@ -54,9 +54,7 @@ function renderizarPropiedades(data) {
           ${prop.imagenes
             .map(
               (img, i) => `
-            <img src="/inmobiliaria/public/images/propiedades/${img}" 
-                class="imagen-base carousel-img${i === 0 ? ' active' : ''}" 
-                alt="Imagen de propiedad ${i + 1}">
+            <img src="/inmobiliaria/public/images/propiedades/${img}" class="imagen-base carousel-img${i === 0 ? ' active' : ''}" alt="Imagen de propiedad ${i + 1}">
           `
             )
             .join('')}
@@ -66,7 +64,6 @@ function renderizarPropiedades(data) {
       `;
     }
 
-    // Ahora el innerHTML del div, el <a> solo con texto + imagenPrincipal (si hay)
     div.innerHTML = `
       <a href="/inmobiliaria/frontend/propiedad.php?id=${prop.id_propiedad}" class="enlace-propiedad">
         ${imagenPrincipal} ${carruselHtml}
@@ -80,16 +77,11 @@ function renderizarPropiedades(data) {
     contenedor.appendChild(div);
   });
 
-  // Código para activar los botones del carrusel sin que disparen la navegación
+  // Activar carrusel
   document.querySelectorAll('.carousel').forEach((carousel) => {
     const imgs = carousel.querySelectorAll('.carousel-img');
     let index = 0;
-
-    const showImage = (i) => {
-      imgs.forEach((img, idx) => {
-        img.classList.toggle('active', idx === i);
-      });
-    };
+    const showImage = (i) => imgs.forEach((img, idx) => img.classList.toggle('active', idx === i));
 
     carousel.querySelector('.carousel-next').addEventListener('click', (e) => {
       e.preventDefault();
@@ -109,37 +101,33 @@ function renderizarPropiedades(data) {
   });
 }
 
-// Cargar todas al iniciar
 document.addEventListener('DOMContentLoaded', function () {
-  // Si hay parámetros en la URL (ej: ciudad, estado, etc.)
-  const params = new URLSearchParams(window.location.search);
+  cargarUltimasPropiedades('propiedades-ultimas', 5);
 
-  let url = '/inmobiliaria/backend/controladores/obtenerPropiedad.php';
-  if ([...params].length > 0) {
-    url += '?' + params.toString();
+  const params = new URLSearchParams(window.location.search); // <-- esto faltaba
+  const filtroParams = new URLSearchParams();
+  for (const [key, value] of params) {
+    if (key !== 'ultimas') {
+      filtroParams.append(key, value);
+    }
   }
 
-  // Carga propiedades con filtros si existen
-  cargarPropiedades(url);
+  if ([...filtroParams].length > 0) {
+    const url = '/inmobiliaria/backend/controladores/obtenerPropiedad.php?' + filtroParams.toString();
+    cargarPropiedades(url); // carga con filtros
+  }
 
-  // Prellenar el formulario de filtros si está en la página
   const form = document.getElementById('form-filtros');
   if (form) {
-    params.forEach((value, key) => {
+    filtroParams.forEach((value, key) => {
       const input = form.elements[key];
       if (input) input.value = value;
     });
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-
       const newParams = new URLSearchParams(new FormData(form));
-
-      // Actualizar la URL visible sin recargar
-      const newUrl = window.location.pathname + '?' + newParams.toString();
-      window.history.pushState({}, '', newUrl);
-
-      // Llamar de nuevo a la carga
+      window.history.pushState({}, '', window.location.pathname + '?' + newParams.toString());
       cargarPropiedades('/inmobiliaria/backend/controladores/obtenerPropiedad.php?' + newParams.toString());
     });
   }

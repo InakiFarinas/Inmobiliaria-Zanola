@@ -1,7 +1,17 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../servicios/PropiedadServicio.php';
+
 $propiedad = new PropiedadServicio();
+
+// Si viene el parámetro ultimas, devolvemos esa cantidad de últimas propiedades
+if (isset($_GET['ultimas']) && is_numeric($_GET['ultimas'])) {
+    $limite = (int) $_GET['ultimas'];
+    echo json_encode($propiedad->obtenerUltimas($limite));
+    exit;
+}
+
+// Caso normal: filtros
 $filtros = [
     'ciudad' => $_GET['ciudad'] ?? null,
     'tipo' => $_GET['tipo'] ?? null,
@@ -16,4 +26,5 @@ $filtros = [
     'precio_min' => $_GET['precio_min'] ?? null,
     'precio_max' => $_GET['precio_max'] ?? null,
 ];
+
 echo json_encode($propiedad->obtenerFiltradas($filtros));

@@ -42,16 +42,16 @@ INSERT INTO `ciudades` (`id_ciudad`, `nombre`) VALUES
 -- Tabla: propiedades
 CREATE TABLE `propiedades` (
   `id_propiedad` INT(11) NOT NULL AUTO_INCREMENT,
-  `calle` VARCHAR(100) NOT NULL,
+  `calle` VARCHAR(50) NOT NULL,
   `altura` VARCHAR(10) NOT NULL,
-  `precio` DECIMAL(12,2) NOT NULL,
+  `precio` INT(11) NOT NULL,
   `estado` ENUM('Venta','Alquiler') NOT NULL,
   `tipo` ENUM('Casa','Departamento','Terreno','Local') NOT NULL,
   `ambientes` INT(11) DEFAULT 0,
   `dormitorios` INT(11) DEFAULT 0,
   `garaje` TINYINT(1) DEFAULT 0,
-  `baños` INT(11) DEFAULT 0,
-  `descripcion` TEXT DEFAULT NULL,
+  `banos` INT(11) DEFAULT 0,
+  `descripcion` VARCHAR(255) DEFAULT NULL,
   `fecha_publicacion` DATE DEFAULT CURDATE(),
   `superficie` INT(11) NOT NULL,
   `antiguedad` INT(11) NOT NULL, /* en años */
