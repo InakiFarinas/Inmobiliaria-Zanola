@@ -70,6 +70,7 @@ if (imagenes.length > 0) {
     </div>
       <div class="detalle-derecha">
   <div id="direccion" class="titulo-direccion">${prop.ciudad}, ${prop.calle} ${prop.altura}</div>   
+  <p class="preciopag">${prop.estado} $${prop.precio}</p>
   <p class="precio">${prop.estado} $${prop.precio}</p>
   <section class="descripcion">
     <div class="titulo-descripcion">Descripción</div>

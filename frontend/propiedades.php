@@ -42,9 +42,9 @@
         </div>
         <button type="submit">Filtrar</button>
       </form>
-      <div id="propiedades-listado" class="contenedor-propiedades">
+      <div id="propiedades-listado" class="contenedor-propiedad">
         <!-- Al renderizar en la sección de propiedades -->
-        <div class="tarjeta-propiedades">
+        <div class="tarjeta-propiedad">
           <!-- contenido de la propiedad -->
         </div>
       </div>
