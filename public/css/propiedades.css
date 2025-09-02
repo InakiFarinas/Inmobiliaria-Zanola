@@ -9,6 +9,8 @@ body {
 }
 
 
+
+
 .titulopropiedades {
   text-align: center;
 font-family: "Nunito Sans", sans-serif;
@@ -88,76 +90,95 @@ font-family: "Nunito Sans", sans-serif;
 /* CONTENEDOR DE TODAS LAS TARJETAS */
 .contenedor-propiedad {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 32px;
   padding: 24px 0;
   width: 100%;
+  align-items: stretch;
+}
+
+.enlace-propiedad {
+  text-decoration: none;
 }
 
 /* TARJETA DE PROPIEDAD */
 .tarjeta-propiedad {
-  background: #fbfbfb;
-  border-radius: 18px;
-  box-shadow: 0 6px 32px rgba(74,58,255,0.09);
-  overflow: hidden;
-  transition: box-shadow 0.3s, transform 0.3s;
+    background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  border: 1px solid #eaeaff;
   display: flex;
   flex-direction: column;
-  border: 1.5px solid #f0f0ff;
+  font-family: "Inter", sans-serif;
+  transition: transform 0.3s ease;
+  height: auto;
+  overflow: hidden;
+  padding-bottom: 10px;
 }
+
 
 .tarjeta-propiedad:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 16px 40px rgba(74,58,255,0.13);
-  border-color: #d1d1ff;
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
-
-
-/* INFO DE LA PROPIEDAD */
-.info-propiedad {
-  flex: 1;
-  padding: 18px 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-}
-
-.info-propiedad h3 {
-  margin: 0 0 8px 0;
-  padding: 24px 22px 18px 22px;
-  font-size: 1.15rem;
-  font-weight: 700;
+.tarjeta-propiedad h3 {
+ font-size: 15px;
+  font-weight: 600;
   color: #222;
-  letter-spacing: 0.5px;
-}
-
-.info-propiedad .ubicacion {
-  font-size: 0.97rem;
-  padding: 24px 22px 18px 22px;
-  color: #666;
-  margin-bottom: 6px;
-}
-
-.info-propiedad .detalles {
+  margin: 4px 16px 0;
   display: flex;
-  padding: 24px 22px 18px 22px;
-  flex-wrap: wrap;
-  gap: 14px;
-  font-size: 0.95rem;
-  color: #444;
-  margin-bottom: 8px;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.3;
 }
 
-.preciopag{
-font-size: 1.15rem;
-  font-weight: 700;
-  color: #0256ff;
-  margin: 16px;
-  padding: 24px 22px 18px 22px;
-  margin-bottom: 2px;
+.tarjeta-propiedad p {
+  margin: 4px 16px 12px;
+  color: #555;
+   font-size: 18px;
+  line-height: 25px;
+  overflow: hidden;
+  justify-content: flex-start;
+  text-overflow: ellipsis;
+  display: -webkit-box;
 }
+
+.tarjeta-detalles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 16px;
+}
+
+
+
+.precio-tarjeta{
+  font-size: 20px;
+  font-weight: 700;
+  color: #000000;
+ margin: 0 16px 8px;
+}
+.Estado{
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #888686;
+  padding: 4px;
+  border-radius: 6px;
+     margin: 6px 16px 2px;
+}
+
+.tarjeta-detalles p {
+font-size: 13px;
+  color: #333;
+  background-color: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin: 0;
+  white-space: nowrap;
+}
+
 
 /* Responsive */
 @media (max-width: 900px) {
@@ -260,18 +281,6 @@ body, html {
 }
 
 
-.tarjeta-propiedad h3 {
-  margin: 16px;
-  font-size: 18px;
-  color: #222;
-}
-
-.tarjeta-propiedad p {
-  margin: 4px 16px 12px;
-  font-size: 14px;
-  color: #555;
-}
-
 .tarjeta-propiedad:hover {
   transform: translateY(-6px);
   box-shadow: 0 8px 20px rgba(0,0,0,0.12);
@@ -313,11 +322,7 @@ body, html {
 }
 
 /* Ubicación */
-.ubicacion {
-  margin: 0;
-  font-size: 14px;
-  color: #666;
-}
+
 /* Features */
 .detalles {
   display: flex;
@@ -328,6 +333,5 @@ body, html {
 }
 .carousel.horizontal-carousel button.prev { left: 10px; }
 .carousel.horizontal-carousel button.next { right: 10px; }
-
 
 

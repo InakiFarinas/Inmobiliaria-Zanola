@@ -27,7 +27,8 @@ function cargarPropiedades(url = '/inmobiliaria/backend/controladores/obtenerPro
     });
 }
 
-function cargarUltimasPropiedades(targetId = 'propiedades-ultimas', limite = 5) {
+function cargarUltimasPropiedades(targetId = 'propiedades-ultimas', limite = 5
+) {
   const url = `/inmobiliaria/backend/controladores/obtenerPropiedad.php?ultimas=${limite}`;
   cargarPropiedades(url, targetId);
 }
@@ -65,14 +66,27 @@ function renderizarPropiedades(data, targetId = 'propiedades-listado') {
     }
 
     div.innerHTML = `
-      <a href="/inmobiliaria/frontend/propiedad.php?id=${prop.id_propiedad}" class="enlace-propiedad">
-        ${imagenPrincipal} ${carruselHtml}
-        <h3><img src="/inmobiliaria/public/images/icons/ubicacion.png" alt="Ubicacion" class="icono-ubicacion"/> ${prop.ciudad}, ${prop.calle} ${prop.altura}</h3>
-        <p class="precio">$${prop.precio}</p>
-        <p class="estado">Estado: ${prop.estado}</p>
-        <p class="tipo">Tipo: ${prop.tipo}</p>
-      </a>
+  <a href="/inmobiliaria/frontend/propiedad.php?id=${prop.id_propiedad}" class="enlace-propiedad">
+    <div class="imagen-con-etiqueta">
+      ${imagenPrincipal} ${carruselHtml}
+    </div>
+              <div class="Estado">${prop.estado}</div>
+          <div class="precio-tarjeta"> $${prop.precio.toLocaleString('es-AR')}</div>
+    <h3><img src="/inmobiliaria/public/images/icons/ubicacion.png" alt="Ubicacion" class="icono-ubicacion"/> ${prop.ciudad}, ${prop.calle} ${prop.altura}</h3>
+    <div class="tarjeta-detalles">
+  <p class="tipo"><i class="fas fa-home"></i> ${prop.tipo.length > 5 ? prop.tipo.substring(0, 5) + '...' : prop.tipo}</p>
+  <p class="dormitorios"><i class="fas fa-bed"></i> ${prop.dormitorios}</p>
+  <p class="ambientes"><i class="fas fa-th-large"></i> ${prop.ambientes} Amb.</p>
+  <p class="superficie"><i class="fas fa-ruler-combined"></i> ${prop.superficie} m²</p>
+
+</div>
+<div class="descripcion-tarjetalista">
+  <p class="descripcion">${prop.descripcion.length > 100 ? prop.descripcion.substring(0, 100) + '...' : prop.descripcion}</p>
+</div>
+  </a>
+
     `;
+    
 
     contenedor.appendChild(div);
   });
@@ -132,3 +146,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+ //guarda el link de la propiedad
+function guardarPropiedad(id) {
+  const url = `/inmobiliaria/frontend/propiedad.php?id=${id}`;
+  navigator.clipboard.writeText(window.location.origin + url)
+}

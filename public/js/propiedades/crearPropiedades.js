@@ -19,7 +19,7 @@ document.getElementById('form-crear-propiedad').addEventListener('submit', funct
     }
   })
   .catch(err => {
-    console.error('Error en fetch:', err);
+    console.error('Error en fetch:',err);
     alert('Error al crear la propiedad');
   });
 });

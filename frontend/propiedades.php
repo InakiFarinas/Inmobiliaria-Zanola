@@ -4,6 +4,7 @@
 <?php include("includes/head.php"); ?>
 <body>
   <?php include("includes/header.php"); ?>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <main>
     <h1 class="titulopropiedades">Listado de Propiedades</h1>
     <div class="contenido-flex">

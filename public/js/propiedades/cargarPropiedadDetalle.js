@@ -64,26 +64,37 @@ if (imagenes.length > 0) {
 
       // Render del contenido
       container.innerHTML = `
-      <div class="galeria-y-detalle">
+       <div class="galeria-y-detalle">
     <div class="galeria-preview">
       ${galeriaHtml}
     </div>
-      <div class="detalle-derecha">
-  <div id="direccion" class="titulo-direccion">${prop.ciudad}, ${prop.calle} ${prop.altura}</div>   
-  <p class="preciopag">${prop.estado} $${prop.precio}</p>
-  <p class="precio">${prop.estado} $${prop.precio}</p>
-  <section class="descripcion">
-    <div class="titulo-descripcion">Descripción</div>
-    <p>${prop.descripcion}</p>
-    <a
-      href="https://wa.me/5491123456789?text=${encodeURIComponent('¡Hola villafañe propiedades, me interesa la propiedad ' + prop.ciudad + ', ' + prop.calle + ' ' + prop.altura + ', necesitaría más info! Gracias!')}"
-      target="_blank"
-      class="btn-whatsapp"
-    >
-      Consultar por WhatsApp
-    </a>
-  </section>    
-</div> 
+    <div class="detalle-derecha">
+      <div id="direccion" class="titulo-direccion">
+        ${prop.ciudad}, ${prop.calle} ${prop.altura}
+      </div>   
+
+      <p class="precio">${prop.estado} $${prop.precio}</p>
+
+      <section class="descripcion">
+        <div class="titulo-descripcion">Descripción</div>
+        <p>${prop.descripcion}</p>
+      </section>
+
+      <div class="acciones-contacto">
+        <a
+          href="https://wa.me/5491123456789?text=${encodeURIComponent('¡Hola villafañe propiedades, me interesa la propiedad ' + prop.ciudad + ', ' + prop.calle + ' ' + prop.altura + ', necesitaría más info! Gracias!')}"
+          target="_blank"
+          class="btn-whatsapp"
+        >
+          Consultar por WhatsApp
+        </a>
+
+        <button class="btn-guardar-inline" onclick="guardarPropiedad(${prop.id_propiedad})">
+          <img src="/inmobiliaria/public/images/icons/compartir.png" alt="Compartir propiedad" class="icono-guardar-inline" />
+        </button>
+      </div>
+    </div>
+  </div>
   </div>
               <section class="tarjetas">
         <div class="caracteristicas-propiedad">
