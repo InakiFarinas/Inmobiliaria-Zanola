@@ -72,13 +72,15 @@ if (imagenes.length > 0) {
       <div id="direccion" class="titulo-direccion">
         ${prop.ciudad}, ${prop.calle} ${prop.altura}
       </div>   
-
-      <p class="precio">${prop.estado} $${prop.precio}</p>
-
       <section class="descripcion">
-        <div class="titulo-descripcion">Descripción</div>
+        <div class="titulo-descripcion"></div>
         <p>${prop.descripcion}</p>
       </section>
+   <div class="cuadro-precio">
+  <span class="etiqueta-precio">${prop.estado === 'Alquiler' ? 'PRECIO DE ALQUILER' : 'PRECIO DE VENTA'}</span>
+  <p class="precio">$${prop.precio.toLocaleString('es-AR')}</p>
+</div>
+
 
       <div class="acciones-contacto">
         <a
@@ -86,12 +88,8 @@ if (imagenes.length > 0) {
           target="_blank"
           class="btn-whatsapp"
         >
-          Consultar por WhatsApp
+         ¡Contactanos!
         </a>
-
-        <button class="btn-guardar-inline" onclick="guardarPropiedad(${prop.id_propiedad})">
-          <img src="/inmobiliaria/public/images/icons/compartir.png" alt="Compartir propiedad" class="icono-guardar-inline" />
-        </button>
       </div>
     </div>
   </div>

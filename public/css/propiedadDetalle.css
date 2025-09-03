@@ -46,7 +46,7 @@
  margin-bottom: -12px;
   margin-top: 10px;
 font-size: 30px;
-   font-weight: 700;
+   font-weight: 300;
      padding-top: 2px;
 }
 
@@ -71,14 +71,34 @@ p {
   text-shadow: 0 1px 9px rgba(69, 69, 69, 0.1);
 }
 
-p.precio {
-font-size: 22px;
-    font-family: "Lexend", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 700;
-    color: #000000;
-    margin: 10px 0 0px 0;
+.cuadro-precio {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 16px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  display: inline-block;
 }
+
+.etiqueta-precio {
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+}
+
+p.precio {
+  font-size: 24px;
+  font-family: "Lexend", sans-serif;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+}
+
 
   /* GALERÍA */
 
@@ -417,6 +437,7 @@ font-size: 22px;
 }
 
 @media (max-width: 600px) {
+  
   #detalle-propiedad {
     padding: 8px 2vw;
     font-size: 15px;
@@ -462,7 +483,46 @@ font-size: 22px;
     height: 120px;
     border-radius: 16px;
   }
+  .cuadro-precio {
+  padding: 12px 16px;
+  margin: 12px 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  font-size: 15px;
 }
+
+.etiqueta-precio {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+p.precio {
+  font-size: 20px;
+}
+  .detalle-derecha {
+    padding: 0 2vw;
+    max-width: 100%;
+  }
+
+  .titulo-direccion {
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+
+  .descripcion p {
+    font-size: 15px;
+    line-height: 1.4;
+  }
+   .acciones-contacto {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  
+
+}
+
+
 
 /* Evita overflow horizontal */
 body, html {
@@ -477,21 +537,10 @@ body, html {
   margin-top: 16px;
 }
 
-.btn-guardar-inline {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.icono-guardar-inline {
-  width: 30px;
-  height: 30px;
-}
 .btn-whatsapp {
   display: inline-block;
-  margin-top: 18px;
-  padding: 12px 28px;
+  margin-top: -22px;
+  padding: 10px 20px;
   background: #25d366;
   color: #fff;
   font-weight: 700;

@@ -137,13 +137,22 @@ document.addEventListener('DOMContentLoaded', function () {
       const input = form.elements[key];
       if (input) input.value = value;
     });
+    //Boton filtro reiniciar y filtrar
+const resetBtn = document.getElementById('reset-filtros');
+if (resetBtn) {
+  resetBtn.addEventListener('click', () => {
+    form.reset();
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const newParams = new URLSearchParams(new FormData(form));
-      window.history.pushState({}, '', window.location.pathname + '?' + newParams.toString());
-      cargarPropiedades('/inmobiliaria/backend/controladores/obtenerPropiedad.php?' + newParams.toString());
+    // Reiniciar selects dinámicos si es necesario
+    form.querySelectorAll('select').forEach(select => {
+      select.selectedIndex = 0;
     });
+
+    // Limpiar la URL y recargar sin filtros
+    window.history.pushState({}, '', window.location.pathname);
+    cargarPropiedades(); // sin parámetros
+  });
+}
   }
 });
  //guarda el link de la propiedad
@@ -151,3 +160,4 @@ function guardarPropiedad(id) {
   const url = `/inmobiliaria/frontend/propiedad.php?id=${id}`;
   navigator.clipboard.writeText(window.location.origin + url)
 }
+

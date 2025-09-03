@@ -41,7 +41,10 @@
           <input type="number" id="superficie-min" name="superficie_min" placeholder="Superficie Mínima">
           <input type="number" id="superficie-max" name="superficie_max" placeholder="Superficie Máxima">
         </div>
-        <button type="submit">Filtrar</button>
+    <div class="botones-filtros">
+  <button type="submit">Filtrar</button>
+  <button type="button" id="reset-filtros">Borrar filtros</button>
+</div>
       </form>
       <div id="propiedades-listado" class="contenedor-propiedad">
         <!-- Al renderizar en la sección de propiedades -->
