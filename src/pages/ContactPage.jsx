@@ -141,30 +141,36 @@ export default function ContactPage() {
 				</form>
 
 				<aside className="contact-card contact-info">
-					<h2>Informacion de contacto</h2>
+					<h2>Información de contacto</h2>
 					<ul className="contact-info-list">
 						<li>
 							<span className="info-icon" aria-hidden="true">
-								📍
+								<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+									<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
+								</svg>
 							</span>
 							<div>
-								<strong>Direccion</strong>
-								<p>25 de Mayo 372, Moron</p>
+								<strong>Dirección</strong>
+								<p>25 de Mayo 372, Morón</p>
 								<small>Buenos Aires</small>
 							</div>
 						</li>
 						<li>
 							<span className="info-icon" aria-hidden="true">
-								📞
+								<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+									<path d="M6.6 10.2a15.05 15.05 0 006.2 6.2l1.8-1.8a1 1 0 011.1-.2c.5.2 1 .3 1.6.3a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h2.2a1 1 0 011 1c0 .6.1 1.1.3 1.6a1 1 0 01-.2 1.1L6.6 10.2z" />
+								</svg>
 							</span>
 							<div>
-								<strong>Telefono</strong>
+								<strong>Teléfono</strong>
 								<p>(011) 4489-0000</p>
 							</div>
 						</li>
 						<li>
 							<span className="info-icon" aria-hidden="true">
-								✉️
+								<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+									<path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm2 .5l8 5 8-5V6l-8 5-8-5v.5z" />
+								</svg>
 							</span>
 							<div>
 								<strong>Email</strong>
