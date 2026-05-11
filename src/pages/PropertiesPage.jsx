@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import PropertyCard from "../components/PropertyCard";
-import PropertyFilters from "../components/PropertyFilters";
+import PropertyCard from "../components/properties/PropertyCard";
+import PropertyFilters from "../components/properties/PropertyFilters";
 import {
 	getCities,
 	getProperties,

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import PropertyGallery from "../components/PropertyGallery";
-import PropertyMap from "../components/PropertyMap";
+import PropertyGallery from "../components/properties/PropertyGallery";
+import PropertyMap from "../components/properties/PropertyMap";
 import { WHATSAPP_PROPERTY_URL } from "../config/contact";
 import { getPropertyById } from "../lib/api";
 

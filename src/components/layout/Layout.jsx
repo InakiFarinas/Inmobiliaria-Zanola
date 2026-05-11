@@ -1,12 +1,12 @@
 import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
-import WhatsAppIcon from "./icons/WhatsAppIcon";
+import WhatsAppIcon from "../icons/WhatsAppIcon";
 import {
 	WHATSAPP_URL,
 	PHONE_NUMBER,
 	PHONE_LINK,
 	EMAIL,
-} from "../config/contact";
+} from "../../config/contact";
 
 export default function Layout({ children }) {
 	const [menuOpen, setMenuOpen] = useState(false);

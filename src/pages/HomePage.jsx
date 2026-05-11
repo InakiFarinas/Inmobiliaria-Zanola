@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import PropertyCard from "../components/PropertyCard";
+import PropertyCard from "../components/properties/PropertyCard";
 import { getCities, getLatestProperties, getPropertyStates } from "../lib/api";
 import { WHATSAPP_URL } from "../config/contact";
 
