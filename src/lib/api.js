@@ -11,6 +11,7 @@ const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "").replace(
 	/\/$/,
 	"",
 );
+const HAS_API = Boolean(API_BASE_URL);
 
 function buildUrl(path, params) {
 	const url = new URL(`${API_BASE_URL}${path}`, window.location.origin);
@@ -49,6 +50,10 @@ export function normalizeProperty(property) {
 }
 
 export async function getLatestProperties(limit = 5) {
+	if (!HAS_API) {
+		return mockProperties.slice(0, limit).map(normalizeProperty);
+	}
+
 	try {
 		const data = await fetchJson("/controladores/obtenerPropiedad.php", {
 			ultimas: limit,
@@ -64,16 +69,18 @@ export async function getLatestProperties(limit = 5) {
 }
 
 export async function getProperties(filters = {}) {
-	try {
-		const data = await fetchJson(
-			"/controladores/obtenerPropiedad.php",
-			filters,
-		);
-		if (Array.isArray(data)) {
-			return data.map(normalizeProperty);
+	if (HAS_API) {
+		try {
+			const data = await fetchJson(
+				"/controladores/obtenerPropiedad.php",
+				filters,
+			);
+			if (Array.isArray(data)) {
+				return data.map(normalizeProperty);
+			}
+		} catch (error) {
+			console.warn("Using mock properties for list", error);
 		}
-	} catch (error) {
-		console.warn("Using mock properties for list", error);
 	}
 
 	const searchableFilters = {
@@ -161,15 +168,20 @@ export async function getProperties(filters = {}) {
 }
 
 export async function getPropertyById(id) {
-	try {
-		const data = await fetchJson("/controladores/obtenerPropiedadDetalle.php", {
-			id,
-		});
-		if (data && !data.error) {
-			return normalizeProperty(data);
+	if (HAS_API) {
+		try {
+			const data = await fetchJson(
+				"/controladores/obtenerPropiedadDetalle.php",
+				{
+					id,
+				},
+			);
+			if (data && !data.error) {
+				return normalizeProperty(data);
+			}
+		} catch (error) {
+			console.warn("Using mock property detail", error);
 		}
-	} catch (error) {
-		console.warn("Using mock property detail", error);
 	}
 
 	const mockProperty = getMockPropertyById(id);
@@ -180,6 +192,7 @@ export async function getPropertyById(id) {
 }
 
 export async function getCities() {
+	if (!HAS_API) return mockCities;
 	try {
 		const data = await fetchJson("/controladores/obtenerCiudades.php");
 		return Array.isArray(data) && data.length > 0 ? data : mockCities;
@@ -190,6 +203,7 @@ export async function getCities() {
 }
 
 export async function getPropertyTypes() {
+	if (!HAS_API) return mockTypes;
 	try {
 		const data = await fetchJson("/controladores/obtenerTipoPropiedad.php");
 		return Array.isArray(data) && data.length > 0 ? data : mockTypes;
@@ -200,6 +214,7 @@ export async function getPropertyTypes() {
 }
 
 export async function getPropertyStates() {
+	if (!HAS_API) return mockStates;
 	try {
 		const data = await fetchJson("/controladores/obtenerEstadosPropiedad.php");
 		return Array.isArray(data) && data.length > 0 ? data : mockStates;
