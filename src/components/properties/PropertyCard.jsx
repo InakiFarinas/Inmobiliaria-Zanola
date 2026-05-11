@@ -48,19 +48,19 @@ export default function PropertyCard({ property, featured = false }) {
 
 	return (
 		<article
-			className={`property-card ${featured ? "property-card-featured" : ""}`}
+			className={`property-card ${featured ? "property-card-featured" : ""} rounded-md bg-white shadow-site overflow-hidden transition-transform hover:-translate-y-1`}
 		>
-			<div className="property-image-wrap">
+			<div className="property-image-wrap overflow-hidden">
 				<Link
 					to={`/propiedad/${property.id_propiedad}`}
-					className="property-image-link"
+					className="property-image-link block"
 					aria-label={`Ver propiedad en ${property.ciudad}, ${property.calle}`}
 				>
 					{displayedImage ? (
 						<img
 							src={displayedImage}
 							alt={`Propiedad en ${property.ciudad}`}
-							className="property-image"
+							className="property-image w-full h-full object-cover"
 						/>
 					) : (
 						<div className="property-image placeholder">Sin imagen</div>
@@ -88,25 +88,45 @@ export default function PropertyCard({ property, featured = false }) {
 
 			<Link
 				to={`/propiedad/${property.id_propiedad}`}
-				className="property-card-body property-card-link"
+				className="property-card-body property-card-link block p-4"
 			>
-				<div className="property-price">{getPriceLabel(property)}</div>
-				<h3>
+				<div className="property-price text-2xl font-extrabold text-carbon">
+					{getPriceLabel(property)}
+				</div>
+				<h3 className="mt-2 text-lg font-bold">
 					{property.ciudad
 						? `${property.ciudad}, ${property.calle} ${property.altura}`
 						: property.calle}
 				</h3>
-				<div className="property-meta">
-					{property.ambientes ? <span>{property.ambientes} amb.</span> : null}
-					{property.superficie ? <span>{property.superficie} m²</span> : null}
-					{property.garaje ? <span>Cochera</span> : null}
-					{property.patio ? <span>Patio</span> : null}
+				<div className="property-meta mt-2 text-sm text-muted flex gap-3 flex-wrap">
+					{property.ambientes ? (
+						<span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5">
+							{property.ambientes} amb.
+						</span>
+					) : null}
+					{property.superficie ? (
+						<span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5">
+							{property.superficie} m²
+						</span>
+					) : null}
+					{property.garaje ? (
+						<span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5">
+							Cochera
+						</span>
+					) : null}
+					{property.patio ? (
+						<span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5">
+							Patio
+						</span>
+					) : null}
 				</div>
 				{property.descripcion ? (
-					<p className="property-summary">{property.descripcion}</p>
+					<p className="property-summary mt-3 text-sm text-muted">
+						{property.descripcion}
+					</p>
 				) : null}
 
-				<dl className="property-specs">
+				<dl className="property-specs mt-4 grid grid-cols-4 gap-3">
 					<div>
 						<dt>Tipo</dt>
 						<dd>{property.tipo}</dd>

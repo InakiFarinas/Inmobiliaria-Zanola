@@ -15,10 +15,16 @@ export default function Layout({ children }) {
 
 	return (
 		<div className="app-shell">
-			<header className="site-header">
-				<Link to="/" className="brand" aria-label="Zanola Inmobiliaria">
+			<header
+				className={`site-header bg-cazador text-white sticky top-0 z-20 grid grid-cols-[auto,1fr,auto] items-center gap-4 px-4`}
+			>
+				<Link
+					to="/"
+					className="brand flex items-center gap-3"
+					aria-label="Zanola Inmobiliaria"
+				>
 					<img
-						className="brand-logo"
+						className="brand-logo max-h-14"
 						src="/images/icons/logocompleto.png"
 						alt="Zanola Inmobiliaria"
 						decoding="async"
@@ -26,7 +32,7 @@ export default function Layout({ children }) {
 				</Link>
 
 				<button
-					className={`nav-toggle ${menuOpen ? "open" : ""}`}
+					className={`nav-toggle ${menuOpen ? "open" : ""} md:hidden`}
 					aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
 					aria-expanded={menuOpen}
 					onClick={() => setMenuOpen((v) => !v)}
@@ -35,19 +41,44 @@ export default function Layout({ children }) {
 				</button>
 
 				<nav
-					className={`site-nav ${menuOpen ? "site-nav-open" : ""}`}
+					className={`site-nav ${menuOpen ? "site-nav-open" : ""} justify-center md:justify-start`}
 					aria-label="Navegación principal"
 				>
-					<NavLink to="/" end onClick={closeMenu}>
+					<NavLink
+						to="/"
+						end
+						onClick={closeMenu}
+						className={({ isActive }) =>
+							`px-3 py-2 rounded-full text-white/90 ${isActive ? "bg-white/12" : ""}`
+						}
+					>
 						Inicio
 					</NavLink>
-					<NavLink to="/propiedades" onClick={closeMenu}>
+					<NavLink
+						to="/propiedades"
+						onClick={closeMenu}
+						className={({ isActive }) =>
+							`px-3 py-2 rounded-full text-white/90 ${isActive ? "bg-white/12" : ""}`
+						}
+					>
 						Propiedades
 					</NavLink>
-					<NavLink to="/contacto" onClick={closeMenu}>
+					<NavLink
+						to="/contacto"
+						onClick={closeMenu}
+						className={({ isActive }) =>
+							`px-3 py-2 rounded-full text-white/90 ${isActive ? "bg-white/12" : ""}`
+						}
+					>
 						Contacto
 					</NavLink>
-					<NavLink to="/nosotros" onClick={closeMenu}>
+					<NavLink
+						to="/nosotros"
+						onClick={closeMenu}
+						className={({ isActive }) =>
+							`px-3 py-2 rounded-full text-white/90 ${isActive ? "bg-white/12" : ""}`
+						}
+					>
 						Nosotros
 					</NavLink>
 				</nav>
@@ -56,7 +87,7 @@ export default function Layout({ children }) {
 					href={WHATSAPP_URL("Hola, quisiera que me contacten.")}
 					target="_blank"
 					rel="noreferrer"
-					className="button-ghost button"
+					className="button-ghost button btn btn-whatsapp"
 					aria-label="Contactar por WhatsApp"
 				>
 					<WhatsAppIcon size={18} />
@@ -66,7 +97,7 @@ export default function Layout({ children }) {
 
 			<main className="site-main">{children}</main>
 
-			<footer className="site-footer">
+			<footer className="site-footer bg-cazador text-white p-6 mt-8">
 				<div className="footer-brand">
 					<strong>Zanola Inmobiliaria</strong>
 					<p>25 de Mayo 372, Morón, Buenos Aires.</p>
@@ -81,7 +112,7 @@ export default function Layout({ children }) {
 						)}
 						target="_blank"
 						rel="noreferrer"
-						className="footer-whatsapp"
+						className="footer-whatsapp btn btn-whatsapp ml-4"
 					>
 						Escribinos por WhatsApp
 					</a>
