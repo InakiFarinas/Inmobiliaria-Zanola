@@ -72,8 +72,11 @@ export default function ContactPage() {
 			</div>
 
 			<div className="contact-layout">
-				<form className="contact-card contact-form" onSubmit={handleSubmit}>
-					<h2>Envianos un mensaje</h2>
+				<form
+					className="contact-card contact-form card-contact"
+					onSubmit={handleSubmit}
+				>
+					<h2 className="font-serif text-2xl mb-3">Envianos un mensaje</h2>
 					<div className="interest-block">
 						<label className="label-inline">Me interesa</label>
 						<div className="interest-chips">
@@ -83,7 +86,7 @@ export default function ContactPage() {
 									<button
 										type="button"
 										key={opt}
-										className={"chip " + (active ? "active" : "")}
+										className={"chip " + (active ? "chip-active" : "")}
 										onClick={() => toggleInterest(opt)}
 									>
 										{opt}
@@ -100,6 +103,7 @@ export default function ContactPage() {
 								placeholder="Tu nombre"
 								value={form.nombre}
 								onChange={handleChange}
+								className="form-input"
 							/>
 						</label>
 						<label>
@@ -110,6 +114,7 @@ export default function ContactPage() {
 								placeholder="tu@email.com"
 								value={form.email}
 								onChange={handleChange}
+								className="form-input"
 							/>
 						</label>
 						<label>
@@ -120,6 +125,7 @@ export default function ContactPage() {
 								placeholder="11 1234-5678"
 								value={form.telefono}
 								onChange={handleChange}
+								className="form-input"
 							/>
 						</label>
 						<label className="full-row">
@@ -130,11 +136,12 @@ export default function ContactPage() {
 								placeholder="Contanos en que podemos ayudarte..."
 								value={form.descripcion}
 								onChange={handleChange}
+								className="form-input"
 							/>
 						</label>
 					</div>
 
-					<button type="submit" className="button contact-submit">
+					<button type="submit" className="btn btn-cta contact-submit">
 						Enviar consulta
 					</button>
 					{status ? <p className="contact-status">{status}</p> : null}
@@ -183,7 +190,7 @@ export default function ContactPage() {
 						href={WHATSAPP_URL("Hola, quisiera que me contacten.")}
 						target="_blank"
 						rel="noreferrer"
-						className="button contact-whatsapp"
+						className="btn btn-whatsapp contact-whatsapp"
 					>
 						Escribir por WhatsApp
 					</a>

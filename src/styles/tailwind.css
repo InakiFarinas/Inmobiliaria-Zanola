@@ -1,3 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	:root {
+		/* ensure CSS variables available to Tailwind components */
+	}
+}
+
+@layer components {
+	.btn {
+		@apply inline-flex items-center justify-center gap-2 rounded-full font-extrabold px-4 py-2;
+	}
+
+	.btn-ghost {
+		@apply btn bg-transparent border border-transparent text-white;
+	}
+
+	.btn-cta {
+		/* dark site CTA */
+		background-color: theme("colors.cta-dark");
+		color: theme("colors.blanco");
+		@apply btn shadow-site;
+	}
+
+	.btn-whatsapp {
+		background-color: theme("colors.whatsapp");
+		color: theme("colors.blanco");
+		@apply btn shadow-site;
+	}
+
+	.card-contact {
+		@apply rounded-lg p-6 shadow-site bg-white/80;
+	}
+
+	.chip {
+		@apply inline-flex items-center justify-center rounded-full px-3 py-1 font-bold text-sm bg-white/90 border border-neutral-200;
+	}
+
+	.chip-active {
+		@apply bg-accent text-blanco;
+	}
+	.form-input {
+		@apply w-full rounded-md px-3 py-2 border bg-white/90 text-carbon;
+	}
+}
