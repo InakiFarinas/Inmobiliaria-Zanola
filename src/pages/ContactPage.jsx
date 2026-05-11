@@ -7,12 +7,34 @@ export default function ContactPage() {
 		email: "",
 		telefono: "",
 		descripcion: "",
+		intereses: [],
 	});
 	const [status, setStatus] = useState("");
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setForm((f) => ({ ...f, [name]: value }));
+	};
+
+	const interestOptions = [
+		"Departamento",
+		"Casa",
+		"PH",
+		"Local",
+		"Alquiler",
+		"Compra",
+	];
+
+	const toggleInterest = (label) => {
+		setForm((f) => {
+			const has = f.intereses.includes(label);
+			return {
+				...f,
+				intereses: has
+					? f.intereses.filter((i) => i !== label)
+					: [...f.intereses, label],
+			};
+		});
 	};
 
 	const handleSubmit = async (e) => {
@@ -27,7 +49,13 @@ export default function ContactPage() {
 		try {
 			await new Promise((r) => setTimeout(r, 700));
 			setStatus("Consulta enviada. Te respondemos a la brevedad.");
-			setForm({ nombre: "", email: "", telefono: "", descripcion: "" });
+			setForm({
+				nombre: "",
+				email: "",
+				telefono: "",
+				descripcion: "",
+				intereses: [],
+			});
 		} catch (err) {
 			setStatus("Error al enviar. Intentá de nuevo.");
 		}
@@ -46,6 +74,24 @@ export default function ContactPage() {
 			<div className="contact-layout">
 				<form className="contact-card contact-form" onSubmit={handleSubmit}>
 					<h2>Envianos un mensaje</h2>
+					<div className="interest-block">
+						<label className="label-inline">Me interesa</label>
+						<div className="interest-chips">
+							{interestOptions.map((opt) => {
+								const active = form.intereses.includes(opt);
+								return (
+									<button
+										type="button"
+										key={opt}
+										className={"chip " + (active ? "active" : "")}
+										onClick={() => toggleInterest(opt)}
+									>
+										{opt}
+									</button>
+								);
+							})}
+						</div>
+					</div>
 					<div className="contact-grid">
 						<label>
 							Nombre
