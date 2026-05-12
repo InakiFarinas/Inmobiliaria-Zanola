@@ -80,9 +80,24 @@ export default function PropertyDetailPage() {
 
 	return (
 		<section className="mx-auto w-[min(1180px,calc(100%_-_32px))] pt-6">
-			<div className="mb-6 grid gap-4 xl:grid-cols-[1fr_auto] xl:items-end">
-				<div>
-					<SectionHeader kicker="Detalle" title={address} titleAs="h1" />
+			<div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+				<div className="grid gap-3">
+					<div className="text-sm text-[var(--muted)]">
+						<Link to="/">Inicio</Link>
+						{" > "}
+						<Link to="/propiedades">Propiedades</Link>
+						{" > "}
+						{address}
+					</div>
+					<SectionHeader title={address} titleAs="h1" />
+					<div className="flex flex-wrap gap-2.5">
+						<span className="inline-flex rounded-full bg-[color:var(--accent-soft)] px-3 py-1 text-xs font-extrabold uppercase tracking-[0.08em] text-[color:var(--accent)]">
+							{property.estado || "Venta"}
+						</span>
+						<span className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--text)] shadow-[0_6px_16px_rgba(26,26,26,0.06)]">
+							{property.tipo || "Propiedad"}
+						</span>
+					</div>
 				</div>
 				<Link
 					to="/propiedades"
@@ -92,47 +107,70 @@ export default function PropertyDetailPage() {
 				</Link>
 			</div>
 
-			<div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr] xl:items-start">
-				<PropertyGallery images={property.imagenes} title={address} />
+			<div className="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_minmax(360px,0.8fr)] xl:items-start">
+				<div className="grid gap-6">
+					<PropertyGallery images={property.imagenes} title={address} />
 
-				<Card as="aside" className="grid gap-4" padding="md">
-					<div className="grid gap-1">
-						<span>
-							{property.estado === "Alquiler"
-								? "Precio de alquiler"
-								: "Precio de venta"}
-						</span>
-						<strong className="text-[clamp(2rem,4vw,3rem)] font-serif text-carbon">
-							${formatPrice(property.precio)}
-						</strong>
-					</div>
+					<Card className="grid gap-4" padding="md">
+						<h2 className="m-0 text-xl font-serif leading-tight">
+							Características
+						</h2>
+						<StatGrid
+							items={[
+								{ label: "Tipo", value: property.tipo },
+								{ label: "Garaje", value: property.garaje === 1 ? "Sí" : "No" },
+								{ label: "Baños", value: property.baños },
+								{ label: "Ambientes", value: property.ambientes },
+								{ label: "Dormitorios", value: property.dormitorios },
+								{ label: "Superficie", value: `${property.superficie} m²` },
+								{ label: "Antigüedad", value: `${property.antiguedad} años` },
+							]}
+						/>
+					</Card>
+				</div>
 
-					<p className="leading-8 text-muted">{property.descripcion}</p>
+				<div className="grid gap-6 xl:sticky xl:top-6">
+					<Card as="aside" className="grid gap-4" padding="md">
+						<div className="grid gap-1">
+							<span className="text-sm text-[var(--muted)]">
+								{property.estado === "Alquiler"
+									? "Precio de alquiler"
+									: "Precio de venta"}
+							</span>
+							<strong className="text-[clamp(2rem,4vw,3rem)] font-black text-[var(--text)]">
+								${formatPrice(property.precio)}
+							</strong>
+						</div>
 
-					<StatGrid
-						items={[
-							{ label: "Tipo", value: property.tipo },
-							{ label: "Garaje", value: property.garaje === 1 ? "Sí" : "No" },
-							{ label: "Baños", value: property.baños },
-							{ label: "Ambientes", value: property.ambientes },
-							{ label: "Dormitorios", value: property.dormitorios },
-							{ label: "Superficie", value: `${property.superficie} m²` },
-							{ label: "Antigüedad", value: `${property.antiguedad} años` },
-						]}
-					/>
+						<WhatsAppButton
+							message={`Hola, me interesa la propiedad en ${address}`}
+							className="w-full"
+						>
+							¡Contactanos!
+						</WhatsAppButton>
+					</Card>
 
-					<WhatsAppButton
-						message={`Hola, me interesa la propiedad en ${address}`}
-						className="w-full"
-					>
-						¡Contactanos!
-					</WhatsAppButton>
-				</Card>
-			</div>
+					<Card className="grid gap-4" padding="md">
+						<div className="grid gap-2">
+							<h2 className="m-0 text-xl font-serif leading-tight">
+								Descripción
+							</h2>
+							<p className="m-0 leading-8 text-[var(--muted)]">
+								{property.descripcion}
+							</p>
+						</div>
+					</Card>
 
-			<div className="mt-6 grid gap-4">
-				<SectionHeader kicker="Ubicación" title="Encontrala en el mapa" />
-				<PropertyMap address={address} />
+					<Card className="grid gap-0 overflow-hidden" padding="none">
+						<div className="flex items-center justify-between gap-3 border-b border-[color:var(--line)] px-4 py-3">
+							<h2 className="m-0 text-base font-extrabold">Ubicación</h2>
+							<span className="text-sm text-[var(--accent)]">
+								Abrir en Maps →
+							</span>
+						</div>
+						<PropertyMap address={address} />
+					</Card>
+				</div>
 			</div>
 		</section>
 	);

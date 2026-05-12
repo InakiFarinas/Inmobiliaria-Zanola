@@ -91,8 +91,15 @@ export default function HomePage() {
 					))}
 				</div>
 			</section>
+			<div className="flex items-center gap-3 my-8">
+				<div className="flex-1 h-px bg-black/10" />
+				<span className="text-[16px] tracking-[2px] text-[#1b5e46] font-bold whitespace-nowrap">
+					ÚLTIMAS PROPIEDADES
+				</span>
+				<div className="flex-1 h-px bg-black/10" />
+			</div>
 
-			<section className="mx-auto w-[min(1180px,calc(100%_-_32px))] p-10">
+			<section className="mt-6 w-full p-10">
 				<SectionHeader
 					align="inline"
 					kicker="Últimas propiedades"
@@ -108,13 +115,9 @@ export default function HomePage() {
 				/>
 
 				{latest.length > 0 ? (
-					<div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+					<div className="grid gap-12 xl:grid-cols-3">
 						{latest.map((property) => (
-							<PropertyCard
-								key={property.id_propiedad}
-								property={property}
-								featured
-							/>
+							<PropertyCard key={property.id_propiedad} property={property} />
 						))}
 					</div>
 				) : (

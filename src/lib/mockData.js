@@ -51,18 +51,8 @@ export const mockProperties = [
 		descripcion:
 			"Departamento de tres ambientes en edificio de categoría, ubicado en una zona tranquila y cercana a servicios.",
 		imagenes: [
-			svgDataUri({
-				title: "Colón · Morón Sur",
-				subtitle: "Departamento 3 ambientes",
-				background: "#7a5e3e",
-				accent: "#b5935a",
-			}),
-			svgDataUri({
-				title: "Edificio de categoría",
-				subtitle: "Buen estado general",
-				background: "#3a6b4a",
-				accent: "#d8b896",
-			}),
+			"/images/propiedades/propiedad1.jpg",
+			"/images/propiedades/propiedad2.jpg",
 		],
 	},
 	{
@@ -84,12 +74,8 @@ export const mockProperties = [
 		descripcion:
 			"Casa en alquiler con tres dormitorios, patio y cochera, ideal para familia.",
 		imagenes: [
-			svgDataUri({
-				title: "Paraná · Morón Sur",
-				subtitle: "Casa en alquiler",
-				background: "#5c7e8e",
-				accent: "#d97b5a",
-			}),
+			"/images/propiedades/propiedad3.webp",
+			"/images/propiedades/propiedad4.jpg",
 		],
 	},
 	{
@@ -110,14 +96,7 @@ export const mockProperties = [
 		antiguedad: 6,
 		descripcion:
 			"Monoambiente en alquiler en una ubicación céntrica, práctico y funcional para vivir o invertir.",
-		imagenes: [
-			svgDataUri({
-				title: "Brown · Morón Centro",
-				subtitle: "Monoambiente en alquiler",
-				background: "#d97b5a",
-				accent: "#c4a15a",
-			}),
-		],
+		imagenes: ["/images/propiedades/propiedad5.jpg"],
 	},
 	{
 		id_propiedad: 104,
@@ -137,14 +116,7 @@ export const mockProperties = [
 		antiguedad: 10,
 		descripcion:
 			"Departamento en venta en Morón Sur, con buena luz natural y una distribución cómoda para uso diario.",
-		imagenes: [
-			svgDataUri({
-				title: "García Silva · Morón Sur",
-				subtitle: "Departamento en venta",
-				background: "#b5935a",
-				accent: "#5c7e8e",
-			}),
-		],
+		imagenes: ["/images/propiedades/propiedad6.jpg"],
 	},
 	{
 		id_propiedad: 105,
@@ -164,14 +136,7 @@ export const mockProperties = [
 		antiguedad: 7,
 		descripcion:
 			"Local en alquiler con frente sobre calle activa, útil para comercio barrial o estudio profesional.",
-		imagenes: [
-			svgDataUri({
-				title: "Yatay · Morón Sur",
-				subtitle: "Local en alquiler",
-				background: "#7a5e3e",
-				accent: "#d97b5a",
-			}),
-		],
+		imagenes: ["/images/propiedades/propiedad1.jpg"],
 	},
 ];
 

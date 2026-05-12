@@ -84,20 +84,210 @@ export default function SiteChrome({
 
 			<main className="flex-1 pb-[72px]">{children}</main>
 
-			<footer className="mt-8 flex justify-between gap-[18px] rounded-none border-0 bg-[var(--accent)] px-7 py-[18px] text-white backdrop-blur-[18px] max-[720px]:flex-col max-[720px]:items-start">
-				<div className="grid gap-1.5">
-					<strong>Zanola Inmobiliaria</strong>
-					<p>25 de Mayo 372, Morón, Buenos Aires.</p>
-					<p className="text-[0.92rem] text-white/80">Lun–Vie 9 a 18 hs</p>
+			<footer className="mt-8 bg-[var(--accent)] px-6 py-6 text-white md:px-10 md:py-8">
+				<div className=" grid w-full gap-6 lg:grid-cols-[1.15fr_0.85fr_0.7fr_1fr] lg:gap-6 items-start">
+					<div className="grid gap-5">
+						<div className="grid gap-3">
+							<img
+								src="/images/icons/logocompleto.png"
+								alt="Zanola Inmobiliaria"
+								className="w-[140px] max-w-full"
+								decoding="async"
+							/>
+							<p className="max-w-[28ch] text-[1.08rem] leading-8 text-white/72">
+								Inmobiliaria familiar con más de 30 años en el Partido de Morón.
+							</p>
+						</div>
+						<div className="flex gap-3">
+							<a
+								href="https://www.instagram.com"
+								aria-label="Instagram"
+								className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/18 text-white/80 transition hover:border-white/40 hover:text-white"
+							>
+								<svg
+									width="22"
+									height="22"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="1.9"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
+									<rect x="3" y="3" width="18" height="18" rx="5" />
+									<circle cx="12" cy="12" r="4" />
+									<circle
+										cx="17.5"
+										cy="6.5"
+										r="1"
+										fill="currentColor"
+										stroke="none"
+									/>
+								</svg>
+							</a>
+							<a
+								href="https://www.facebook.com"
+								aria-label="Facebook"
+								className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/18 text-white/80 transition hover:border-white/40 hover:text-white"
+							>
+								<svg
+									width="22"
+									height="22"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="1.9"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
+									<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+								</svg>
+							</a>
+						</div>
+					</div>
+
+					<div className="grid gap-4">
+						<h2 className="text-[1.05rem] font-extrabold uppercase tracking-[0.12em] text-white">
+							Encontrá lo que buscás
+						</h2>
+						<ul className="grid gap-3 text-[1.06rem] text-white/72">
+							<li>
+								<a
+									href="/propiedades?tipo=Departamento"
+									className="transition hover:text-white"
+								>
+									Departamentos
+								</a>
+							</li>
+							<li>
+								<a
+									href="/propiedades?tipo=Casa"
+									className="transition hover:text-white"
+								>
+									Casas
+								</a>
+							</li>
+							<li>
+								<a
+									href="/propiedades?tipo=PH"
+									className="transition hover:text-white"
+								>
+									PH
+								</a>
+							</li>
+							<li>
+								<a
+									href="/propiedades?tipo=Lote"
+									className="transition hover:text-white"
+								>
+									Lotes
+								</a>
+							</li>
+							<li>
+								<a
+									href="/propiedades?tipo=Local"
+									className="transition hover:text-white"
+								>
+									Locales
+								</a>
+							</li>
+						</ul>
+					</div>
+
+					<div className="grid gap-4">
+						<h2 className="text-[1.05rem] font-extrabold uppercase tracking-[0.12em] text-white">
+							Menú
+						</h2>
+						<nav className="grid gap-3 text-[1.06rem] text-white/72">
+							<NavLink to="/" end className="transition hover:text-white">
+								Inicio
+							</NavLink>
+							<NavLink
+								to="/propiedades"
+								className="transition hover:text-white"
+							>
+								Propiedades
+							</NavLink>
+							<NavLink to="/contacto" className="transition hover:text-white">
+								Contacto
+							</NavLink>
+							<NavLink to="/nosotros" className="transition hover:text-white">
+								Quiénes somos
+							</NavLink>
+						</nav>
+					</div>
+
+					<div className="grid gap-4">
+						<h2 className="text-[1.05rem] font-extrabold uppercase tracking-[0.12em] text-white">
+							Contacto
+						</h2>
+						<div className="grid gap-3 text-[1.02rem] text-white/80">
+							<div className="flex items-center gap-3">
+								<span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white">
+									<svg
+										width="22"
+										height="22"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeWidth="1.9"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									>
+										<path d="M12 21s6-5.33 6-11a6 6 0 0 0-12 0c0 5.67 6 11 6 11z" />
+										<circle cx="12" cy="10" r="2.2" />
+									</svg>
+								</span>
+								<span>25 de Mayo 372 – Morón</span>
+							</div>
+							<div className="flex items-center gap-3">
+								<span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white">
+									<svg
+										width="22"
+										height="22"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeWidth="1.9"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									>
+										<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 1.92 4.18 2 2 0 0 1 3.92 2h3a2 2 0 0 1 2 1.72c.12.9.34 1.78.66 2.61a2 2 0 0 1-.45 2.11L8.1 9.5a16 16 0 0 0 6.4 6.4l1.06-1.03a2 2 0 0 1 2.11-.45c.83.32 1.71.54 2.61.66A2 2 0 0 1 22 16.92z" />
+									</svg>
+								</span>
+								<span>{PHONE_NUMBER}</span>
+							</div>
+							<div className="flex items-center gap-3">
+								<span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white">
+									<svg
+										width="22"
+										height="22"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeWidth="1.9"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									>
+										<path d="M4 4h16v16H4z" />
+										<path d="m4 7 8 6 8-6" />
+									</svg>
+								</span>
+								<span>{EMAIL}</span>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div className="flex flex-wrap items-center gap-4 max-[720px]:w-full">
-					<a href={`tel:${PHONE_LINK}`}>{PHONE_NUMBER}</a>
-					<a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+
+				<div className="mt-8 flex w-full flex-col gap-3 border-t border-white/10 pt-4 md:flex-row md:items-center md:justify-between">
+					<p className="text-[0.95rem] text-white/55">
+						© 2026 Zanola Propiedades · Morón, Buenos Aires
+					</p>
 					<WhatsAppButton
 						message="Hola, quiero hacer una consulta sobre una propiedad."
-						className="justify-center whitespace-nowrap px-3.5 py-2 text-white"
+						className="justify-center whitespace-nowrap px-3 py-2"
 					>
-						Escribinos por WhatsApp
+						Escribinos
 					</WhatsAppButton>
 				</div>
 			</footer>

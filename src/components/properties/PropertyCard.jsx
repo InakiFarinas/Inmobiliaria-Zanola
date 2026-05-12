@@ -1,4 +1,14 @@
 import { Link } from "react-router-dom";
+import PropertyImageCarousel from "./PropertyImageCarousel";
+import {
+	StatGridAgeIcon,
+	StatGridBathroomsIcon,
+	StatGridBedroomsIcon,
+	StatGridGarageIcon,
+	StatGridRoomsIcon,
+	StatGridSurfaceIcon,
+	StatGridTypeIcon,
+} from "../ui/StatGridIcons";
 
 function formatPrice(value) {
 	return new Intl.NumberFormat("es-AR").format(Number(value || 0));
@@ -19,39 +29,49 @@ function getPriceLabel(property) {
 
 export default function PropertyCard({ property, featured = false }) {
 	const images = property.imagenes || [];
-	const displayedImage = images[0];
 	const isRental = normalizeStateLabel(property.estado).includes("alquiler");
 	const stateLabel = isRental ? "Alquiler" : "Venta";
+	const cardPills = [
+		property.tipo
+			? { label: property.tipo, Icon: StatGridTypeIcon, stroke: "#3b82f6" }
+			: null,
+		property.ambientes
+			? {
+					label: `${property.ambientes} amb.`,
+					Icon: StatGridRoomsIcon,
+					stroke: "#10b981",
+				}
+			: null,
+		property.superficie
+			? {
+					label: `${property.superficie} m²`,
+					Icon: StatGridSurfaceIcon,
+					stroke: "#f97316",
+				}
+			: null,
+		property.garaje
+			? { label: "Cochera", Icon: StatGridGarageIcon, stroke: "#a855f7" }
+			: null,
+		property.patio
+			? { label: "Patio", Icon: StatGridAgeIcon, stroke: "#d97706" }
+			: null,
+	].filter(Boolean);
 
 	return (
 		<article
-			className={`overflow-hidden rounded-md bg-white shadow-lg transition-transform hover:-translate-y-1 ${featured ? "md:col-span-2" : ""}`}
+			className={`overflow-hidden rounded-2xl bg-white shadow-lg transition-transform hover:-translate-y-1 ${featured ? "md:col-span-2" : ""}`}
 		>
-			<div className="relative">
-				<Link
-					to={`/propiedad/${property.id_propiedad}`}
-					aria-label={`Ver propiedad en ${property.ciudad}, ${property.calle}`}
-					className="block"
-				>
-					{displayedImage ? (
-						<img
-							src={displayedImage}
-							alt={`Propiedad en ${property.ciudad}`}
-							className={`w-full ${featured ? "h-64 md:h-96" : "h-48 md:h-56"} object-cover`}
-						/>
-					) : (
-						<div className="flex h-48 items-center justify-center bg-gray-100 text-muted md:h-56">
-							Sin imagen
-						</div>
-					)}
-				</Link>
-				<span className="absolute right-3 top-3 rounded-full bg-[var(--surface)] px-3 py-1 text-xs font-bold uppercase text-[var(--accent)]">
-					{stateLabel}
-				</span>
-			</div>
+			<PropertyImageCarousel
+				images={images}
+				propertyId={property.id_propiedad}
+				propertyCity={property.ciudad}
+				propertyStreet={property.calle}
+				stateLabel={stateLabel}
+				featured={featured}
+			/>
 
 			<Link to={`/propiedad/${property.id_propiedad}`} className="block p-4">
-				<div className="text-2xl font-extrabold text-[var(--text)]">
+				<div className="text-4xl font-black text-[var(--text)]">
 					{getPriceLabel(property)}
 				</div>
 				<h3 className="mt-2 text-lg font-bold">
@@ -59,54 +79,20 @@ export default function PropertyCard({ property, featured = false }) {
 						? `${property.ciudad}, ${property.calle} ${property.altura}`
 						: property.calle}
 				</h3>
-				<div className="mt-2 flex flex-wrap gap-3 text-sm text-[var(--muted)]">
-					{property.ambientes ? (
-						<span className="inline-flex items-center gap-2 rounded-full bg-black/5 px-3 py-1">
-							{property.ambientes} amb.
+				<div className="mt-3 flex flex-wrap gap-2.5 text-sm">
+					{cardPills.map(({ label, Icon, stroke }) => (
+						<span
+							key={label}
+							className="inline-flex items-center gap-1.5 rounded-full bg-black/5 px-3 py-1.5 text-[var(--muted)]"
+						>
+							<span className="inline-flex h-4 w-4 shrink-0 items-center justify-center">
+								<Icon stroke={stroke} />
+							</span>
+							{label}
 						</span>
-					) : null}
-					{property.superficie ? (
-						<span className="inline-flex items-center gap-2 rounded-full bg-black/5 px-3 py-1">
-							{property.superficie} m²
-						</span>
-					) : null}
-					{property.garaje ? (
-						<span className="inline-flex items-center gap-2 rounded-full bg-black/5 px-3 py-1">
-							Cochera
-						</span>
-					) : null}
-					{property.patio ? (
-						<span className="inline-flex items-center gap-2 rounded-full bg-black/5 px-3 py-1">
-							Patio
-						</span>
-					) : null}
+					))}
 				</div>
-				{property.descripcion ? (
-					<p className="mt-3 text-sm text-[var(--muted)]">
-						{property.descripcion}
-					</p>
-				) : null}
-
-				<dl className="mt-4 grid grid-cols-4 gap-3">
-					<div>
-						<dt className="text-xs text-muted">Tipo</dt>
-						<dd className="font-semibold">{property.tipo}</dd>
-					</div>
-					<div>
-						<dt className="text-xs text-muted">Amb.</dt>
-						<dd className="font-semibold">{property.ambientes}</dd>
-					</div>
-					<div>
-						<dt className="text-xs text-muted">Dorm.</dt>
-						<dd className="font-semibold">{property.dormitorios}</dd>
-					</div>
-					<div>
-						<dt className="text-xs text-muted">M²</dt>
-						<dd className="font-semibold">{property.superficie}</dd>
-					</div>
-				</dl>
 			</Link>
 		</article>
 	);
 }
-<dt className="text-xs text-muted">M²</dt>;

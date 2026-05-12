@@ -16,13 +16,13 @@ export default function HomeHero({
 	return (
 		<section className="h-[calc(100vh-var(--header-height))] overflow-hidden bg-[var(--accent)]">
 			<div className="grid h-full gap-6 p-4 xl:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] xl:grid-rows-[1fr_auto] xl:gap-x-8 xl:p-10">
-				<div className="flex min-w-0 flex-col justify-start gap-2 rounded-none border-0 bg-transparent p-0 shadow-none xl:col-start-1 xl:row-start-1 xl:pr-2">
+				<div className="flex min-w-0 flex-col justify-start gap-6 rounded-none border-0 bg-transparent p-0 shadow-none xl:col-start-1 xl:row-start-1 xl:pr-2">
 					<span className="inline-flex w-fit rounded-full bg-white/25 px-4 py-2 text-sm font-bold uppercase tracking-[0.08em] text-white">
 						Morón · Buenos Aires
 					</span>
 					<h1 className="m-0 max-w-[10ch] font-serif text-[clamp(2.8rem,5vw,5.6rem)] leading-[1.02] text-white">
 						Encontrá tu próxima{" "}
-						<span className="text-[var(--terracota)]">propiedad</span>
+						<span className="text-[var(--terracota)]">propiedad.</span>
 					</h1>
 					<p className="m-0 max-w-[54ch] text-[1.05rem] leading-7 text-white/75">
 						Explorá opciones de venta y alquiler con un acceso directo a
