@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import PropertyCard from "../components/properties/PropertyCard";
 import PropertyFilters from "../components/properties/PropertyFilters";
+import EmptyState from "../components/ui/EmptyState";
+import SectionHeader from "../components/ui/SectionHeader";
 import {
 	getCities,
 	getProperties,
@@ -135,18 +137,15 @@ export default function PropertiesPage() {
 	};
 
 	return (
-		<section className="section-block section-block-wide">
-			<div className="section-heading section-heading-inline">
-				<div>
-					<span className="section-kicker">Explora</span>
-					<h1>Listado de propiedades</h1>
-				</div>
-				<p className="section-summary">
-					Filtrá por tipo, ciudad, presupuesto y características clave.
-				</p>
-			</div>
+		<section className="mx-auto w-[min(1180px,calc(100%_-_32px))] pt-6">
+			<SectionHeader
+				align="inline"
+				kicker="Explora"
+				title="Listado de propiedades"
+				description="Filtrá por tipo, ciudad, presupuesto y características clave."
+			/>
 
-			<div className="properties-layout">
+			<div className="grid gap-6 xl:grid-cols-[280px_1fr] xl:items-start">
 				<PropertyFilters
 					values={filters}
 					onChange={handleChange}
@@ -155,19 +154,17 @@ export default function PropertiesPage() {
 					options={{ cities, types, states }}
 				/>
 
-				<div className="properties-results">
+				<div className="min-w-0">
 					{loading ? (
-						<p className="empty-state">Cargando propiedades...</p>
+						<EmptyState title="Cargando propiedades..." />
 					) : properties.length > 0 ? (
-						<div className="property-grid">
+						<div className="grid gap-4 md:grid-cols-2">
 							{properties.map((property) => (
 								<PropertyCard key={property.id_propiedad} property={property} />
 							))}
 						</div>
 					) : (
-						<p className="empty-state">
-							No se encontraron propiedades con esos filtros.
-						</p>
+						<EmptyState title="No se encontraron propiedades con esos filtros." />
 					)}
 				</div>
 			</div>

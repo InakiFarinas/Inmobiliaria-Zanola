@@ -1,8 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import Button from "../components/ui/Button";
+import Card from "../components/ui/Card";
 import PropertyGallery from "../components/properties/PropertyGallery";
 import PropertyMap from "../components/properties/PropertyMap";
-import { WHATSAPP_PROPERTY_URL } from "../config/contact";
+import EmptyState from "../components/ui/EmptyState";
+import SectionHeader from "../components/ui/SectionHeader";
+import StatGrid from "../components/ui/StatGrid";
+import WhatsAppButton from "../components/ui/WhatsAppButton";
 import { getPropertyById } from "../lib/api";
 
 function formatPrice(value) {
@@ -57,17 +62,15 @@ export default function PropertyDetailPage() {
 	}, [property]);
 
 	if (loading) {
-		return <p className="empty-state">Cargando detalle de la propiedad...</p>;
+		return <EmptyState title="Cargando detalle de la propiedad..." />;
 	}
 
 	if (error) {
 		return (
-			<div className="empty-state empty-state-hero">
-				<p>{error}</p>
-				<Link to="/propiedades" className="button button-primary">
-					Volver al listado
-				</Link>
-			</div>
+			<EmptyState
+				title={error}
+				action={<Button to="/propiedades">Volver al listado</Button>}
+			/>
 		);
 	}
 
@@ -76,79 +79,59 @@ export default function PropertyDetailPage() {
 	}
 
 	return (
-		<section className="section-block section-block-wide">
-			<div className="detail-topbar">
+		<section className="mx-auto w-[min(1180px,calc(100%_-_32px))] pt-6">
+			<div className="mb-6 grid gap-4 xl:grid-cols-[1fr_auto] xl:items-end">
 				<div>
-					<span className="section-kicker">Detalle</span>
-					<h1>{address}</h1>
+					<SectionHeader kicker="Detalle" title={address} titleAs="h1" />
 				</div>
-				<Link to="/propiedades" className="text-link">
+				<Link
+					to="/propiedades"
+					className="font-extrabold text-[color:var(--accent)]"
+				>
 					Volver al listado
 				</Link>
 			</div>
 
-			<div className="detail-layout">
+			<div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr] xl:items-start">
 				<PropertyGallery images={property.imagenes} title={address} />
 
-				<aside className="detail-aside">
-					<div className="price-card">
+				<Card as="aside" className="grid gap-4" padding="md">
+					<div className="grid gap-1">
 						<span>
 							{property.estado === "Alquiler"
 								? "Precio de alquiler"
 								: "Precio de venta"}
 						</span>
-						<strong>${formatPrice(property.precio)}</strong>
+						<strong className="text-[clamp(2rem,4vw,3rem)] font-serif text-carbon">
+							${formatPrice(property.precio)}
+						</strong>
 					</div>
 
-					<p className="detail-description">{property.descripcion}</p>
+					<p className="leading-8 text-muted">{property.descripcion}</p>
 
-					<dl className="detail-specs">
-						<div>
-							<dt>Tipo</dt>
-							<dd>{property.tipo}</dd>
-						</div>
-						<div>
-							<dt>Garaje</dt>
-							<dd>{property.garaje === 1 ? "Sí" : "No"}</dd>
-						</div>
-						<div>
-							<dt>Baños</dt>
-							<dd>{property.baños}</dd>
-						</div>
-						<div>
-							<dt>Ambientes</dt>
-							<dd>{property.ambientes}</dd>
-						</div>
-						<div>
-							<dt>Dormitorios</dt>
-							<dd>{property.dormitorios}</dd>
-						</div>
-						<div>
-							<dt>Superficie</dt>
-							<dd>{property.superficie} m²</dd>
-						</div>
-						<div>
-							<dt>Antigüedad</dt>
-							<dd>{property.antiguedad} años</dd>
-						</div>
-					</dl>
+					<StatGrid
+						items={[
+							{ label: "Tipo", value: property.tipo },
+							{ label: "Garaje", value: property.garaje === 1 ? "Sí" : "No" },
+							{ label: "Baños", value: property.baños },
+							{ label: "Ambientes", value: property.ambientes },
+							{ label: "Dormitorios", value: property.dormitorios },
+							{ label: "Superficie", value: `${property.superficie} m²` },
+							{ label: "Antigüedad", value: `${property.antiguedad} años` },
+						]}
+					/>
 
-					<a
-						className="button button-primary detail-cta"
-						href={WHATSAPP_PROPERTY_URL(address)}
-						target="_blank"
-						rel="noreferrer"
+					<WhatsAppButton
+						message={`Hola, me interesa la propiedad en ${address}`}
+						className="w-full"
 					>
 						¡Contactanos!
-					</a>
-				</aside>
+					</WhatsAppButton>
+				</Card>
 			</div>
 
-			<div className="map-section">
-				<div className="section-heading">
-					<span className="section-kicker">Ubicación</span>
-					<h2>Encontrala en el mapa</h2>
-				</div>
+			<div className="mt-6 grid gap-4">
+				<SectionHeader kicker="Ubicación" title="Encontrala en el mapa" />
 				<PropertyMap address={address} />
 			</div>
 		</section>

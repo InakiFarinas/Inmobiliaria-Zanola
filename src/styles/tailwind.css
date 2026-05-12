@@ -1,47 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
 	:root {
-		/* ensure CSS variables available to Tailwind components */
-	}
-}
-
-@layer components {
-	.btn {
-		@apply inline-flex items-center justify-center gap-2 rounded-full font-extrabold px-4 py-2;
-	}
-
-	.btn-ghost {
-		@apply btn bg-transparent border border-transparent text-white;
-	}
-
-	.btn-cta {
-		/* dark site CTA */
-		background-color: theme("colors.cta-dark");
-		color: theme("colors.blanco");
-		@apply btn shadow-site;
+		color-scheme: light;
+		--text: #1a1a1a;
+		--accent: #2d5644;
+		--terracota: #e3141a;
+		--surface: #ffffff;
+		--muted: #444a4a;
+		--line: rgba(26, 26, 26, 0.12);
+		--accent-soft: rgba(27, 94, 70, 0.12);
+		--info: #35607a;
+		--danger: #e3141a;
+		--shadow: 0 22px 70px rgba(26, 26, 26, 0.11);
+		--header-height: 104px;
+		--whatsapp: #25d366;
+		--cta-dark: #1e3a2f;
 	}
 
-	.btn-whatsapp {
-		background-color: theme("colors.whatsapp");
-		color: theme("colors.blanco");
-		@apply btn shadow-site;
+	* {
+		box-sizing: border-box;
 	}
 
-	.card-contact {
-		@apply rounded-lg p-6 shadow-site bg-white/80;
+	html {
+		scroll-behavior: smooth;
 	}
 
-	.chip {
-		@apply inline-flex items-center justify-center rounded-full px-3 py-1 font-bold text-sm bg-white/90 border border-neutral-200;
+	body {
+		margin: 0;
+		font-family: "Manrope", sans-serif;
+		color: var(--text);
+		background:
+			radial-gradient(
+				circle at top left,
+				rgba(27, 94, 70, 0.1),
+				transparent 36%
+			),
+			radial-gradient(
+				circle at top right,
+				rgba(53, 96, 122, 0.1),
+				transparent 30%
+			),
+			linear-gradient(180deg, #fafdf9 0%, #f5f4f0 45%, #eef6f0 100%);
 	}
 
-	.chip-active {
-		@apply bg-accent text-blanco;
+	body::before {
+		content: "";
+		position: fixed;
+		inset: 0;
+		pointer-events: none;
+		background-image:
+			linear-gradient(rgba(26, 26, 26, 0.024) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(26, 26, 26, 0.024) 1px, transparent 1px);
+		background-size: 34px 34px;
+		mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.18), transparent 60%);
 	}
-	.form-input {
-		@apply w-full rounded-md px-3 py-2 border bg-white/90 text-carbon;
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	img {
+		display: block;
+		max-width: 100%;
+	}
+
+	button,
+	input,
+	select {
+		font: inherit;
+	}
+
+	button {
+		cursor: pointer;
+	}
+
+	:is(a, button, input, select, textarea):focus-visible {
+		outline: 2px solid rgba(27, 94, 70, 0.45);
+		outline-offset: 2px;
+	}
+
+	#root {
+		min-height: 100vh;
 	}
 }

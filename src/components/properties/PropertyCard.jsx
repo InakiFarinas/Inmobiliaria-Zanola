@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function formatPrice(value) {
@@ -12,15 +11,6 @@ function normalizeStateLabel(value) {
 		.toLowerCase();
 }
 
-function getStateClass(value) {
-	const state = normalizeStateLabel(value);
-	if (state.includes("alquiler")) return "property-badge--alquiler";
-	if (state.includes("venta")) return "property-badge--venta";
-	if (state.includes("reserv")) return "property-badge--reservada";
-	if (state.includes("destac")) return "property-badge--destacada";
-	return "";
-}
-
 function getPriceLabel(property) {
 	const isRental = normalizeStateLabel(property.estado).includes("alquiler");
 	const price = formatPrice(property.precio);
@@ -29,68 +19,39 @@ function getPriceLabel(property) {
 
 export default function PropertyCard({ property, featured = false }) {
 	const images = property.imagenes || [];
-	const [currentImage, setCurrentImage] = useState(0);
-
-	const displayedImage = images[currentImage] || images[0];
-	const hasCarousel = images.length > 1;
-
-	const previousImage = (event) => {
-		event.preventDefault();
-		event.stopPropagation();
-		setCurrentImage((index) => (index - 1 + images.length) % images.length);
-	};
-
-	const nextImage = (event) => {
-		event.preventDefault();
-		event.stopPropagation();
-		setCurrentImage((index) => (index + 1) % images.length);
-	};
+	const displayedImage = images[0];
+	const isRental = normalizeStateLabel(property.estado).includes("alquiler");
+	const stateLabel = isRental ? "Alquiler" : "Venta";
 
 	return (
 		<article
-			className={`property-card ${featured ? "property-card-featured" : ""} rounded-md bg-white shadow-site overflow-hidden transition-transform hover:-translate-y-1`}
+			className={`overflow-hidden rounded-md bg-white shadow-lg transition-transform hover:-translate-y-1 ${featured ? "md:col-span-2" : ""}`}
 		>
-			<div className="property-image-wrap overflow-hidden">
+			<div className="relative">
 				<Link
 					to={`/propiedad/${property.id_propiedad}`}
-					className="property-image-link block"
 					aria-label={`Ver propiedad en ${property.ciudad}, ${property.calle}`}
+					className="block"
 				>
 					{displayedImage ? (
 						<img
 							src={displayedImage}
 							alt={`Propiedad en ${property.ciudad}`}
-							className="property-image w-full h-full object-cover"
+							className={`w-full ${featured ? "h-64 md:h-96" : "h-48 md:h-56"} object-cover`}
 						/>
 					) : (
-						<div className="property-image placeholder">Sin imagen</div>
+						<div className="flex h-48 items-center justify-center bg-gray-100 text-muted md:h-56">
+							Sin imagen
+						</div>
 					)}
 				</Link>
-
-				{hasCarousel && (
-					<div className="property-image-controls">
-						<button
-							type="button"
-							onClick={previousImage}
-							className="image-control"
-						>
-							‹
-						</button>
-						<span>
-							{currentImage + 1}/{images.length}
-						</span>
-						<button type="button" onClick={nextImage} className="image-control">
-							›
-						</button>
-					</div>
-				)}
+				<span className="absolute right-3 top-3 rounded-full bg-[var(--surface)] px-3 py-1 text-xs font-bold uppercase text-[var(--accent)]">
+					{stateLabel}
+				</span>
 			</div>
 
-			<Link
-				to={`/propiedad/${property.id_propiedad}`}
-				className="property-card-body property-card-link block p-4"
-			>
-				<div className="property-price text-2xl font-extrabold text-carbon">
+			<Link to={`/propiedad/${property.id_propiedad}`} className="block p-4">
+				<div className="text-2xl font-extrabold text-[var(--text)]">
 					{getPriceLabel(property)}
 				</div>
 				<h3 className="mt-2 text-lg font-bold">
@@ -98,53 +59,54 @@ export default function PropertyCard({ property, featured = false }) {
 						? `${property.ciudad}, ${property.calle} ${property.altura}`
 						: property.calle}
 				</h3>
-				<div className="property-meta mt-2 text-sm text-muted flex gap-3 flex-wrap">
+				<div className="mt-2 flex flex-wrap gap-3 text-sm text-[var(--muted)]">
 					{property.ambientes ? (
-						<span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5">
+						<span className="inline-flex items-center gap-2 rounded-full bg-black/5 px-3 py-1">
 							{property.ambientes} amb.
 						</span>
 					) : null}
 					{property.superficie ? (
-						<span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5">
+						<span className="inline-flex items-center gap-2 rounded-full bg-black/5 px-3 py-1">
 							{property.superficie} m²
 						</span>
 					) : null}
 					{property.garaje ? (
-						<span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5">
+						<span className="inline-flex items-center gap-2 rounded-full bg-black/5 px-3 py-1">
 							Cochera
 						</span>
 					) : null}
 					{property.patio ? (
-						<span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5">
+						<span className="inline-flex items-center gap-2 rounded-full bg-black/5 px-3 py-1">
 							Patio
 						</span>
 					) : null}
 				</div>
 				{property.descripcion ? (
-					<p className="property-summary mt-3 text-sm text-muted">
+					<p className="mt-3 text-sm text-[var(--muted)]">
 						{property.descripcion}
 					</p>
 				) : null}
 
-				<dl className="property-specs mt-4 grid grid-cols-4 gap-3">
+				<dl className="mt-4 grid grid-cols-4 gap-3">
 					<div>
-						<dt>Tipo</dt>
-						<dd>{property.tipo}</dd>
+						<dt className="text-xs text-muted">Tipo</dt>
+						<dd className="font-semibold">{property.tipo}</dd>
 					</div>
 					<div>
-						<dt>Amb.</dt>
-						<dd>{property.ambientes}</dd>
+						<dt className="text-xs text-muted">Amb.</dt>
+						<dd className="font-semibold">{property.ambientes}</dd>
 					</div>
 					<div>
-						<dt>Dorm.</dt>
-						<dd>{property.dormitorios}</dd>
+						<dt className="text-xs text-muted">Dorm.</dt>
+						<dd className="font-semibold">{property.dormitorios}</dd>
 					</div>
 					<div>
-						<dt>M²</dt>
-						<dd>{property.superficie}</dd>
+						<dt className="text-xs text-muted">M²</dt>
+						<dd className="font-semibold">{property.superficie}</dd>
 					</div>
 				</dl>
 			</Link>
 		</article>
 	);
 }
+<dt className="text-xs text-muted">M²</dt>;
