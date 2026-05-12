@@ -3,6 +3,11 @@ import Button from "../components/ui/Button";
 import Card from "../components/ui/Card";
 import FormField from "../components/ui/FormField";
 import InfoCard from "../components/ui/InfoCard";
+import {
+	LocationIcon,
+	PhoneIcon,
+	MailIcon,
+} from "../components/ui/ContactIcons";
 import SectionHeader from "../components/ui/SectionHeader";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
 
@@ -152,37 +157,16 @@ export default function ContactPage() {
 						Información de contacto
 					</h2>
 					<ul className="grid gap-4 p-0 m-0 list-none">
-						<InfoCard
-							title="Dirección"
-							icon={
-								<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-									<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
-								</svg>
-							}
-						>
+						<InfoCard title="Dirección" icon={<LocationIcon />}>
 							<p className="m-0 text-[1.35rem] font-bold">
 								25 de Mayo 372, Morón
 							</p>
 							<small className="text-sm text-muted">Buenos Aires</small>
 						</InfoCard>
-						<InfoCard
-							title="Teléfono"
-							icon={
-								<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-									<path d="M6.6 10.2a15.05 15.05 0 006.2 6.2l1.8-1.8a1 1 0 011.1-.2c.5.2 1 .3 1.6.3a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h2.2a1 1 0 011 1c0 .6.1.1.3 1.6a1 1 0 01-.2 1.1L6.6 10.2z" />
-								</svg>
-							}
-						>
+						<InfoCard title="Teléfono" icon={<PhoneIcon />}>
 							<p className="m-0 text-[1.35rem] font-bold">(011) 4489-0000</p>
 						</InfoCard>
-						<InfoCard
-							title="Email"
-							icon={
-								<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-									<path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm2 .5l8 5 8-5V6l-8 5-8-5v.5z" />
-								</svg>
-							}
-						>
+						<InfoCard title="Email" icon={<MailIcon />}>
 							<p className="m-0 text-[1.35rem] font-bold">info@zanola.com.ar</p>
 						</InfoCard>
 					</ul>
@@ -191,13 +175,11 @@ export default function ContactPage() {
 					</div>
 					<WhatsAppButton
 						message="Hola, quisiera que me contacten."
-						className="w-full border-0 py-3 font-black text-white"
+						className="w-full border-0 py-3 font-black"
+						style={{ backgroundColor: "var(--cta-dark)", color: "white" }}
 					>
-						Escribir por WhatsApp
+						Escribinos por WhatsApp
 					</WhatsAppButton>
-					<div className="rounded-xl bg-black/10 px-3 py-3 font-bold">
-						Lun - Vie 9 a 18 hs
-					</div>
 				</Card>
 			</div>
 		</section>

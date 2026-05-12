@@ -43,7 +43,7 @@ export default function AboutPage() {
 					<WhatsAppButton
 						message="Hola, quisiera que me contacten."
 						className="mx-auto w-[220px] justify-center"
-						style={{ backgroundColor: "var(--cta-dark)" }}
+						style={{ backgroundColor: "var(--cta-dark)", color: "white" }}
 					>
 						Consultar ahora
 					</WhatsAppButton>
