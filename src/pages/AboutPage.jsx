@@ -14,10 +14,10 @@ export default function AboutPage() {
 			<div className="grid gap-3 md:gap-4 md:grid-cols-2 xl:grid-cols-3">
 				<Card
 					as="article"
-					className="mx-auto grid max-w-[880px] gap-3 text-center"
+					className="mx-auto grid max-w-[880px] gap-3 text-left"
 					padding="md"
 				>
-					<h2>Trayectoria</h2>
+					<h2 className="m-0 font-serif text-2xl font-bold">Trayectoria</h2>
 					<p>
 						La familia Zanola forma parte de la comunidad moronense desde la
 						década del '60 y trabaja en el rubro inmobiliario desde 1990.
@@ -31,51 +31,114 @@ export default function AboutPage() {
 				</Card>
 				<Card
 					as="article"
-					className="mx-auto grid max-w-[880px] gap-3 text-center"
+					className="mx-auto grid max-w-[880px] gap-3 text-left"
 					padding="md"
 				>
-					<h2>Atención comercial</h2>
+					<h2 className="m-0 font-serif text-2xl font-bold">
+						Atención comercial
+					</h2>
 					<p>
 						La firma está a cargo del Arquitecto Kevin Zanola, con actividad en
 						instituciones educativas, sociales, profesionales y comerciales del
 						Partido de Morón.
 					</p>
-					<WhatsAppButton
-						message="Hola, quisiera que me contacten."
-						className="mx-auto w-[220px] justify-center"
-						style={{ backgroundColor: "var(--cta-dark)", color: "white" }}
-					>
-						Consultar ahora
-					</WhatsAppButton>
+					<div className="grid gap-1">
+						<p className="m-0 font-semibold">Arq. Kevin Zanola</p>
+						<p className="m-0 text-sm text-[var(--muted)]">
+							Responsable comercial
+						</p>
+					</div>
 				</Card>
 				<Card
 					as="article"
-					className="mx-auto grid max-w-[880px] gap-3 text-center"
+					className="mx-auto grid max-w-[880px] gap-3 text-left"
 					padding="md"
 				>
-					<h2>Lo que valoramos</h2>
+					<h2 className="m-0 font-serif text-2xl font-bold">
+						Lo que valoramos
+					</h2>
 					<p>
 						Honestidad, atención directa y acompañamiento en cada consulta o
 						operación.
 					</p>
 					<div className="inline-grid gap-2.5 rounded-xl border border-[color:var(--line)] bg-white/5 px-4 py-3">
-						<ul className="m-0 flex list-none flex-wrap justify-center gap-3 p-0">
-							<li>Honestidad</li>
-							<li>Atención personalizada</li>
-							<li>Respaldo técnico</li>
+						<ul className="m-0 flex list-none flex-wrap justify-center gap-4 p-0">
+							<li className="inline-flex items-center gap-2 rounded-full bg-transparent px-3 py-1">
+								<svg
+									className="h-4 w-4 text-[color:var(--accent)]"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+								>
+									<path
+										d="M20 6L9 17l-5-5"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									/>
+								</svg>
+								Honestidad
+							</li>
+							<li className="inline-flex items-center gap-2 rounded-full bg-transparent px-3 py-1">
+								<svg
+									className="h-4 w-4 text-[color:var(--accent)]"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+								>
+									<path
+										d="M20 6L9 17l-5-5"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									/>
+								</svg>
+								Atención personalizada
+							</li>
+							<li className="inline-flex items-center gap-2 rounded-full bg-transparent px-3 py-1">
+								<svg
+									className="h-4 w-4 text-[color:var(--accent)]"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+								>
+									<path
+										d="M20 6L9 17l-5-5"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									/>
+								</svg>
+								Respaldo técnico
+							</li>
 						</ul>
 					</div>
 				</Card>
 			</div>
 
-			<Card className="overflow-hidden" padding="none">
-				<iframe
-					title="Ubicación de Zanola Inmobiliaria"
-					src="https://www.google.com/maps?q=25+de+Mayo+372,+Mor%C3%B3n,+Buenos+Aires&output=embed"
-					loading="lazy"
-					style={{ width: "100%", minHeight: 340 }}
-				/>
-			</Card>
+			<div className="flex justify-center mt-6">
+				<WhatsAppButton
+					message="Hola, quisiera que me contacten."
+					className="w-[220px] justify-center"
+					style={{ backgroundColor: "var(--cta-dark)", color: "white" }}
+				>
+					Contactanos
+				</WhatsAppButton>
+			</div>
+
+			<div className="mt-8">
+				<h2 className="m-0 font-serif text-2xl font-bold mb-4">
+					Dónde encontrarnos
+				</h2>
+				<Card className="overflow-hidden" padding="none">
+					<iframe
+						title="Ubicación de Zanola Inmobiliaria"
+						src="https://www.google.com/maps?q=25+de+Mayo+372,+Mor%C3%B3n,+Buenos+Aires&output=embed"
+						loading="lazy"
+						style={{ width: "100%", minHeight: 340 }}
+					/>
+				</Card>
+			</div>
 		</section>
 	);
 }
