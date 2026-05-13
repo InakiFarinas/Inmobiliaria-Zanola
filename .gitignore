@@ -1,7 +1,3 @@
-# Ignorar imágenes de propiedades, pero subir la carpeta vacía
-/public/images/propiedades/*
-!/public/images/propiedades/
-
 # Dependencias y build del frontend React/Vite
 /node_modules/
 /dist/
