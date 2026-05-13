@@ -51,8 +51,10 @@ export const mockProperties = [
 		descripcion:
 			"Departamento de tres ambientes en edificio de categoría, ubicado en una zona tranquila y cercana a servicios.",
 		imagenes: [
-			"/images/propiedades/propiedad1.jpg",
-			"/images/propiedades/propiedad2.jpg",
+			new URL("/images/propiedades/propiedad1.jpg", import.meta.env.BASE_URL)
+				.href,
+			new URL("/images/propiedades/propiedad2.jpg", import.meta.env.BASE_URL)
+				.href,
 		],
 	},
 	{
@@ -74,8 +76,10 @@ export const mockProperties = [
 		descripcion:
 			"Casa en alquiler con tres dormitorios, patio y cochera, ideal para familia.",
 		imagenes: [
-			"/images/propiedades/propiedad3.webp",
-			"/images/propiedades/propiedad4.jpg",
+			new URL("/images/propiedades/propiedad3.webp", import.meta.env.BASE_URL)
+				.href,
+			new URL("/images/propiedades/propiedad4.jpg", import.meta.env.BASE_URL)
+				.href,
 		],
 	},
 	{
@@ -96,7 +100,10 @@ export const mockProperties = [
 		antiguedad: 6,
 		descripcion:
 			"Monoambiente en alquiler en una ubicación céntrica, práctico y funcional para vivir o invertir.",
-		imagenes: ["/images/propiedades/propiedad5.jpg"],
+		imagenes: [
+			new URL("/images/propiedades/propiedad5.jpg", import.meta.env.BASE_URL)
+				.href,
+		],
 	},
 	{
 		id_propiedad: 104,
@@ -116,7 +123,10 @@ export const mockProperties = [
 		antiguedad: 10,
 		descripcion:
 			"Departamento en venta en Morón Sur, con buena luz natural y una distribución cómoda para uso diario.",
-		imagenes: ["/images/propiedades/propiedad6.jpg"],
+		imagenes: [
+			new URL("/images/propiedades/propiedad6.jpg", import.meta.env.BASE_URL)
+				.href,
+		],
 	},
 	{
 		id_propiedad: 105,
@@ -136,7 +146,10 @@ export const mockProperties = [
 		antiguedad: 7,
 		descripcion:
 			"Local en alquiler con frente sobre calle activa, útil para comercio barrial o estudio profesional.",
-		imagenes: ["/images/propiedades/propiedad1.jpg"],
+		imagenes: [
+			new URL("/images/propiedades/propiedad1.jpg", import.meta.env.BASE_URL)
+				.href,
+		],
 	},
 ];
 
