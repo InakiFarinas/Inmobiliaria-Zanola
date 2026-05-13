@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Card from "../ui/Card";
+import { getImageUrl } from "../../lib/mockData";
 
 export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 	const [currentIndex, setCurrentIndex] = useState(0);
@@ -58,7 +59,7 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 
 					<img
 						className="h-full w-full object-cover"
-						src={currentImage}
+						src={getImageUrl(currentImage)}
 						alt={`${title} - imagen ${currentIndex + 1}`}
 					/>
 
@@ -101,7 +102,7 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 							aria-label={`Ver imagen ${index + 1}`}
 						>
 							<img
-								src={image}
+								src={getImageUrl(image)}
 								alt={`${title} miniatura ${index + 1}`}
 								className="aspect-[4/3] w-full object-cover"
 							/>

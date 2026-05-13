@@ -21,6 +21,21 @@ function svgDataUri({ title, subtitle, background, accent }) {
 	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
 
+/**
+ * Resolve image URLs with proper base path handling for deployment environments.
+ * @param {string} imagePath - Relative or absolute image path (e.g., '/images/propiedades/propiedad1.jpg')
+ * @returns {string} Full URL with base path applied
+ */
+export function getImageUrl(imagePath) {
+	const base = import.meta.env.BASE_URL || "/";
+	try {
+		return new URL(imagePath, `${window.location.origin}${base}`).href;
+	} catch {
+		// Fallback if URL construction fails; return path as-is
+		return imagePath;
+	}
+}
+
 export const mockCities = [
 	{ id_ciudad: 1, nombre: "Morón Sur" },
 	{ id_ciudad: 2, nombre: "Morón Centro" },
@@ -51,10 +66,8 @@ export const mockProperties = [
 		descripcion:
 			"Departamento de tres ambientes en edificio de categoría, ubicado en una zona tranquila y cercana a servicios.",
 		imagenes: [
-			new URL("/images/propiedades/propiedad1.jpg", import.meta.env.BASE_URL)
-				.href,
-			new URL("/images/propiedades/propiedad2.jpg", import.meta.env.BASE_URL)
-				.href,
+			"/images/propiedades/propiedad1.jpg",
+			"/images/propiedades/propiedad2.jpg",
 		],
 	},
 	{
@@ -76,10 +89,8 @@ export const mockProperties = [
 		descripcion:
 			"Casa en alquiler con tres dormitorios, patio y cochera, ideal para familia.",
 		imagenes: [
-			new URL("/images/propiedades/propiedad3.webp", import.meta.env.BASE_URL)
-				.href,
-			new URL("/images/propiedades/propiedad4.jpg", import.meta.env.BASE_URL)
-				.href,
+			"/images/propiedades/propiedad3.webp",
+			"/images/propiedades/propiedad4.jpg",
 		],
 	},
 	{
@@ -100,10 +111,7 @@ export const mockProperties = [
 		antiguedad: 6,
 		descripcion:
 			"Monoambiente en alquiler en una ubicación céntrica, práctico y funcional para vivir o invertir.",
-		imagenes: [
-			new URL("/images/propiedades/propiedad5.jpg", import.meta.env.BASE_URL)
-				.href,
-		],
+		imagenes: ["/images/propiedades/propiedad5.jpg"],
 	},
 	{
 		id_propiedad: 104,
@@ -123,10 +131,7 @@ export const mockProperties = [
 		antiguedad: 10,
 		descripcion:
 			"Departamento en venta en Morón Sur, con buena luz natural y una distribución cómoda para uso diario.",
-		imagenes: [
-			new URL("/images/propiedades/propiedad6.jpg", import.meta.env.BASE_URL)
-				.href,
-		],
+		imagenes: ["/images/propiedades/propiedad6.jpg"],
 	},
 	{
 		id_propiedad: 105,
@@ -146,10 +151,7 @@ export const mockProperties = [
 		antiguedad: 7,
 		descripcion:
 			"Local en alquiler con frente sobre calle activa, útil para comercio barrial o estudio profesional.",
-		imagenes: [
-			new URL("/images/propiedades/propiedad1.jpg", import.meta.env.BASE_URL)
-				.href,
-		],
+		imagenes: ["/images/propiedades/propiedad1.jpg"],
 	},
 ];
 

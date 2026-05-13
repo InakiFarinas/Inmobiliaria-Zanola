@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { getImageUrl } from "../../lib/mockData";
 
 export default function PropertyImageCarousel({
 	images = [],
@@ -10,7 +11,9 @@ export default function PropertyImageCarousel({
 	featured = false,
 }) {
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const displayedImage = images[currentIndex] || null;
+	const displayedImage = images[currentIndex]
+		? getImageUrl(images[currentIndex])
+		: null;
 
 	const handlePrev = () => {
 		setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
