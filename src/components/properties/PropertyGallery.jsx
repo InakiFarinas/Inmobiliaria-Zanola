@@ -61,6 +61,8 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 						className="h-full w-full object-cover"
 						src={getImageUrl(currentImage)}
 						alt={`${title} - imagen ${currentIndex + 1}`}
+						width="1200"
+						height="900"
 					/>
 
 					{hasMultipleImages ? (
@@ -104,6 +106,8 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 							<img
 								src={getImageUrl(image)}
 								alt={`${title} miniatura ${index + 1}`}
+								width="400"
+								height="300"
 								className="aspect-[4/3] w-full object-cover"
 							/>
 						</button>

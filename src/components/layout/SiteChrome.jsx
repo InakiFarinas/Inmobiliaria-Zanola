@@ -31,6 +31,8 @@ export default function SiteChrome({
 					<img
 						src="/images/icons/logocompleto.png"
 						alt="Zanola Inmobiliaria"
+						width="210"
+						height="96"
 						decoding="async"
 					/>
 				</Link>
@@ -93,6 +95,8 @@ export default function SiteChrome({
 								src="/images/icons/logocompleto.png"
 								alt="Zanola Inmobiliaria"
 								className="w-[140px] max-w-full"
+								width="420"
+								height="96"
 								decoding="async"
 							/>
 							<p className="max-w-[28ch] text-[1.08rem] leading-8 text-white/72">

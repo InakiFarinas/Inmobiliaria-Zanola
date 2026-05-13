@@ -89,6 +89,8 @@ export default function HomeHero({
 							<img
 								src={heroProperties[0].imagenes[0]}
 								alt={heroProperties[0].ciudad}
+								width="1200"
+								height="800"
 								className="h-full w-full object-cover"
 							/>
 						) : (
@@ -108,6 +110,8 @@ export default function HomeHero({
 								<img
 									src={property.imagenes[0]}
 									alt={property.ciudad}
+									width="1200"
+									height="800"
 									className="h-full w-full object-cover"
 								/>
 								<div className="absolute bottom-3 left-3 right-3 grid gap-0.5 rounded-2xl bg-black/80 px-3 py-2 text-white backdrop-blur-md">
