@@ -72,7 +72,7 @@ export default function ContactPage() {
 	};
 
 	return (
-		<section className="mx-auto w-[min(1180px,calc(100%_-_32px))] pt-6">
+		<section className="mx-auto w-[min(1180px,calc(100%_-_24px))] md:w-[min(1180px,calc(100%_-_32px))] pt-4 md:pt-6">
 			<SectionHeader
 				className="mb-4"
 				kicker="Contacto"
@@ -81,7 +81,7 @@ export default function ContactPage() {
 				description="Te respondemos a la brevedad en horario comercial."
 			/>
 
-			<div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(320px,0.9fr)]">
+			<div className="grid items-start gap-4 md:gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.9fr)]">
 				<Card
 					as="form"
 					className="grid gap-4"

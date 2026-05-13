@@ -137,7 +137,7 @@ export default function PropertiesPage() {
 	};
 
 	return (
-		<section className="mx-auto w-[min(1180px,calc(100%_-_32px))] pt-6">
+		<section className="mx-auto w-[min(1180px,calc(100%_-_24px))] md:w-[min(1180px,calc(100%_-_32px))] pt-4 md:pt-6">
 			<SectionHeader
 				align="inline"
 				kicker="Explora"
@@ -145,7 +145,7 @@ export default function PropertiesPage() {
 				description="Filtrá por tipo, ciudad, presupuesto y características clave."
 			/>
 
-			<div className="grid gap-6 xl:grid-cols-[280px_1fr] xl:items-start">
+			<div className="grid gap-4 md:gap-6 lg:grid-cols-[280px_1fr] lg:items-start">
 				<PropertyFilters
 					values={filters}
 					onChange={handleChange}

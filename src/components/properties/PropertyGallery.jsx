@@ -92,7 +92,7 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 			</div>
 
 			{hasMultipleImages ? (
-				<div className="grid grid-cols-4 gap-3 md:grid-cols-4">
+				<div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
 					{images.map((image, index) => (
 						<button
 							key={image + index}

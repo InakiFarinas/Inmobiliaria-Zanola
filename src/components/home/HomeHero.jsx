@@ -15,7 +15,7 @@ export default function HomeHero({
 
 	return (
 		<section className="h-[calc(100vh-var(--header-height))] overflow-hidden bg-[var(--accent)]">
-			<div className="grid h-full gap-6 p-4 xl:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] xl:grid-rows-[1fr_auto] xl:gap-x-8 xl:p-10">
+			<div className="grid h-full gap-4 md:gap-6 p-4 md:p-6 xl:p-10 xl:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] xl:grid-rows-[1fr_auto] xl:gap-x-8">
 				<div className="flex min-w-0 flex-col justify-start gap-6 rounded-none border-0 bg-transparent p-0 shadow-none xl:col-start-1 xl:row-start-1 xl:pr-2">
 					<span className="inline-flex w-fit rounded-full bg-white/25 px-4 py-2 text-sm font-bold uppercase tracking-[0.08em] text-white">
 						Morón · Buenos Aires

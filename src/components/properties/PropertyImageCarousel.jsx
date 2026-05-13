@@ -46,7 +46,7 @@ export default function PropertyImageCarousel({
 			</Link>
 
 			{/* Badge Estado */}
-			<span className="absolute right-3 top-3 rounded-full bg-[var(--surface)] px-3 py-1 text-xs font-bold uppercase text-[var(--accent)]">
+			<span className="absolute right-2 md:right-3 top-2 md:top-3 rounded-full bg-[var(--surface)] px-2 md:px-3 py-1 text-xs font-bold uppercase text-[var(--accent)]">
 				{stateLabel}
 			</span>
 
@@ -56,12 +56,12 @@ export default function PropertyImageCarousel({
 					{/* Flechas navegación */}
 					<button
 						onClick={handlePrev}
-						className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-[var(--text)] transition hover:bg-white"
+						className="absolute left-1 md:left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/75 md:bg-white/80 p-1.5 md:p-2 text-[var(--text)] transition hover:bg-white"
 						aria-label="Imagen anterior"
 					>
 						<svg
-							width="20"
-							height="20"
+							width="18"
+							height="18"
 							viewBox="0 0 24 24"
 							fill="none"
 							stroke="currentColor"
@@ -72,12 +72,12 @@ export default function PropertyImageCarousel({
 					</button>
 					<button
 						onClick={handleNext}
-						className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-[var(--text)] transition hover:bg-white"
+						className="absolute right-1 md:right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/75 md:bg-white/80 p-1.5 md:p-2 text-[var(--text)] transition hover:bg-white"
 						aria-label="Siguiente imagen"
 					>
 						<svg
-							width="20"
-							height="20"
+							width="18"
+							height="18"
 							viewBox="0 0 24 24"
 							fill="none"
 							stroke="currentColor"
@@ -88,12 +88,12 @@ export default function PropertyImageCarousel({
 					</button>
 
 					{/* Dots indicadores */}
-					<div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
+					<div className="absolute bottom-2 md:bottom-3 left-1/2 flex -translate-x-1/2 gap-1">
 						{images.map((_, index) => (
 							<button
 								key={index}
 								onClick={() => setCurrentIndex(index)}
-								className={`h-2 w-2 rounded-full transition ${
+								className={`h-1.5 md:h-2 w-1.5 md:w-2 rounded-full transition ${
 									index === currentIndex
 										? "bg-white"
 										: "bg-white/50 hover:bg-white/75"

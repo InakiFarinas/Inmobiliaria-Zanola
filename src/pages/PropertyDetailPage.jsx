@@ -79,8 +79,8 @@ export default function PropertyDetailPage() {
 	}
 
 	return (
-		<section className="mx-auto w-[min(1180px,calc(100%_-_32px))] pt-6">
-			<div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+		<section className="mx-auto w-[min(1180px,calc(100%_-_24px))] md:w-[min(1180px,calc(100%_-_32px))] pt-4 md:pt-6">
+			<div className="mb-4 md:mb-6 flex flex-wrap items-end justify-between gap-3 md:gap-4">
 				<div className="grid gap-3">
 					<div className="text-sm text-[var(--muted)]">
 						<Link to="/">Inicio</Link>
@@ -107,7 +107,7 @@ export default function PropertyDetailPage() {
 				</Link>
 			</div>
 
-			<div className="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_minmax(360px,0.8fr)] xl:items-start">
+			<div className="grid gap-4 md:gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(360px,0.8fr)] lg:items-start">
 				<div className="grid gap-6">
 					<PropertyGallery images={property.imagenes} title={address} />
 
@@ -129,7 +129,7 @@ export default function PropertyDetailPage() {
 					</Card>
 				</div>
 
-				<div className="grid gap-6 xl:sticky xl:top-6">
+				<div className="grid gap-4 md:gap-6 lg:sticky lg:top-6">
 					<Card as="aside" className="grid gap-4" padding="md">
 						<div className="grid gap-1">
 							<span className="text-sm text-[var(--muted)]">

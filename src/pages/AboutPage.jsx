@@ -4,14 +4,14 @@ import WhatsAppButton from "../components/ui/WhatsAppButton";
 
 export default function AboutPage() {
 	return (
-		<section className="mx-auto w-[min(1180px,calc(100%_-_32px))] pt-6">
+		<section className="mx-auto w-[min(1180px,calc(100%_-_24px))] md:w-[min(1180px,calc(100%_-_32px))] pt-4 md:pt-6">
 			<SectionHeader
 				kicker="Nosotros"
 				title="Sobre Zanola Inmobiliaria"
 				titleAs="h1"
 			/>
 
-			<div className="grid gap-4 xl:grid-cols-3">
+			<div className="grid gap-3 md:gap-4 md:grid-cols-2 xl:grid-cols-3">
 				<Card
 					as="article"
 					className="mx-auto grid max-w-[880px] gap-3 text-center"

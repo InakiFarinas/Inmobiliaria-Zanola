@@ -5,7 +5,7 @@ import { LocationIcon, PhoneIcon, MailIcon } from "../ui/ContactIcons";
 
 const linkClassName = ({ isActive }) =>
 	[
-		"rounded-full px-3 py-2 text-white/90 transition-colors transition-transform duration-200 hover:bg-white/20 hover:text-white",
+		"rounded-full px-3 py-2 text-sm md:text-base text-white/90 transition-colors transition-transform duration-200 hover:bg-white/20 hover:text-white",
 		isActive ? "bg-white/20 text-white" : "",
 	].join(" ");
 
@@ -17,15 +17,15 @@ export default function SiteChrome({
 }) {
 	const navClassName = [
 		menuOpen ? "flex" : "hidden",
-		"absolute left-0 right-0 top-[var(--header-height)] z-40 flex-col gap-3 bg-[var(--accent)] px-[18px] pb-[18px] pt-3 md:static md:z-auto md:flex md:flex-row md:justify-center md:gap-2.5 md:bg-transparent md:p-0",
+		"absolute left-0 right-0 top-[var(--header-height)] z-40 flex-col gap-2.5 bg-[var(--accent)] px-3 pb-3 pt-2 md:static md:z-auto md:order-2 md:flex md:flex-row md:justify-center md:gap-2.5 md:bg-transparent md:p-0",
 	].join(" ");
 
 	return (
 		<div className="flex min-h-screen flex-col">
-			<header className="sticky top-0 z-20 grid h-[var(--header-height)] grid-cols-[auto,1fr,auto] items-center gap-4 bg-[var(--accent)] px-4 text-white shadow-[0_18px_36px_rgba(26,26,26,0.12)] backdrop-blur-[20px] max-[1080px]:grid-cols-1 max-[1080px]:justify-items-center">
+			<header className="sticky top-0 z-20 grid h-[var(--header-height)] grid-cols-[1fr,auto] md:grid-cols-[auto,1fr,auto] items-center gap-3 md:gap-4 bg-[var(--accent)] px-3 md:px-4 text-white shadow-[0_18px_36px_rgba(26,26,26,0.12)] backdrop-blur-[20px]">
 				<Link
 					to="/"
-					className="inline-flex min-w-0 items-center gap-3"
+					className="inline-flex min-w-0 items-center gap-3 md:order-1"
 					aria-label="Zanola Inmobiliaria"
 				>
 					<img
@@ -36,14 +36,14 @@ export default function SiteChrome({
 				</Link>
 
 				<button
-					className="inline-flex h-11 w-11 items-center justify-center border-0 bg-transparent md:hidden"
+					className="inline-flex h-10 w-10 items-center justify-center border-0 bg-transparent md:hidden md:order-2"
 					aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
 					aria-expanded={menuOpen}
 					onClick={onToggleMenu}
 				>
 					<span
 						aria-hidden="true"
-						className="relative block h-[2px] w-[22px] bg-white before:absolute before:left-0 before:top-[-7px] before:h-[2px] before:w-[22px] before:bg-white after:absolute after:left-0 after:top-[7px] after:h-[2px] after:w-[22px] after:bg-white"
+						className="relative block h-[2px] w-5 bg-white before:absolute before:left-0 before:top-[-6px] before:h-[2px] before:w-5 before:bg-white after:absolute after:left-0 after:top-[6px] after:h-[2px] after:w-5 after:bg-white"
 					/>
 				</button>
 
@@ -76,7 +76,7 @@ export default function SiteChrome({
 
 				<WhatsAppButton
 					message="Hola, quisiera que me contacten."
-					className="justify-center whitespace-nowrap px-4"
+					className="hidden md:inline-flex md:order-3 justify-center whitespace-nowrap px-4"
 					onClick={onCloseMenu}
 				>
 					WhatsApp

@@ -10,7 +10,11 @@ export default function PropertyFilters({
 	const { cities = [], types = [], states = [] } = options;
 
 	return (
-		<Card as="aside" className="sticky top-[110px] p-5" padding="none">
+		<Card
+			as="aside"
+			className="lg:sticky lg:top-[110px] p-4 md:p-5"
+			padding="none"
+		>
 			<form className="grid gap-4" onSubmit={onSubmit}>
 				<div>
 					<span className="inline-flex w-fit rounded-full bg-[color:var(--accent-soft)] px-3 py-1 text-xs font-extrabold uppercase tracking-[0.08em] text-[color:var(--accent)]">

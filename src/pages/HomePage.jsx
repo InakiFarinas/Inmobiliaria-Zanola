@@ -72,12 +72,12 @@ export default function HomePage() {
 				latest={latest}
 			/>
 
-			<section className="mt-6 w-full p-10">
+			<section className="mt-6 w-full p-6 md:p-10">
 				<SectionHeader
 					kicker="Por qué elegirnos"
 					title="Propiedades y contacto en un solo lugar"
 				/>
-				<div className="grid gap-4 xl:grid-cols-3">
+				<div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
 					{heroPoints.map((item) => (
 						<article
 							className="grid gap-3 rounded-[28px] border border-[color:var(--line)] border-l-[4px] border-l-[color:var(--accent)] bg-[var(--surface)] p-6 shadow-[var(--shadow)] backdrop-blur-[18px]"
@@ -115,7 +115,7 @@ export default function HomePage() {
 				/>
 
 				{latest.length > 0 ? (
-					<div className="grid gap-12 xl:grid-cols-3">
+					<div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
 						{latest.map((property) => (
 							<PropertyCard key={property.id_propiedad} property={property} />
 						))}
@@ -127,27 +127,27 @@ export default function HomePage() {
 				)}
 			</section>
 
-			<section className="mx-auto w-[min(1180px,calc(100%_-_32px))] py-12">
-				<div className="rounded-[28px] bg-[var(--accent)] p-6 text-white md:flex md:items-center md:justify-between md:gap-8 md:p-10">
+			<section className="mx-auto w-[min(1180px,calc(100%_-_24px))] md:w-[min(1180px,calc(100%_-_32px))] py-8 md:py-12">
+				<div className="rounded-[28px] bg-[var(--accent)] p-6 md:p-10 text-white md:flex md:items-center md:justify-between md:gap-8">
 					<div className="mb-6 md:mb-0 md:flex-1">
-						<h2 className="m-0 font-serif text-[1.8rem] font-bold leading-tight">
+						<h2 className="m-0 font-serif text-2xl md:text-3xl font-bold leading-tight">
 							¿Tenés una propiedad para publicar?
 						</h2>
 						<p className="m-0 mt-2 text-white/80">
 							Te ayudamos a encontrar el mejor comprador o inquilino.
 						</p>
 					</div>
-					<div className="flex flex-wrap gap-3">
+					<div className="flex flex-wrap gap-2 md:gap-3">
 						<Button
 							to="/"
 							variant="ghost"
-							className="border border-white/30 hover:bg-white/10"
+							className="border border-white/30 hover:bg-white/10 text-sm md:text-base"
 						>
 							Ver más info
 						</Button>
 						<WhatsAppButton
 							message="Hola, quisiera publicar una propiedad."
-							className="!bg-white !text-[var(--accent)] px-4"
+							className="!bg-white !text-[var(--accent)] px-3 md:px-4 text-sm md:text-base"
 						>
 							Escribinos
 						</WhatsAppButton>

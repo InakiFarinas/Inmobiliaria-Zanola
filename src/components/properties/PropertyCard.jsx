@@ -59,7 +59,7 @@ export default function PropertyCard({ property, featured = false }) {
 
 	return (
 		<article
-			className={`overflow-hidden rounded-2xl bg-white shadow-lg transition-transform hover:-translate-y-1 ${featured ? "md:col-span-2" : ""}`}
+			className={`overflow-hidden rounded-xl md:rounded-2xl bg-white shadow-md md:shadow-lg transition-transform hover:-translate-y-1 ${featured ? "md:col-span-2" : ""}`}
 		>
 			<PropertyImageCarousel
 				images={images}
@@ -70,11 +70,14 @@ export default function PropertyCard({ property, featured = false }) {
 				featured={featured}
 			/>
 
-			<Link to={`/propiedad/${property.id_propiedad}`} className="block p-4">
-				<div className="text-4xl font-black text-[var(--text)]">
+			<Link
+				to={`/propiedad/${property.id_propiedad}`}
+				className="block p-3 md:p-4"
+			>
+				<div className="text-3xl md:text-4xl font-black text-[var(--text)]">
 					{getPriceLabel(property)}
 				</div>
-				<h3 className="mt-2 text-lg font-bold">
+				<h3 className="mt-2 text-base md:text-lg font-bold">
 					{property.ciudad
 						? `${property.ciudad}, ${property.calle} ${property.altura}`
 						: property.calle}
