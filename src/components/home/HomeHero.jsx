@@ -2,6 +2,7 @@
 import Card from "../ui/Card";
 import FormField from "../ui/FormField";
 import WhatsAppButton from "../ui/WhatsAppButton";
+import { Link } from "react-router-dom";
 
 export default function HomeHero({
 	cities = [],
@@ -52,8 +53,8 @@ export default function HomeHero({
 						onChange={(event) => onFormChange("ciudad", event.target.value)}
 					>
 						<option value="">Todas las ciudades</option>
-						{cities.map((city) => (
-							<option key={city.id_ciudad} value={city.id_ciudad}>
+						{cities.map((city, idx) => (
+							<option key={`${city.id_ciudad}-${idx}`} value={city.id_ciudad}>
 								{city.nombre}
 							</option>
 						))}
@@ -65,8 +66,8 @@ export default function HomeHero({
 						onChange={(event) => onFormChange("estado", event.target.value)}
 					>
 						<option value="">Seleccionar...</option>
-						{states.map((state) => (
-							<option key={state} value={state}>
+						{states.map((state, idx) => (
+							<option key={`${state}-${idx}`} value={state}>
 								{state}
 							</option>
 						))}
@@ -84,8 +85,12 @@ export default function HomeHero({
 				</Card>
 
 				<div className="grid gap-3 xl:col-start-2 xl:row-span-2 xl:grid-rows-[minmax(0,1fr)_minmax(0,0.55fr)_auto]">
-					<div className="relative min-h-[240px] overflow-hidden rounded-[22px] bg-white/5 shadow-[0_20px_45px_rgba(0,0,0,0.22)] xl:min-h-0 xl:row-span-1">
-						{heroProperties[0] ? (
+					{heroProperties[0] ? (
+						<Link
+							to={`/propiedad/${heroProperties[0].id_propiedad}`}
+							className="relative min-h-[240px] overflow-hidden rounded-[22px] bg-white/5 shadow-[0_20px_45px_rgba(0,0,0,0.22)] transition-transform duration-200 hover:-translate-y-0.5 xl:min-h-0 xl:row-span-1"
+							aria-label={`Ver propiedad en ${heroProperties[0].ciudad}`}
+						>
 							<img
 								src={heroProperties[0].imagenes[0]}
 								alt={heroProperties[0].ciudad}
@@ -93,19 +98,34 @@ export default function HomeHero({
 								height="800"
 								className="h-full w-full object-cover"
 							/>
-						) : (
+							<div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-2 text-[0.78rem] font-extrabold text-[var(--text)]">
+								Destacada
+							</div>
+							<div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent p-4 text-white">
+								<p className="m-0 text-sm font-bold">
+									{heroProperties[0].calle}
+								</p>
+								<p className="m-0 text-xs text-white/75">
+									{heroProperties[0].ciudad}
+								</p>
+							</div>
+						</Link>
+					) : (
+						<div className="relative min-h-[240px] overflow-hidden rounded-[22px] bg-white/5 shadow-[0_20px_45px_rgba(0,0,0,0.22)] xl:min-h-0 xl:row-span-1">
 							<div className="h-full bg-[linear-gradient(135deg,rgba(140,140,140,0.12),rgba(110,110,110,0.1))]" />
-						)}
-						<div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-2 text-[0.78rem] font-extrabold text-[var(--text)]">
-							Destacada
+							<div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-2 text-[0.78rem] font-extrabold text-[var(--text)]">
+								Destacada
+							</div>
 						</div>
-					</div>
+					)}
 
 					<div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:row-span-1">
 						{heroProperties.slice(1, 3).map((property) => (
-							<div
-								className="relative min-h-[190px] overflow-hidden rounded-[22px] bg-white/5 shadow-[0_20px_45px_rgba(0,0,0,0.22)]"
+							<Link
+								to={`/propiedad/${property.id_propiedad}`}
+								className="relative min-h-[190px] overflow-hidden rounded-[22px] bg-white/5 shadow-[0_20px_45px_rgba(0,0,0,0.22)] transition-transform duration-200 hover:-translate-y-0.5"
 								key={property.id_propiedad}
+								aria-label={`Ver propiedad en ${property.ciudad}, ${property.calle}`}
 							>
 								<img
 									src={property.imagenes[0]}
@@ -120,7 +140,7 @@ export default function HomeHero({
 										{property.ciudad}
 									</span>
 								</div>
-							</div>
+							</Link>
 						))}
 					</div>
 
