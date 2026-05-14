@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/ui/Button";
 import Card from "../../components/ui/Card";
@@ -71,18 +71,18 @@ export default function AdminPropertyForm() {
 			});
 	}, [id, isEditing]);
 
-	function handleChange(e) {
+	const handleChange = useCallback((e) => {
 		const { name, type, value, checked } = e.target;
 		setForm((f) => ({ ...f, [name]: type === "checkbox" ? checked : value }));
-	}
+	}, []);
 
-	function handleFileChange(e) {
+	const handleFileChange = useCallback((e) => {
 		setNewFiles(Array.from(e.target.files));
-	}
+	}, []);
 
-	function removeExistingImage(url) {
+	const removeExistingImage = useCallback((url) => {
 		setImages((imgs) => imgs.filter((i) => i !== url));
-	}
+	}, []);
 
 	async function uploadImages() {
 		if (newFiles.length === 0) return [];

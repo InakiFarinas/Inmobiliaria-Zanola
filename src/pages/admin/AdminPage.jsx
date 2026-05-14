@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button";
 import Card from "../../components/ui/Card";
@@ -8,7 +9,7 @@ import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../lib/api";
 
 // Componente memoizado para cada propiedad
-const PropertyRow = ({ property, onToggle, onDelete, onEdit }) => (
+const PropertyRow = memo(({ property, onToggle, onDelete, onEdit }) => (
 	<Card
 		key={property.id_propiedad}
 		padding="md"
@@ -59,7 +60,7 @@ const PropertyRow = ({ property, onToggle, onDelete, onEdit }) => (
 			</Button>
 		</div>
 	</Card>
-);
+));
 
 const ITEMS_PER_PAGE = 10;
 
