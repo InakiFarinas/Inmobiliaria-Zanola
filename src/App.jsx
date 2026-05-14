@@ -1,10 +1,11 @@
 import { lazy, Suspense } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const PropertiesPage = lazy(() => import("./pages/PropertiesPage"));
 const PropertyDetailPage = lazy(() => import("./pages/PropertyDetailPage"));
 
@@ -24,7 +25,7 @@ export default function App() {
 					<Route path="/propiedad/:id" element={<PropertyDetailPage />} />
 					<Route path="/nosotros" element={<AboutPage />} />
 					<Route path="/contacto" element={<ContactPage />} />
-					<Route path="*" element={<Navigate to="/" replace />} />
+					<Route path="*" element={<NotFoundPage />} />
 				</Routes>
 			</Suspense>
 		</Layout>

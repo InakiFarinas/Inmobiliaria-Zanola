@@ -1,225 +1,115 @@
-import {
-	getMockPropertyById,
-	mockCities,
-	mockProperties,
-	mockStates,
-	mockTypes,
-} from "./mockData";
-import { toSearchableText, toNumber } from "./utils";
+import { createClient } from "@supabase/supabase-js";
 
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "").replace(
-	/\/$/,
-	"",
+export const supabase = createClient(
+	import.meta.env.VITE_SUPABASE_URL,
+	import.meta.env.VITE_SUPABASE_ANON_KEY,
 );
-const HAS_API = Boolean(API_BASE_URL);
 
-function buildUrl(path, params) {
-	const url = new URL(`${API_BASE_URL}${path}`, window.location.origin);
-	Object.entries(params || {}).forEach(([key, value]) => {
-		if (value === undefined || value === null || value === "") {
-			return;
-		}
-		url.searchParams.set(key, value);
-	});
-	return url.toString();
-}
+export async function getProperties(searchParams) {
+	let query = supabase
+		.from("propiedades")
+		.select("*")
+		.eq("activa", true)
+		.order("created_at", { ascending: false });
 
-async function fetchJson(path, params) {
-	const response = await fetch(buildUrl(path, params));
-	if (!response.ok) {
-		throw new Error(`HTTP ${response.status} ${response.statusText}`);
-	}
-	const data = await response.json();
+	const ciudad = searchParams.get("ciudad");
+	const tipo = searchParams.get("tipo");
+	const estado = searchParams.get("estado");
+	const precio_max = searchParams.get("precio_max");
+	const precio_min = searchParams.get("precio_min");
+	const ambientes = searchParams.get("ambientes");
+	const dormitorios = searchParams.get("dormitorios");
+	const superficie_min = searchParams.get("superficie_min");
+	const superficie_max = searchParams.get("superficie_max");
+	const garaje = searchParams.get("garaje");
+
+	if (ciudad) query = query.eq("ciudad", ciudad);
+	if (tipo) query = query.eq("tipo", tipo);
+	if (estado) query = query.eq("estado", estado);
+	if (precio_min) query = query.gte("precio", Number(precio_min));
+	if (precio_max) query = query.lte("precio", Number(precio_max));
+	if (ambientes) query = query.eq("ambientes", Number(ambientes));
+	if (dormitorios) query = query.eq("dormitorios", Number(dormitorios));
+	if (superficie_min) query = query.gte("superficie", Number(superficie_min));
+	if (superficie_max) query = query.lte("superficie", Number(superficie_max));
+	if (garaje === "1") query = query.eq("garaje", true);
+
+	const { data, error } = await query;
+	if (error) throw error;
 	return data;
 }
 
-export function normalizeProperty(property) {
-	return {
-		...property,
-		id_propiedad: toNumber(property.id_propiedad),
-		precio: toNumber(property.precio),
-		ambientes: toNumber(property.ambientes),
-		dormitorios: toNumber(property.dormitorios),
-		garaje: toNumber(property.garaje),
-		baños: toNumber(property.baños ?? property.banos),
-		superficie: toNumber(property.superficie),
-		antiguedad: toNumber(property.antiguedad),
-		id_ciudad: toNumber(property.id_ciudad),
-		imagenes: Array.isArray(property.imagenes) ? property.imagenes : [],
-	};
-}
-
-export async function getLatestProperties(limit = 5) {
-	if (!HAS_API) {
-		return mockProperties.slice(0, limit).map(normalizeProperty);
-	}
-
-	try {
-		const data = await fetchJson("/controladores/obtenerPropiedad.php", {
-			ultimas: limit,
-		});
-		const normalized = Array.isArray(data) ? data.map(normalizeProperty) : [];
-		return normalized.length > 0
-			? normalized.slice(0, limit)
-			: mockProperties.slice(0, limit).map(normalizeProperty);
-	} catch (error) {
-		console.warn("Using mock properties for latest list", error);
-		return mockProperties.slice(0, limit).map(normalizeProperty);
-	}
-}
-
-export async function getProperties(filters = {}) {
-	if (HAS_API) {
-		try {
-			const data = await fetchJson(
-				"/controladores/obtenerPropiedad.php",
-				filters,
-			);
-			if (Array.isArray(data)) {
-				return data.map(normalizeProperty);
-			}
-		} catch (error) {
-			console.warn("Using mock properties for list", error);
-		}
-	}
-
-	const searchableFilters = {
-		tipo: toSearchableText(filters.tipo),
-		estado: toSearchableText(filters.estado),
-		ciudad: toSearchableText(filters.ciudad),
-		ambientes: filters.ambientes ? Number(filters.ambientes) : null,
-		dormitorios: filters.dormitorios ? Number(filters.dormitorios) : null,
-		baños: filters.baños ? Number(filters.baños) : null,
-		antiguedad: filters.antiguedad ? Number(filters.antiguedad) : null,
-		garaje: filters.garaje ? true : null,
-		precio_min: filters.precio_min ? Number(filters.precio_min) : null,
-		precio_max: filters.precio_max ? Number(filters.precio_max) : null,
-		superficie_min: filters.superficie_min
-			? Number(filters.superficie_min)
-			: null,
-		superficie_max: filters.superficie_max
-			? Number(filters.superficie_max)
-			: null,
-	};
-
-	return mockProperties.map(normalizeProperty).filter((property) => {
-		if (
-			searchableFilters.tipo &&
-			!toSearchableText(property.tipo).includes(searchableFilters.tipo)
-		)
-			return false;
-		if (
-			searchableFilters.estado &&
-			!toSearchableText(property.estado).includes(searchableFilters.estado)
-		)
-			return false;
-		if (
-			searchableFilters.ciudad &&
-			!toSearchableText(property.ciudad).includes(searchableFilters.ciudad)
-		)
-			return false;
-		if (
-			searchableFilters.ambientes !== null &&
-			property.ambientes !== searchableFilters.ambientes
-		)
-			return false;
-		if (
-			searchableFilters.dormitorios !== null &&
-			property.dormitorios !== searchableFilters.dormitorios
-		)
-			return false;
-		if (
-			searchableFilters.baños !== null &&
-			property.baños !== searchableFilters.baños
-		)
-			return false;
-		if (
-			searchableFilters.antiguedad !== null &&
-			property.antiguedad !== searchableFilters.antiguedad
-		)
-			return false;
-		if (
-			searchableFilters.garaje !== null &&
-			Boolean(property.garaje) !== searchableFilters.garaje
-		)
-			return false;
-		if (
-			searchableFilters.precio_min !== null &&
-			property.precio < searchableFilters.precio_min
-		)
-			return false;
-		if (
-			searchableFilters.precio_max !== null &&
-			property.precio > searchableFilters.precio_max
-		)
-			return false;
-		if (
-			searchableFilters.superficie_min !== null &&
-			property.superficie < searchableFilters.superficie_min
-		)
-			return false;
-		if (
-			searchableFilters.superficie_max !== null &&
-			property.superficie > searchableFilters.superficie_max
-		)
-			return false;
-		return true;
-	});
-}
-
 export async function getPropertyById(id) {
-	if (HAS_API) {
-		try {
-			const data = await fetchJson(
-				"/controladores/obtenerPropiedadDetalle.php",
-				{
-					id,
-				},
-			);
-			if (data && !data.error) {
-				return normalizeProperty(data);
-			}
-		} catch (error) {
-			console.warn("Using mock property detail", error);
-		}
-	}
+	const { data, error } = await supabase
+		.from("propiedades")
+		.select("*")
+		.eq("id_propiedad", id)
+		.single();
 
-	const mockProperty = getMockPropertyById(id);
-	if (!mockProperty) {
-		throw new Error("Propiedad no encontrada");
-	}
-	return normalizeProperty(mockProperty);
+	if (error) throw error;
+	return data;
+}
+
+export async function getFeaturedProperties() {
+	const { data, error } = await supabase
+		.from("propiedades")
+		.select("*")
+		.eq("activa", true)
+		.eq("destacada", true)
+		.limit(3);
+
+	if (error) throw error;
+	return data;
 }
 
 export async function getCities() {
-	if (!HAS_API) return mockCities;
-	try {
-		const data = await fetchJson("/controladores/obtenerCiudades.php");
-		return Array.isArray(data) && data.length > 0 ? data : mockCities;
-	} catch (error) {
-		console.warn("Using mock cities", error);
-		return mockCities;
-	}
+	const { data, error } = await supabase
+		.from("propiedades")
+		.select("ciudad, id_ciudad")
+		.eq("activa", true);
+
+	if (error) throw error;
+
+	// deduplicar por ciudad
+	const seen = new Set();
+	return data
+		.filter(({ ciudad }) => {
+			if (seen.has(ciudad)) return false;
+			seen.add(ciudad);
+			return true;
+		})
+		.map(({ ciudad, id_ciudad }) => ({ nombre: ciudad, id_ciudad }));
 }
 
 export async function getPropertyTypes() {
-	if (!HAS_API) return mockTypes;
-	try {
-		const data = await fetchJson("/controladores/obtenerTipoPropiedad.php");
-		return Array.isArray(data) && data.length > 0 ? data : mockTypes;
-	} catch (error) {
-		console.warn("Using mock property types", error);
-		return mockTypes;
-	}
+	const { data, error } = await supabase
+		.from("propiedades")
+		.select("tipo")
+		.eq("activa", true);
+
+	if (error) throw error;
+
+	return [...new Set(data.map(({ tipo }) => tipo))];
 }
 
 export async function getPropertyStates() {
-	if (!HAS_API) return mockStates;
-	try {
-		const data = await fetchJson("/controladores/obtenerEstadosPropiedad.php");
-		return Array.isArray(data) && data.length > 0 ? data : mockStates;
-	} catch (error) {
-		console.warn("Using mock property states", error);
-		return mockStates;
-	}
+	const { data, error } = await supabase
+		.from("propiedades")
+		.select("estado")
+		.eq("activa", true);
+
+	if (error) throw error;
+
+	return [...new Set(data.map(({ estado }) => estado))];
+}
+export async function getLatestProperties(limit = 3) {
+	const { data, error } = await supabase
+		.from("propiedades")
+		.select("*")
+		.eq("activa", true)
+		.order("created_at", { ascending: false })
+		.limit(limit);
+
+	if (error) throw error;
+	return data;
 }
