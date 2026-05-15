@@ -119,7 +119,7 @@ export default function PropertyDetailPage() {
 							items={[
 								{ label: "Tipo", value: property.tipo },
 								{ label: "Garaje", value: property.garaje === 1 ? "Sí" : "No" },
-								{ label: "Baños", value: property.baños },
+								{ label: "Baños", value: property.banos },
 								{ label: "Ambientes", value: property.ambientes },
 								{ label: "Dormitorios", value: property.dormitorios },
 								{ label: "Superficie", value: `${property.superficie} m²` },

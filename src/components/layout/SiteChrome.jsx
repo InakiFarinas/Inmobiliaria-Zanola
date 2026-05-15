@@ -16,8 +16,12 @@ export default function SiteChrome({
 	onCloseMenu,
 }) {
 	const navClassName = [
-		menuOpen ? "flex" : "hidden",
 		"absolute left-0 right-0 top-[var(--header-height)] z-40 flex-col gap-2.5 bg-[var(--accent)] px-3 pb-3 pt-2 md:static md:z-auto md:order-2 md:flex md:flex-row md:justify-center md:gap-2.5 md:bg-transparent md:p-0",
+		"transition-all duration-300 ease-in-out overflow-hidden md:overflow-visible",
+		menuOpen
+			? "max-h-[600px] opacity-100 translate-y-0"
+			: "max-h-0 opacity-0 -translate-y-2",
+		"md:max-h-none md:opacity-100 md:translate-y-0",
 	].join(" ");
 
 	return (
@@ -45,7 +49,13 @@ export default function SiteChrome({
 				>
 					<span
 						aria-hidden="true"
-						className="relative block h-[2px] w-5 bg-white before:absolute before:left-0 before:top-[-6px] before:h-[2px] before:w-5 before:bg-white after:absolute after:left-0 after:top-[6px] after:h-[2px] after:w-5 after:bg-white"
+						className={[
+							"relative block h-[2px] w-5 bg-white transition-all duration-300 before:absolute before:left-0 before:h-[2px] before:w-5 before:bg-white after:absolute after:left-0 after:h-[2px] after:w-5 after:bg-white",
+							menuOpen
+								? "bg-transparent before:top-0 before:rotate-45 before:translate-y-0 after:top-0 after:-rotate-45"
+								: "before:top-[-6px] after:top-[6px]",
+							"before:transition before:duration-300 after:transition after:duration-300",
+						].join(" ")}
 					/>
 				</button>
 
@@ -85,7 +95,7 @@ export default function SiteChrome({
 				</WhatsAppButton>
 			</header>
 
-			<main className="flex-1 pb-[72px]">{children}</main>
+			<main className="flex-1 pb-6 md:pb-[72px]">{children}</main>
 
 			<footer className="mt-8 bg-[var(--accent)] px-6 py-6 text-white md:px-10 md:py-8">
 				<div className=" grid w-full gap-6 lg:grid-cols-[1.15fr_0.85fr_0.7fr_1fr] lg:gap-6 items-start">

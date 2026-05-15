@@ -15,7 +15,7 @@ export default function HomeHero({
 	const heroProperties = latest.slice(0, 3);
 
 	return (
-		<section className="h-[calc(100vh-var(--header-height))] overflow-hidden bg-[var(--accent)]">
+		<section className="min-h-[calc(100vh-var(--header-height))] md:h-[calc(100vh-var(--header-height))] overflow-visible md:overflow-hidden bg-[var(--accent)]">
 			<div className="grid h-full gap-4 md:gap-6 p-4 md:p-6 xl:p-10 xl:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] xl:grid-rows-[1fr_auto] xl:gap-x-8">
 				<div className="flex min-w-0 flex-col justify-start gap-6 rounded-none border-0 bg-transparent p-0 shadow-none xl:col-start-1 xl:row-start-1 xl:pr-2">
 					<span className="inline-flex w-fit rounded-full bg-white/25 px-4 py-2 text-sm font-bold uppercase tracking-[0.08em] text-white">
@@ -38,6 +38,36 @@ export default function HomeHero({
 							Contactar
 						</WhatsAppButton>
 					</div>
+
+					{/* Small-screen: show a single featured image under the hero text */}
+					{heroProperties[0] && (
+						<Link
+							to={`/propiedad/${heroProperties[0].id_propiedad}`}
+							className="mt-4 block overflow-hidden rounded-[18px] bg-white/5 shadow-[0_12px_28px_rgba(0,0,0,0.18)] xl:hidden relative group cursor-pointer"
+							aria-label={`Ver propiedad en ${heroProperties[0].ciudad}`}
+						>
+							<img
+								src={heroProperties[0].imagenes[0]}
+								alt={heroProperties[0].ciudad}
+								width="1200"
+								height="800"
+								className="h-[200px] w-full object-cover transition-transform duration-300 group-hover:scale-105"
+							/>
+							<div className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-[0.78rem] font-extrabold text-[var(--text)]">
+								Destacada
+							</div>
+							<div className="absolute inset-x-0 bottom-0 p-3">
+								<div className="rounded-2xl bg-black/80 px-3 py-2 text-white ring-1 ring-black/60">
+									<p className="m-0 text-sm font-bold">
+										{heroProperties[0].calle}
+									</p>
+									<p className="m-0 text-xs text-white/80">
+										{heroProperties[0].ciudad}
+									</p>
+								</div>
+							</div>
+						</Link>
+					)}
 				</div>
 
 				<Card
@@ -54,7 +84,7 @@ export default function HomeHero({
 					>
 						<option value="">Todas las ciudades</option>
 						{cities.map((city, idx) => (
-							<option key={`${city.id_ciudad}-${idx}`} value={city.id_ciudad}>
+							<option key={`${city.id_ciudad}-${idx}`} value={city.nombre}>
 								{city.nombre}
 							</option>
 						))}
@@ -84,7 +114,7 @@ export default function HomeHero({
 					</Button>
 				</Card>
 
-				<div className="grid gap-3 xl:col-start-2 xl:row-span-2 xl:grid-rows-[minmax(0,1fr)_minmax(0,0.55fr)_auto]">
+				<div className="hidden xl:grid gap-3 xl:col-start-2 xl:row-span-2 xl:grid-rows-[minmax(0,1fr)_minmax(0,0.55fr)_auto]">
 					{heroProperties[0] ? (
 						<Link
 							to={`/propiedad/${heroProperties[0].id_propiedad}`}
@@ -101,7 +131,7 @@ export default function HomeHero({
 							<div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-2 text-[0.78rem] font-extrabold text-[var(--text)]">
 								Destacada
 							</div>
-							<div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent p-4 text-white">
+							<div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/70 to-transparent p-4 text-white">
 								<p className="m-0 text-sm font-bold">
 									{heroProperties[0].calle}
 								</p>

@@ -136,6 +136,13 @@ export default function PropertiesPage() {
 		navigate("/propiedades");
 	};
 
+	const [filtersOpen, setFiltersOpen] = useState(false);
+
+	const handleMobileSubmit = (event) => {
+		handleSubmit(event);
+		setFiltersOpen(false);
+	};
+
 	return (
 		<section className="mx-auto w-[min(1180px,calc(100%_-_24px))] md:w-[min(1180px,calc(100%_-_32px))] pt-4 md:pt-6">
 			<SectionHeader
@@ -145,14 +152,29 @@ export default function PropertiesPage() {
 				description="Filtrá por tipo, ciudad, presupuesto y características clave."
 			/>
 
+			<div className="mb-4 lg:hidden flex items-center justify-between">
+				<button
+					type="button"
+					className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-extrabold text-[color:var(--accent)] bg-white/90 shadow-sm"
+					onClick={() => setFiltersOpen(true)}
+				>
+					Filtros
+				</button>
+				<span className="text-sm text-muted">
+					{properties.length} resultados
+				</span>
+			</div>
+
 			<div className="grid gap-4 md:gap-6 lg:grid-cols-[280px_1fr] lg:items-start">
-				<PropertyFilters
-					values={filters}
-					onChange={handleChange}
-					onSubmit={handleSubmit}
-					onReset={handleReset}
-					options={{ cities, types, states }}
-				/>
+				<div className="hidden lg:block">
+					<PropertyFilters
+						values={filters}
+						onChange={handleChange}
+						onSubmit={handleSubmit}
+						onReset={handleReset}
+						options={{ cities, types, states }}
+					/>
+				</div>
 
 				<div className="min-w-0">
 					{loading ? (
@@ -167,6 +189,43 @@ export default function PropertiesPage() {
 						<EmptyState title="No se encontraron propiedades con esos filtros." />
 					)}
 				</div>
+			</div>
+
+			{/* Mobile drawer for filters */}
+			<div
+				className={`fixed inset-0 z-50 md:hidden ${filtersOpen ? "" : "pointer-events-none"}`}
+				aria-hidden={!filtersOpen}
+			>
+				<div
+					className={`absolute inset-0 bg-black/40 transition-opacity duration-300 ${filtersOpen ? "opacity-100" : "opacity-0"}`}
+					onClick={() => setFiltersOpen(false)}
+				/>
+				<aside
+					className={`absolute left-0 top-0 bottom-0 w-[92%] max-w-[340px] bg-[var(--surface)] p-4 transition-transform duration-300 ${
+						filtersOpen ? "translate-x-0" : "-translate-x-full"
+					}`}
+				>
+					<div className="flex items-center justify-between mb-3">
+						<h3 className="m-0 font-extrabold">Filtros</h3>
+						<button
+							className="inline-flex items-center justify-center rounded-full p-2"
+							onClick={() => setFiltersOpen(false)}
+							aria-label="Cerrar filtros"
+						>
+							✕
+						</button>
+					</div>
+					<PropertyFilters
+						values={filters}
+						onChange={handleChange}
+						onSubmit={handleMobileSubmit}
+						onReset={() => {
+							handleReset();
+							setFiltersOpen(false);
+						}}
+						options={{ cities, types, states }}
+					/>
+				</aside>
 			</div>
 		</section>
 	);

@@ -69,7 +69,7 @@ export default function PropertyFilters({
 					>
 						<option value="">Todas las ciudades</option>
 						{cities.map((city) => (
-							<option key={city.id_ciudad} value={city.id_ciudad}>
+							<option key={city.id_ciudad} value={city.nombre}>
 								{city.nombre}
 							</option>
 						))}

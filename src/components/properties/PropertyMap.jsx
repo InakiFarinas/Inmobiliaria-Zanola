@@ -1,6 +1,6 @@
 export default function PropertyMap({ address = "Morón, Buenos Aires" }) {
 	const query = encodeURIComponent(address);
-	const src = `https://www.google.com/maps?q=${query}&output=embed`;
+	const src = `https://maps.google.com/maps?q=${query}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
 
 	return (
 		<div className="overflow-hidden rounded-[20px] p-0">

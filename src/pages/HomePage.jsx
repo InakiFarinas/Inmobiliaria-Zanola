@@ -51,6 +51,7 @@ export default function HomePage() {
 		const params = new URLSearchParams();
 		if (form.ciudad) params.set("ciudad", form.ciudad);
 		if (form.estado) params.set("estado", form.estado);
+		if (form.precio_max) params.set("precio_max", form.precio_max);
 		navigate(`/propiedades${params.toString() ? `?${params.toString()}` : ""}`);
 	};
 
