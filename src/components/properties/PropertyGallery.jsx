@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import Card from "../ui/Card";
-import { getImageUrl } from "../../lib/utils";
+import { getImageUrl, getImageUrls } from "../../lib/utils";
 
 export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 	const [currentIndex, setCurrentIndex] = useState(0);
@@ -93,24 +93,30 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 				<div className="relative aspect-[4/3] w-full overflow-hidden bg-[color:var(--accent-soft)]">
 					{currentImage ? (
 						<>
-							<img
-								src={currentImage}
-								alt={`${title} - imagen ${currentIndex + 1}`}
-								width="1200"
-								height="900"
-								className={currentLayerClassName}
-								decoding="async"
-							/>
-							{incomingImage ? (
+							<picture>
+								<source srcSet={currentImage} type="image/webp" />
 								<img
-									src={incomingImage}
-									alt={`${title} - imagen ${incomingIndex + 1}`}
+									src={currentImage.replace(/\.webp$/i, ".jpg")}
+									alt={`${title} - imagen ${currentIndex + 1}`}
 									width="1200"
 									height="900"
-									className={incomingLayerClassName}
+									className={currentLayerClassName}
 									decoding="async"
-									onTransitionEnd={handleIncomingTransitionEnd}
 								/>
+							</picture>
+							{incomingImage ? (
+								<picture>
+									<source srcSet={incomingImage} type="image/webp" />
+									<img
+										src={incomingImage.replace(/\.webp$/i, ".jpg")}
+										alt={`${title} - imagen ${incomingIndex + 1}`}
+										width="1200"
+										height="900"
+										className={incomingLayerClassName}
+										decoding="async"
+										onTransitionEnd={handleIncomingTransitionEnd}
+									/>
+								</picture>
 							) : null}
 						</>
 					) : (
@@ -184,15 +190,18 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 							}}
 							aria-label={`Ver imagen ${index + 1}`}
 						>
-							<img
-								src={getImageUrl(image)}
-								alt={`${title} miniatura ${index + 1}`}
-								width="400"
-								height="300"
-								className="aspect-[4/3] w-full object-cover"
-								loading="lazy"
-								decoding="async"
-							/>
+							<picture>
+								<source srcSet={getImageUrl(image)} type="image/webp" />
+								<img
+									src={getImageUrl(image).replace(/\.webp$/i, ".jpg")}
+									alt={`${title} miniatura ${index + 1}`}
+									width="400"
+									height="300"
+									className="aspect-[4/3] w-full object-cover"
+									loading="lazy"
+									decoding="async"
+								/>
+							</picture>
 						</button>
 					))}
 				</div>

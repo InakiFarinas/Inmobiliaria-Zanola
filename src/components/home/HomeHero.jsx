@@ -72,15 +72,18 @@ export default function HomeHero({
 							className="mt-4 block overflow-hidden rounded-[18px] bg-white/5 shadow-[0_12px_28px_rgba(0,0,0,0.18)] xl:hidden relative group cursor-pointer"
 							aria-label={`Ver propiedad en ${heroProperties[0].ciudad}`}
 						>
-							<img
-								src={mainImage}
-								alt={heroProperties[0].ciudad}
-								width="1200"
-								height="800"
-								className="h-[200px] w-full object-cover transition-transform duration-300 group-hover:scale-105"
-								loading="lazy"
-								decoding="async"
-							/>
+							<picture>
+								<source srcSet={mainImage} type="image/webp" />
+								<img
+									src={mainImage.replace(/\.webp$/i, ".jpg")}
+									alt={heroProperties[0].ciudad}
+									width="1200"
+									height="800"
+									className="h-[200px] w-full object-cover transition-transform duration-300 group-hover:scale-105"
+									loading="lazy"
+									decoding="async"
+								/>
+							</picture>
 							<div className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-[0.78rem] font-extrabold text-[var(--text)]">
 								Destacada
 							</div>
@@ -149,15 +152,18 @@ export default function HomeHero({
 							className="relative min-h-[240px] overflow-hidden rounded-[22px] bg-white/5 shadow-[0_20px_45px_rgba(0,0,0,0.22)] transition-transform duration-200 hover:-translate-y-0.5 xl:min-h-0 xl:row-span-1"
 							aria-label={`Ver propiedad en ${heroProperties[0].ciudad}`}
 						>
-							<img
-								src={mainImage}
-								alt={heroProperties[0].ciudad}
-								width="1200"
-								height="800"
-								className="h-full w-full object-cover"
-								loading="lazy"
-								decoding="async"
-							/>
+							<picture>
+								<source srcSet={mainImage} type="image/webp" />
+								<img
+									src={mainImage.replace(/\.webp$/i, ".jpg")}
+									alt={heroProperties[0].ciudad}
+									width="1200"
+									height="800"
+									className="h-full w-full object-cover"
+									loading="lazy"
+									decoding="async"
+								/>
+							</picture>
 							<div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-2 text-[0.78rem] font-extrabold text-[var(--text)]">
 								Destacada
 							</div>
@@ -187,13 +193,16 @@ export default function HomeHero({
 								key={property.id_propiedad}
 								aria-label={`Ver propiedad en ${property.ciudad}, ${property.calle}`}
 							>
-								<img
-									src={property.imagenes[0]}
-									alt={property.ciudad}
-									width="1200"
-									height="800"
-									className="h-full w-full object-cover"
-								/>
+								<picture>
+									<source srcSet={property.imagenes[0]} type="image/webp" />
+									<img
+										src={property.imagenes[0].replace(/\.webp$/i, ".jpg")}
+										alt={property.ciudad}
+										width="1200"
+										height="800"
+										className="h-full w-full object-cover"
+									/>
+								</picture>
 								<div className="absolute bottom-3 left-3 right-3 grid gap-0.5 rounded-2xl bg-black/80 px-3 py-2 text-white backdrop-blur-md">
 									<strong className="text-sm">{property.calle}</strong>
 									<span className="text-xs text-white/70">

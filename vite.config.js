@@ -48,7 +48,7 @@ export default defineConfig({
 		chunkSizeWarningLimit: 500,
 		// CSS minification
 		cssCodeSplit: true,
-		cssMinify: "lightningcss",
+		cssMinify: "esbuild",
 		// Report compressed sizes
 		reportCompressedSize: true,
 	},

@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { getImageUrl } from "../../lib/utils";
+import { getImageUrl, getImageUrls } from "../../lib/utils";
 
 export default function PropertyImageCarousel({
 	images = [],
@@ -87,24 +87,30 @@ export default function PropertyImageCarousel({
 			>
 				{currentImage ? (
 					<>
-						<img
-							src={currentImage}
-							alt={`Propiedad en ${propertyCity}`}
-							width={800}
-							height={600}
-							className={currentLayerClassName}
-							decoding="async"
-						/>
-						{incomingImage ? (
+						<picture>
+							<source srcSet={currentImage} type="image/webp" />
 							<img
-								src={incomingImage}
+								src={currentImage.replace(/\.webp$/i, ".jpg")}
 								alt={`Propiedad en ${propertyCity}`}
 								width={800}
 								height={600}
-								className={incomingLayerClassName}
+								className={currentLayerClassName}
 								decoding="async"
-								onTransitionEnd={handleIncomingTransitionEnd}
 							/>
+						</picture>
+						{incomingImage ? (
+							<picture>
+								<source srcSet={incomingImage} type="image/webp" />
+								<img
+									src={incomingImage.replace(/\.webp$/i, ".jpg")}
+									alt={`Propiedad en ${propertyCity}`}
+									width={800}
+									height={600}
+									className={incomingLayerClassName}
+									decoding="async"
+									onTransitionEnd={handleIncomingTransitionEnd}
+								/>
+							</picture>
 						) : null}
 					</>
 				) : (
