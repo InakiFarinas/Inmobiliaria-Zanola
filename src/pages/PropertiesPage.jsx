@@ -4,6 +4,7 @@ import PropertyCard from "../components/properties/PropertyCard";
 import PropertyFilters from "../components/properties/PropertyFilters";
 import EmptyState from "../components/ui/EmptyState";
 import SectionHeader from "../components/ui/SectionHeader";
+import Reveal from "../components/ui/Reveal";
 import {
 	getCities,
 	getProperties,
@@ -181,8 +182,13 @@ export default function PropertiesPage() {
 						<EmptyState title="Cargando propiedades..." />
 					) : properties.length > 0 ? (
 						<div className="grid gap-4 md:grid-cols-2">
-							{properties.map((property) => (
-								<PropertyCard key={property.id_propiedad} property={property} />
+							{properties.map((property, i) => (
+								<Reveal
+									key={property.id_propiedad}
+									delay={Math.min(i * 80, 400)}
+								>
+									<PropertyCard property={property} />
+								</Reveal>
 							))}
 						</div>
 					) : (

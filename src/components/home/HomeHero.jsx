@@ -11,6 +11,7 @@ export default function HomeHero({
 	onFormChange,
 	onSubmit,
 	latest = [],
+	totalCount,
 }) {
 	const heroProperties = latest.slice(0, 3);
 
@@ -175,7 +176,12 @@ export default function HomeHero({
 					</div>
 
 					<div className="flex items-center justify-between gap-3 px-1 text-sm text-white/75 xl:row-start-3">
-						<span>{latest.length} publicaciones activas</span>
+						<span>
+							{typeof totalCount === "number" && totalCount > 0
+								? totalCount
+								: latest.length}{" "}
+							publicaciones activas
+						</span>
 						<div className="inline-flex gap-1.5" aria-hidden="true">
 							<span className="h-2 w-2 rounded-full bg-white/50" />
 							<span className="h-2 w-2 rounded-full bg-white/50" />

@@ -5,7 +5,13 @@ import PropertyCard from "../components/properties/PropertyCard";
 import SectionHeader from "../components/ui/SectionHeader";
 import Button from "../components/ui/Button";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
-import { getCities, getLatestProperties, getPropertyStates } from "../lib/api";
+import Reveal from "../components/ui/Reveal";
+import {
+	getCities,
+	getLatestProperties,
+	getPropertyStates,
+	getPropertiesCount,
+} from "../lib/api";
 
 const heroPoints = [
 	{
@@ -27,17 +33,24 @@ export default function HomePage() {
 	const [cities, setCities] = useState([]);
 	const [states, setStates] = useState([]);
 	const [latest, setLatest] = useState([]);
+	const [totalCount, setTotalCount] = useState(0);
 	const [form, setForm] = useState({ ciudad: "", estado: "", precio_max: "" });
 
 	useEffect(() => {
 		let active = true;
 
-		Promise.all([getCities(), getPropertyStates(), getLatestProperties(5)])
-			.then(([cityData, stateData, propertyData]) => {
+		Promise.all([
+			getCities(),
+			getPropertyStates(),
+			getLatestProperties(5),
+			getPropertiesCount(),
+		])
+			.then(([cityData, stateData, propertyData, count]) => {
 				if (!active) return;
 				setCities(cityData || []);
 				setStates(stateData || []);
 				setLatest(propertyData || []);
+				setTotalCount(count || 0);
 			})
 			.catch((error) => console.error(error));
 
@@ -71,6 +84,7 @@ export default function HomePage() {
 				onFormChange={handleFormChange}
 				onSubmit={handleSubmit}
 				latest={latest}
+				totalCount={totalCount}
 			/>
 
 			<section className="mt-6 w-full p-6 md:p-10">
@@ -79,16 +93,18 @@ export default function HomePage() {
 					title="Propiedades y contacto en un solo lugar"
 				/>
 				<div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-					{heroPoints.map((item) => (
-						<article
-							className="grid gap-3 rounded-[28px] border border-[color:var(--line)] border-l-[4px] border-l-[color:var(--accent)] bg-[var(--surface)] p-6 shadow-[var(--shadow)] backdrop-blur-[18px]"
-							key={item.title}
-						>
-							<h3 className="m-0 text-[1.4rem] font-serif leading-tight">
-								{item.title}
-							</h3>
-							<p>{item.text}</p>
-						</article>
+					{heroPoints.map((item, i) => (
+						<Reveal key={item.title} delay={i * 100}>
+							<article
+								className="grid gap-3 rounded-[28px] border border-[color:var(--line)] border-l-[4px] border-l-[color:var(--accent)] bg-[var(--surface)] p-6 shadow-[var(--shadow)] backdrop-blur-[18px]"
+								key={item.title}
+							>
+								<h3 className="m-0 text-[1.4rem] font-serif leading-tight">
+									{item.title}
+								</h3>
+								<p>{item.text}</p>
+							</article>
+						</Reveal>
 					))}
 				</div>
 			</section>
@@ -117,8 +133,10 @@ export default function HomePage() {
 
 				{latest.length > 0 ? (
 					<div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-						{latest.map((property) => (
-							<PropertyCard key={property.id_propiedad} property={property} />
+						{latest.map((property, i) => (
+							<Reveal key={property.id_propiedad} delay={i * 100}>
+								<PropertyCard property={property} />
+							</Reveal>
 						))}
 					</div>
 				) : (

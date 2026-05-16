@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Card from "../ui/Card";
-import { getImageUrl } from "../../lib/mockData";
+import { getImageUrl } from "../../lib/utils";
 
 export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 	const [currentIndex, setCurrentIndex] = useState(0);

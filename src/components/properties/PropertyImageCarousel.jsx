@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { getImageUrl } from "../../lib/mockData";
+import { getImageUrl } from "../../lib/utils";
 
 export default function PropertyImageCarousel({
 	images = [],

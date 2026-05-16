@@ -1,39 +1,47 @@
 # Inmobiliaria - Frontend
 
-Proyecto frontend de la app inmobiliaria (Vite + React).
+Frontend de la app inmobiliaria (Vite + React).
 
-## Repositorio
+Repositorio: https://github.com/InakiFarinas/Inmobiliaria-Zanola
 
-https://github.com/InakiFarinas/Inmobiliaria-Zanola
-
-## Sitio desplegado
-
-https://inmobiliaria-neon-eight.vercel.app
+Sitio desplegado: https://inmobiliaria-zanola.vercel.app
 
 ## Descripción
 
-SPA en React (Vite) que muestra propiedades, página About y formulario de Contacto.
-Trabajo principal realizado:
+Single Page App en React (Vite) para listar y filtrar propiedades, ver detalles y contactar. Nuevas mejoras incluidas en esta rama:
 
-- Hero con buscador compacto flotando entre secciones
-- Grid de propiedades responsivo (4 / 2 / 1 columnas)
-- Cards con stripe redondeada
-- Página de Contacto con formulario (cliente-simulado)
+- Hero móvil con mini galería/imagen destacada
+- Panel de filtros convertido en drawer en mobile
+- Optimización: consulta de conteo (`getPropertiesCount`) para evitar traer todos los registros
+- Mejoras en el admin: miniaturas en cada fila y panel a ancho completo
+- Animación suave del menú hamburguesa
 
 ## Estructura principal
 
 - `index.html`, `package.json`, `vite.config.js`
 - `src/` — código React
   - `App.jsx` — rutas
-  - `pages/` — `HomePage.jsx`, `AboutPage.jsx`, `PropertiesPage.jsx`, `PropertyDetailPage.jsx`, `ContactPage.jsx`
+  - `pages/` — `HomePage.jsx`, `AboutPage.jsx`, `PropertiesPage.jsx`, `PropertyDetailPage.jsx`, `ContactPage.jsx`, `admin/*`
   - `components/` — Layout, PropertyCard, PropertyFilters, PropertyGallery, PropertyMap, icons
-  - `styles/` — CSS segmentado (`base.css`, `hero.css`, `catalog.css`, `responsive.css`)
-  - `lib/` — `api.js`, `mockData.js`, `utils.js`
+  - `styles/` — Tailwind / CSS utilities
+  - `lib/` — `api.js`, `utils.js`
 
 ## Requisitos
 
 - Node.js 18+ (recomendado)
 - npm o yarn
+
+## Variables de entorno
+
+Crear un archivo `.env` en la raíz con las claves de Supabase (necesarias para llamadas reales):
+
+```
+VITE_SUPABASE_URL=https://...your-supabase-url...
+VITE_SUPABASE_ANON_KEY=your-anon-key
+BASE_URL=/  # opcional
+```
+
+Si no configuras estas variables, la app mostrará placeholders o imágenes locales; el soporte de mock interno fue removido.
 
 ## Scripts
 
@@ -51,41 +59,26 @@ npm run build
 npm run preview
 ```
 
-El `package.json` incluye los scripts habituales (`dev`, `build`, `preview`).
-
-## Deploy en Vercel (pasos)
+## Deploy en Vercel
 
 1. Conectar el repo de GitHub a Vercel (Import Project).
-2. Configurar build:
-   - Build Command: `npm run build` (o `vite build`)
-   - Output Directory: `dist`
-3. Deployar.
+2. Build Command: `npm run build`
+3. Output Directory: `dist`
 
-Opción CLI (si prefieres desplegar desde la máquina):
+CLI deploy (opcional):
 
 ```bash
-# opcional: instalar vercel
 npm i -g vercel
-vercel login
-# dentro del proyecto
 vercel --prod
 ```
 
-Usar token no interactivo (CI):
+## Notas y recomendaciones
 
-```bash
-VERCEL_TOKEN=xxxx vercel --prod --token $VERCEL_TOKEN
-```
+- El `ContactPage` usa validación cliente; para producción se recomienda añadir un endpoint que envíe correos o guarde los mensajes.
+- Para el conteo total de propiedades (mostrado en el `hero`) se añadió `getPropertiesCount()` en `src/lib/api.js` para evitar transferir todos los registros.
+- Si desplegás en Vercel, configura las variables de entorno en el panel de Vercel (no subir `.env` al repo).
 
-Recomendación: añadir un `VERCEL_TOKEN` como secret en GitHub Actions o en los Environment Variables de Vercel para despliegues automatizados.
-
-## Notas sobre el proyecto
-
-- El formulario de `ContactPage` es cliente-simulado: guarda/valida localmente y muestra un mensaje. Si querés integrar un backend, crear un endpoint que reciba `POST` con `nombre`, `email`, `telefono`, `descripcion`.
-- El logo de alta resolución no está incluido; si querés lo optimizo y lo subo (SVG preferido).
-- Para cambios de diseño, revisá los archivos en `src/styles/`.
-
-## Cómo contribuir / actualizar
+## Cómo contribuir
 
 ```bash
 git checkout -b feature/mi-cambio
@@ -97,4 +90,4 @@ git push origin feature/mi-cambio
 
 ## Contacto
 
-Repo maintainer: Inaki Farinas — ver el repo en GitHub.
+Maintainer: Inaki Farinas — ver el repo en GitHub.

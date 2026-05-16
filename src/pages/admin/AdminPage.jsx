@@ -13,8 +13,16 @@ const PropertyRow = memo(({ property, onToggle, onDelete, onEdit }) => (
 	<Card
 		key={property.id_propiedad}
 		padding="md"
-		className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+		className="grid gap-4 md:grid-cols-[auto_minmax(0,1fr)_auto] md:items-center"
 	>
+		{property.imagenes?.[0] && (
+			<img
+				src={property.imagenes[0]}
+				alt={`${property.tipo} en ${property.ciudad}`}
+				className="h-14 w-14 flex-shrink-0 rounded-lg object-cover"
+			/>
+		)}
+
 		<div className="grid gap-1 min-w-0">
 			<div className="flex flex-wrap items-center gap-2">
 				<span className="truncate font-bold text-sm text-[var(--text)]">
@@ -137,8 +145,8 @@ export default function AdminPage() {
 	}, [properties.length]);
 
 	return (
-		<div className="min-h-screen bg-[var(--surface)] px-4 py-4 md:px-6 md:py-6">
-			<Card className="mx-auto max-w-6xl overflow-hidden p-0" padding="none">
+		<div className="min-h-screen bg-[var(--surface)] px-4 py-4">
+			<Card className="w-full overflow-hidden p-0" padding="none">
 				<div className="flex flex-col gap-4 border-b border-[color:var(--line)] bg-[var(--accent)] px-5 py-4 text-white md:flex-row md:items-center md:justify-between md:px-6">
 					<div>
 						<p className="m-0 text-xs font-bold uppercase tracking-[0.12em] text-white/55">
