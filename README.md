@@ -41,8 +41,6 @@ VITE_SUPABASE_ANON_KEY=your-anon-key
 BASE_URL=/  # opcional
 ```
 
-Si no configuras estas variables, la app mostrará placeholders o imágenes locales; el soporte de mock interno fue removido.
-
 ## Scripts
 
 Instalar dependencias y ejecutar en desarrollo:

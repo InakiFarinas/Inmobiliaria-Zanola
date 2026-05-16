@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getImageUrl } from "../../lib/utils";
 
@@ -8,36 +8,91 @@ export default function PropertyImageCarousel({
 	propertyCity,
 	propertyStreet,
 	stateLabel,
-	featured = false,
 }) {
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const displayedImage = images[currentIndex]
+	const [incomingIndex, setIncomingIndex] = useState(null);
+	const [slideDirection, setSlideDirection] = useState("next");
+	const [isAnimating, setIsAnimating] = useState(false);
+
+	useEffect(() => {
+		setCurrentIndex(0);
+		setIncomingIndex(null);
+		setIsAnimating(false);
+	}, [images]);
+
+	const currentImage = images[currentIndex]
 		? getImageUrl(images[currentIndex])
 		: null;
+	const incomingImage =
+		incomingIndex !== null && images[incomingIndex]
+			? getImageUrl(images[incomingIndex])
+			: null;
 
-	const handlePrev = () => {
-		setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+	const moveToIndex = (nextIndex, direction) => {
+		if (!images.length || nextIndex === currentIndex || isAnimating) return;
+		setSlideDirection(direction);
+		setIsAnimating(false);
+		setIncomingIndex(nextIndex);
+		requestAnimationFrame(() => setIsAnimating(true));
 	};
 
-	const handleNext = () => {
-		setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+	const goPrev = () => {
+		const nextIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+		moveToIndex(nextIndex, "prev");
 	};
+
+	const goNext = () => {
+		const nextIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
+		moveToIndex(nextIndex, "next");
+	};
+
+	const handleIncomingTransitionEnd = () => {
+		if (incomingIndex === null) return;
+		setCurrentIndex(incomingIndex);
+		setIncomingIndex(null);
+		setIsAnimating(false);
+	};
+
+	const currentLayerClassName = [
+		"absolute inset-0 h-full w-full object-cover",
+	].join(" ");
+
+	const incomingLayerClassName = [
+		"absolute inset-0 h-full w-full object-cover transform-gpu transition-transform duration-220 ease-linear",
+		isAnimating
+			? "translate-x-0"
+			: slideDirection === "next"
+				? "translate-x-[115%]"
+				: "-translate-x-[115%]",
+	].join(" ");
 
 	return (
 		<div className="relative aspect-[4/3] w-full overflow-hidden">
 			<Link
 				to={`/propiedad/${propertyId}`}
 				aria-label={`Ver propiedad en ${propertyCity}, ${propertyStreet}`}
-				className="block h-full w-full"
+				className="absolute inset-0 block h-full w-full"
 			>
-				{displayedImage ? (
-					<img
-						src={displayedImage}
-						alt={`Propiedad en ${propertyCity}`}
-						width={800}
-						height={600}
-						className="h-full w-full object-cover"
-					/>
+				{currentImage ? (
+					<>
+						<img
+							src={currentImage}
+							alt={`Propiedad en ${propertyCity}`}
+							width={800}
+							height={600}
+							className={currentLayerClassName}
+						/>
+						{incomingImage ? (
+							<img
+								src={incomingImage}
+								alt={`Propiedad en ${propertyCity}`}
+								width={800}
+								height={600}
+								className={incomingLayerClassName}
+								onTransitionEnd={handleIncomingTransitionEnd}
+							/>
+						) : null}
+					</>
 				) : (
 					<div className="flex h-full items-center justify-center bg-gray-100 text-muted">
 						Sin imagen
@@ -45,18 +100,16 @@ export default function PropertyImageCarousel({
 				)}
 			</Link>
 
-			{/* Badge Estado */}
-			<span className="absolute right-2 md:right-3 top-2 md:top-3 rounded-full bg-[var(--surface)] px-2 md:px-3 py-1 text-xs font-bold uppercase text-[var(--accent)]">
+			<span className="absolute right-2 top-2 rounded-full bg-[var(--surface)] px-2 py-1 text-xs font-bold uppercase text-[var(--accent)] md:right-3 md:top-3 md:px-3">
 				{stateLabel}
 			</span>
 
-			{/* Mostrar controles solo si hay múltiples imágenes */}
-			{images.length > 1 && (
+			{images.length > 1 ? (
 				<>
-					{/* Flechas navegación */}
 					<button
-						onClick={handlePrev}
-						className="absolute left-1 md:left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/75 md:bg-white/80 p-1.5 md:p-2 text-[var(--text)] transition hover:bg-white"
+						type="button"
+						onClick={goPrev}
+						className="absolute left-1 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/75 p-1.5 text-[var(--text)] transition hover:bg-white md:left-2 md:bg-white/80 md:p-2"
 						aria-label="Imagen anterior"
 					>
 						<svg
@@ -71,8 +124,9 @@ export default function PropertyImageCarousel({
 						</svg>
 					</button>
 					<button
-						onClick={handleNext}
-						className="absolute right-1 md:right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/75 md:bg-white/80 p-1.5 md:p-2 text-[var(--text)] transition hover:bg-white"
+						type="button"
+						onClick={goNext}
+						className="absolute right-1 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/75 p-1.5 text-[var(--text)] transition hover:bg-white md:right-2 md:bg-white/80 md:p-2"
 						aria-label="Siguiente imagen"
 					>
 						<svg
@@ -87,13 +141,16 @@ export default function PropertyImageCarousel({
 						</svg>
 					</button>
 
-					{/* Dots indicadores */}
-					<div className="absolute bottom-2 md:bottom-3 left-1/2 flex -translate-x-1/2 gap-1">
+					<div className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1 md:bottom-3">
 						{images.map((_, index) => (
 							<button
 								key={index}
-								onClick={() => setCurrentIndex(index)}
-								className={`h-1.5 md:h-2 w-1.5 md:w-2 rounded-full transition ${
+								type="button"
+								onClick={() => {
+									const direction = index > currentIndex ? "next" : "prev";
+									moveToIndex(index, direction);
+								}}
+								className={`h-1.5 w-1.5 rounded-full transition md:h-2 md:w-2 ${
 									index === currentIndex
 										? "bg-white"
 										: "bg-white/50 hover:bg-white/75"
@@ -103,7 +160,7 @@ export default function PropertyImageCarousel({
 						))}
 					</div>
 				</>
-			)}
+			) : null}
 		</div>
 	);
 }

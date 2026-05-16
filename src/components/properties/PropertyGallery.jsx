@@ -4,9 +4,14 @@ import { getImageUrl } from "../../lib/utils";
 
 export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 	const [currentIndex, setCurrentIndex] = useState(0);
+	const [incomingIndex, setIncomingIndex] = useState(null);
+	const [slideDirection, setSlideDirection] = useState("next");
+	const [isAnimating, setIsAnimating] = useState(false);
 
 	useEffect(() => {
 		setCurrentIndex(0);
+		setIncomingIndex(null);
+		setIsAnimating(false);
 	}, [images]);
 
 	if (!images.length) {
@@ -22,21 +27,83 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 		);
 	}
 
-	const currentImage = images[currentIndex] || images[0];
+	const currentImage = images[currentIndex]
+		? getImageUrl(images[currentIndex])
+		: null;
+	const incomingImage =
+		incomingIndex !== null && images[incomingIndex]
+			? getImageUrl(images[incomingIndex])
+			: null;
 	const hasMultipleImages = images.length > 1;
 
+	const moveToIndex = (nextIndex, direction) => {
+		if (!hasMultipleImages || nextIndex === currentIndex || isAnimating) return;
+		setSlideDirection(direction);
+		setIsAnimating(false);
+		setIncomingIndex(nextIndex);
+		requestAnimationFrame(() => setIsAnimating(true));
+	};
+
 	const previousImage = () => {
-		setCurrentIndex((index) => (index - 1 + images.length) % images.length);
+		const nextIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+		moveToIndex(nextIndex, "prev");
 	};
 
 	const nextImage = () => {
-		setCurrentIndex((index) => (index + 1) % images.length);
+		const nextIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
+		moveToIndex(nextIndex, "next");
 	};
+
+	const handleIncomingTransitionEnd = () => {
+		if (incomingIndex === null) return;
+		setCurrentIndex(incomingIndex);
+		setIncomingIndex(null);
+		setIsAnimating(false);
+	};
+
+	const currentLayerClassName = [
+		"absolute inset-0 h-full w-full object-cover",
+	].join(" ");
+
+	const incomingLayerClassName = [
+		"absolute inset-0 h-full w-full object-cover transform-gpu transition-transform duration-220 ease-linear",
+		isAnimating
+			? "translate-x-0"
+			: slideDirection === "next"
+				? "translate-x-[115%]"
+				: "-translate-x-[115%]",
+	].join(" ");
 
 	return (
 		<Card className="grid gap-3 overflow-hidden" padding="none">
 			<div className="relative overflow-hidden rounded-[28px] bg-[var(--surface)]">
-				<div className="relative aspect-[4/3] w-full bg-[color:var(--accent-soft)]">
+				<div className="relative aspect-[4/3] w-full overflow-hidden bg-[color:var(--accent-soft)]">
+					{currentImage ? (
+						<>
+							<img
+								src={currentImage}
+								alt={`${title} - imagen ${currentIndex + 1}`}
+								width="1200"
+								height="900"
+								className={currentLayerClassName}
+							/>
+							{incomingImage ? (
+								<img
+									src={incomingImage}
+									alt={`${title} - imagen ${incomingIndex + 1}`}
+									width="1200"
+									height="900"
+									className={incomingLayerClassName}
+									onTransitionEnd={handleIncomingTransitionEnd}
+								/>
+							) : null}
+						</>
+					) : (
+						<div className="flex h-full items-center justify-center bg-gray-100 text-muted">
+							Sin imagen
+						</div>
+					)}
+
 					{hasMultipleImages ? (
 						<button
 							type="button"
@@ -56,14 +123,6 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 							</svg>
 						</button>
 					) : null}
-
-					<img
-						className="h-full w-full object-cover"
-						src={getImageUrl(currentImage)}
-						alt={`${title} - imagen ${currentIndex + 1}`}
-						width="1200"
-						height="900"
-					/>
 
 					{hasMultipleImages ? (
 						<button
@@ -94,13 +153,20 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 			</div>
 
 			{hasMultipleImages ? (
-				<div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
+				<div className="grid grid-cols-3 gap-2 md:grid-cols-4 md:gap-3">
 					{images.map((image, index) => (
 						<button
 							key={image + index}
 							type="button"
-							className={`overflow-hidden rounded-[14px] border-2 p-0 transition duration-200 ${index === currentIndex ? "border-[color:var(--accent)] opacity-100" : "border-transparent opacity-70 hover:opacity-100"}`}
-							onClick={() => setCurrentIndex(index)}
+							className={`overflow-hidden rounded-[14px] border-2 p-0 transition duration-200 ${
+								index === currentIndex
+									? "border-[color:var(--accent)] opacity-100"
+									: "border-transparent opacity-70 hover:opacity-100"
+							}`}
+							onClick={() => {
+								const direction = index > currentIndex ? "next" : "prev";
+								moveToIndex(index, direction);
+							}}
 							aria-label={`Ver imagen ${index + 1}`}
 						>
 							<img

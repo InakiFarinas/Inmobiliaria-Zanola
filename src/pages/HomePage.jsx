@@ -119,7 +119,6 @@ export default function HomePage() {
 			<section className="mt-6 w-full p-10">
 				<SectionHeader
 					align="inline"
-					kicker="Últimas propiedades"
 					title="Nuevas oportunidades"
 					action={
 						<Link

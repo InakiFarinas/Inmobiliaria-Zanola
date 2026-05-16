@@ -34,8 +34,8 @@ export default function PropertyFilters({
 						className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
 					>
 						<option value="">Todos los tipos</option>
-						{types.map((type) => (
-							<option key={type} value={type}>
+						{types.map((type, idx) => (
+							<option key={`type-${idx}`} value={type}>
 								{type}
 							</option>
 						))}
@@ -51,8 +51,8 @@ export default function PropertyFilters({
 						className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
 					>
 						<option value="">Cualquier estado</option>
-						{states.map((state) => (
-							<option key={state} value={state}>
+						{states.map((state, idx) => (
+							<option key={`state-${idx}`} value={state}>
 								{state}
 							</option>
 						))}
@@ -68,8 +68,8 @@ export default function PropertyFilters({
 						className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
 					>
 						<option value="">Todas las ciudades</option>
-						{cities.map((city) => (
-							<option key={city.id_ciudad} value={city.nombre}>
+						{cities.map((city, idx) => (
+							<option key={`city-${idx}`} value={city.nombre}>
 								{city.nombre}
 							</option>
 						))}
