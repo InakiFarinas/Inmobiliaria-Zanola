@@ -4,7 +4,7 @@ import Card from "../ui/Card";
 import FormField from "../ui/FormField";
 import WhatsAppButton from "../ui/WhatsAppButton";
 import { Link } from "react-router-dom";
-import { getImageUrl } from "../../lib/utils";
+import { getImageUrl, getImageUrls } from "../../lib/utils";
 
 export default function HomeHero({
 	cities = [],
@@ -17,10 +17,10 @@ export default function HomeHero({
 }) {
 	const heroProperties = useMemo(() => latest.slice(0, 3), [latest]);
 
-	const mainImage = useMemo(
+	const mainImageUrls = useMemo(
 		() =>
 			heroProperties[0] && heroProperties[0].imagenes?.[0]
-				? getImageUrl(heroProperties[0].imagenes[0])
+				? getImageUrls(heroProperties[0].imagenes[0])
 				: null,
 		[heroProperties],
 	);
@@ -66,16 +66,16 @@ export default function HomeHero({
 					</div>
 
 					{/* Small-screen: show a single featured image under the hero text */}
-					{heroProperties[0] && mainImage && (
+					{heroProperties[0] && mainImageUrls && (
 						<Link
 							to={`/propiedad/${heroProperties[0].id_propiedad}`}
 							className="mt-4 block overflow-hidden rounded-[18px] bg-white/5 shadow-[0_12px_28px_rgba(0,0,0,0.18)] xl:hidden relative group cursor-pointer"
 							aria-label={`Ver propiedad en ${heroProperties[0].ciudad}`}
 						>
 							<picture>
-								<source srcSet={mainImage} type="image/webp" />
+								<source srcSet={mainImageUrls?.webp} type="image/webp" />
 								<img
-									src={mainImage.replace(/\.webp$/i, ".jpg")}
+									src={mainImageUrls?.fallback}
 									alt={heroProperties[0].ciudad}
 									width="1200"
 									height="800"
@@ -146,16 +146,16 @@ export default function HomeHero({
 				</Card>
 
 				<div className="hidden xl:grid gap-3 xl:col-start-2 xl:row-span-2 xl:grid-rows-[minmax(0,1fr)_minmax(0,0.55fr)_auto]">
-					{heroProperties[0] && mainImage ? (
+					{heroProperties[0] && mainImageUrls ? (
 						<Link
 							to={`/propiedad/${heroProperties[0].id_propiedad}`}
 							className="relative min-h-[240px] overflow-hidden rounded-[22px] bg-white/5 shadow-[0_20px_45px_rgba(0,0,0,0.22)] transition-transform duration-200 hover:-translate-y-0.5 xl:min-h-0 xl:row-span-1"
 							aria-label={`Ver propiedad en ${heroProperties[0].ciudad}`}
 						>
 							<picture>
-								<source srcSet={mainImage} type="image/webp" />
+								<source srcSet={mainImageUrls?.webp} type="image/webp" />
 								<img
-									src={mainImage.replace(/\.webp$/i, ".jpg")}
+									src={mainImageUrls?.fallback}
 									alt={heroProperties[0].ciudad}
 									width="1200"
 									height="800"
@@ -193,16 +193,21 @@ export default function HomeHero({
 								key={property.id_propiedad}
 								aria-label={`Ver propiedad en ${property.ciudad}, ${property.calle}`}
 							>
-								<picture>
-									<source srcSet={property.imagenes[0]} type="image/webp" />
-									<img
-										src={property.imagenes[0].replace(/\.webp$/i, ".jpg")}
-										alt={property.ciudad}
-										width="1200"
-										height="800"
-										className="h-full w-full object-cover"
-									/>
-								</picture>
+								{(() => {
+									const urls = getImageUrls(property.imagenes[0]);
+									return (
+										<picture>
+											<source srcSet={urls.webp} type="image/webp" />
+											<img
+												src={urls.fallback}
+												alt={property.ciudad}
+												width="1200"
+												height="800"
+												className="h-full w-full object-cover"
+											/>
+										</picture>
+									);
+								})()}
 								<div className="absolute bottom-3 left-3 right-3 grid gap-0.5 rounded-2xl bg-black/80 px-3 py-2 text-white backdrop-blur-md">
 									<strong className="text-sm">{property.calle}</strong>
 									<span className="text-xs text-white/70">

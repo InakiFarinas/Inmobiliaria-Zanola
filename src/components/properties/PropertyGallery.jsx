@@ -27,15 +27,15 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 		);
 	}
 
-	const currentImage = useMemo(
-		() => (images[currentIndex] ? getImageUrl(images[currentIndex]) : null),
+	const currentImageUrls = useMemo(
+		() => (images[currentIndex] ? getImageUrls(images[currentIndex]) : null),
 		[images, currentIndex],
 	);
 
-	const incomingImage = useMemo(
+	const incomingImageUrls = useMemo(
 		() =>
 			incomingIndex !== null && images[incomingIndex]
-				? getImageUrl(images[incomingIndex])
+				? getImageUrls(images[incomingIndex])
 				: null,
 		[images, incomingIndex],
 	);
@@ -91,12 +91,12 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 		<Card className="grid gap-3 overflow-hidden" padding="none">
 			<div className="relative overflow-hidden rounded-[28px] bg-[var(--surface)]">
 				<div className="relative aspect-[4/3] w-full overflow-hidden bg-[color:var(--accent-soft)]">
-					{currentImage ? (
+					{currentImageUrls ? (
 						<>
 							<picture>
-								<source srcSet={currentImage} type="image/webp" />
+								<source srcSet={currentImageUrls.webp} type="image/webp" />
 								<img
-									src={currentImage.replace(/\.webp$/i, ".jpg")}
+									src={currentImageUrls.fallback}
 									alt={`${title} - imagen ${currentIndex + 1}`}
 									width="1200"
 									height="900"
@@ -104,11 +104,11 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 									decoding="async"
 								/>
 							</picture>
-							{incomingImage ? (
+							{incomingImageUrls ? (
 								<picture>
-									<source srcSet={incomingImage} type="image/webp" />
+									<source srcSet={incomingImageUrls.webp} type="image/webp" />
 									<img
-										src={incomingImage.replace(/\.webp$/i, ".jpg")}
+										src={incomingImageUrls.fallback}
 										alt={`${title} - imagen ${incomingIndex + 1}`}
 										width="1200"
 										height="900"
@@ -191,9 +191,9 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 							aria-label={`Ver imagen ${index + 1}`}
 						>
 							<picture>
-								<source srcSet={getImageUrl(image)} type="image/webp" />
+								<source srcSet={getImageUrls(image).webp} type="image/webp" />
 								<img
-									src={getImageUrl(image).replace(/\.webp$/i, ".jpg")}
+									src={getImageUrls(image).fallback}
 									alt={`${title} miniatura ${index + 1}`}
 									width="400"
 									height="300"

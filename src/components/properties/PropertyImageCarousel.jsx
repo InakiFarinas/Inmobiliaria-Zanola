@@ -20,15 +20,15 @@ export default function PropertyImageCarousel({
 		setIsAnimating(false);
 	}, [images]);
 
-	const currentImage = useMemo(
-		() => (images[currentIndex] ? getImageUrl(images[currentIndex]) : null),
+	const currentImageUrls = useMemo(
+		() => (images[currentIndex] ? getImageUrls(images[currentIndex]) : null),
 		[images, currentIndex],
 	);
 
-	const incomingImage = useMemo(
+	const incomingImageUrls = useMemo(
 		() =>
 			incomingIndex !== null && images[incomingIndex]
-				? getImageUrl(images[incomingIndex])
+				? getImageUrls(images[incomingIndex])
 				: null,
 		[images, incomingIndex],
 	);
@@ -85,12 +85,12 @@ export default function PropertyImageCarousel({
 				aria-label={`Ver propiedad en ${propertyCity}, ${propertyStreet}`}
 				className="absolute inset-0 block h-full w-full"
 			>
-				{currentImage ? (
+				{currentImageUrls ? (
 					<>
 						<picture>
-							<source srcSet={currentImage} type="image/webp" />
+							<source srcSet={currentImageUrls.webp} type="image/webp" />
 							<img
-								src={currentImage.replace(/\.webp$/i, ".jpg")}
+								src={currentImageUrls.fallback}
 								alt={`Propiedad en ${propertyCity}`}
 								width={800}
 								height={600}
@@ -98,11 +98,11 @@ export default function PropertyImageCarousel({
 								decoding="async"
 							/>
 						</picture>
-						{incomingImage ? (
+						{incomingImageUrls ? (
 							<picture>
-								<source srcSet={incomingImage} type="image/webp" />
+								<source srcSet={incomingImageUrls.webp} type="image/webp" />
 								<img
-									src={incomingImage.replace(/\.webp$/i, ".jpg")}
+									src={incomingImageUrls.fallback}
 									alt={`Propiedad en ${propertyCity}`}
 									width={800}
 									height={600}
