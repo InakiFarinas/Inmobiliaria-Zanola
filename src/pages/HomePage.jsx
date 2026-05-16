@@ -6,6 +6,7 @@ import SectionHeader from "../components/ui/SectionHeader";
 import Button from "../components/ui/Button";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
 import Reveal from "../components/ui/Reveal";
+import EmptyState from "../components/ui/EmptyState";
 import {
 	getCities,
 	getLatestProperties,
@@ -35,6 +36,7 @@ export default function HomePage() {
 	const [latest, setLatest] = useState([]);
 	const [totalCount, setTotalCount] = useState(0);
 	const [form, setForm] = useState({ ciudad: "", estado: "", precio_max: "" });
+	const [error, setError] = useState(null);
 
 	useEffect(() => {
 		let active = true;
@@ -52,7 +54,10 @@ export default function HomePage() {
 				setLatest(propertyData || []);
 				setTotalCount(count || 0);
 			})
-			.catch((error) => console.error(error));
+			.catch((error) => {
+				console.error(error);
+				if (active) setError("No pudimos cargar el contenido.");
+			});
 
 		return () => {
 			active = false;
@@ -75,6 +80,8 @@ export default function HomePage() {
 		}));
 	};
 
+	if (error) return <EmptyState title={error} />;
+
 	return (
 		<>
 			<HomeHero
@@ -95,10 +102,7 @@ export default function HomePage() {
 				<div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
 					{heroPoints.map((item, i) => (
 						<Reveal key={item.title} delay={i * 100}>
-							<article
-								className="grid gap-3 rounded-[28px] border border-[color:var(--line)] border-l-[4px] border-l-[color:var(--accent)] bg-[var(--surface)] p-6 shadow-[var(--shadow)] backdrop-blur-[18px]"
-								key={item.title}
-							>
+							<article className="grid gap-3 rounded-[28px] border border-[color:var(--line)] border-l-[4px] border-l-[color:var(--accent)] bg-[var(--surface)] p-6 shadow-[var(--shadow)] backdrop-blur-[18px]">
 								<h3 className="m-0 text-[1.4rem] font-serif leading-tight">
 									{item.title}
 								</h3>
@@ -110,7 +114,7 @@ export default function HomePage() {
 			</section>
 			<div className="flex items-center gap-3 my-8">
 				<div className="flex-1 h-px bg-black/10" />
-				<span className="text-[16px] tracking-[2px] text-[#1b5e46] font-bold whitespace-nowrap">
+				<span className="text-[16px] tracking-[2px] text-[color:var(--accent)] font-bold whitespace-nowrap">
 					ÚLTIMAS PROPIEDADES
 				</span>
 				<div className="flex-1 h-px bg-black/10" />

@@ -7,6 +7,8 @@ import FormField from "../../components/ui/FormField";
 import SectionHeader from "../../components/ui/SectionHeader";
 import { supabase } from "../../lib/api";
 
+const CITY_MAP = { "Morón Sur": 1, "Morón Centro": 2, Morón: 3 };
+
 const emptyForm = {
 	tipo: "Departamento",
 	estado: "Venta",
@@ -32,8 +34,8 @@ export default function AdminPropertyForm() {
 	const isEditing = Boolean(id);
 
 	const [form, setForm] = useState(emptyForm);
-	const [images, setImages] = useState([]); // URLs existentes
-	const [newFiles, setNewFiles] = useState([]); // archivos nuevos a subir
+	const [images, setImages] = useState([]);
+	const [newFiles, setNewFiles] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [fetching, setFetching] = useState(isEditing);
 	const [error, setError] = useState("");
@@ -45,7 +47,12 @@ export default function AdminPropertyForm() {
 			.select("*")
 			.eq("id_propiedad", id)
 			.single()
-			.then(({ data }) => {
+			.then(({ data, error }) => {
+				if (error) {
+					setError("No se pudo cargar la propiedad");
+					setFetching(false);
+					return;
+				}
 				if (data) {
 					setForm({
 						tipo: data.tipo,
@@ -68,12 +75,26 @@ export default function AdminPropertyForm() {
 					setImages(data.imagenes || []);
 				}
 				setFetching(false);
+			})
+			.catch(() => {
+				setError("No se pudo cargar la propiedad");
+				setFetching(false);
 			});
 	}, [id, isEditing]);
 
 	const handleChange = useCallback((e) => {
 		const { name, type, value, checked } = e.target;
-		setForm((f) => ({ ...f, [name]: type === "checkbox" ? checked : value }));
+		setForm((f) => {
+			const updated = {
+				...f,
+				[name]: type === "checkbox" ? checked : value,
+			};
+			// sincronizar id_ciudad cuando cambia ciudad
+			if (name === "ciudad") {
+				updated.id_ciudad = CITY_MAP[value] || 1;
+			}
+			return updated;
+		});
 	}, []);
 
 	const handleFileChange = useCallback((e) => {
@@ -87,7 +108,6 @@ export default function AdminPropertyForm() {
 	async function uploadImages() {
 		if (newFiles.length === 0) return [];
 
-		// Upload all files in parallel instead of sequential
 		const uploadPromises = newFiles.map(async (file) => {
 			const ext = file.name.split(".").pop();
 			const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
@@ -144,6 +164,18 @@ export default function AdminPropertyForm() {
 		return (
 			<div className="min-h-screen bg-[#f2f0eb] flex items-center justify-center">
 				<p className="text-[var(--muted)]">Cargando...</p>
+			</div>
+		);
+
+	if (error && !form.calle)
+		return (
+			<div className="min-h-screen bg-[#f2f0eb] flex items-center justify-center">
+				<EmptyState
+					title={error}
+					action={
+						<Button onClick={() => navigate("/admin")}>Volver al panel</Button>
+					}
+				/>
 			</div>
 		);
 
@@ -383,7 +415,7 @@ export default function AdminPropertyForm() {
 						) : null}
 					</Card>
 
-					{error ? (
+					{error && form.calle ? (
 						<p className="m-0 text-sm font-medium text-red-500">{error}</p>
 					) : null}
 

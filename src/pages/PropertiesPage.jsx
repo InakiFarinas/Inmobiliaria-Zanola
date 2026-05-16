@@ -18,7 +18,7 @@ const defaultFilters = {
 	ciudad: "",
 	ambientes: "",
 	dormitorios: "",
-	baños: "",
+	banos: "",
 	antiguedad: "",
 	garaje: false,
 	precio_min: "",
@@ -34,7 +34,7 @@ function readFilters(searchParams) {
 		ciudad: searchParams.get("ciudad") || "",
 		ambientes: searchParams.get("ambientes") || "",
 		dormitorios: searchParams.get("dormitorios") || "",
-		baños: searchParams.get("baños") || "",
+		banos: searchParams.get("banos") || "",
 		antiguedad: searchParams.get("antiguedad") || "",
 		garaje: searchParams.get("garaje") === "1",
 		precio_min: searchParams.get("precio_min") || "",
@@ -69,6 +69,9 @@ export default function PropertiesPage() {
 	const [properties, setProperties] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [filters, setFilters] = useState(() => readFilters(searchParams));
+	const [filtersOpen, setFiltersOpen] = useState(false);
+	const [optionsError, setOptionsError] = useState(null);
+	const [error, setError] = useState(null);
 
 	useEffect(() => {
 		let active = true;
@@ -82,7 +85,10 @@ export default function PropertiesPage() {
 				setTypes(typeData || []);
 				setStates(stateData || []);
 			})
-			.catch((error) => console.error(error));
+			.catch((error) => {
+				console.error(error);
+				if (active) setOptionsError("No pudimos cargar los filtros.");
+			});
 
 		return () => {
 			active = false;
@@ -105,6 +111,7 @@ export default function PropertiesPage() {
 				console.error(error);
 				if (active) {
 					setProperties([]);
+					setError("No pudimos cargar las propiedades.");
 				}
 			})
 			.finally(() => {
@@ -136,8 +143,6 @@ export default function PropertiesPage() {
 		setFilters(defaultFilters);
 		navigate("/propiedades");
 	};
-
-	const [filtersOpen, setFiltersOpen] = useState(false);
 
 	const handleMobileSubmit = (event) => {
 		handleSubmit(event);
@@ -178,7 +183,9 @@ export default function PropertiesPage() {
 				</div>
 
 				<div className="min-w-0">
-					{loading ? (
+					{error ? (
+						<EmptyState title={error} />
+					) : loading ? (
 						<EmptyState title="Cargando propiedades..." />
 					) : properties.length > 0 ? (
 						<div className="grid gap-4 md:grid-cols-2">

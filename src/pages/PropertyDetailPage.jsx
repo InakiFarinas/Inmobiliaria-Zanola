@@ -33,9 +33,7 @@ export default function PropertyDetailPage() {
 
 		getPropertyById(id)
 			.then((data) => {
-				if (!active) {
-					return;
-				}
+				if (!active) return;
 				setProperty(data);
 			})
 			.catch((fetchError) => {
@@ -44,9 +42,7 @@ export default function PropertyDetailPage() {
 				}
 			})
 			.finally(() => {
-				if (active) {
-					setLoading(false);
-				}
+				if (active) setLoading(false);
 			});
 
 		return () => {
@@ -54,11 +50,12 @@ export default function PropertyDetailPage() {
 		};
 	}, [id]);
 
+	// Fix: oculta altura cuando es 0
 	const address = useMemo(() => {
-		if (!property) {
-			return "";
-		}
-		return `${property.ciudad}, ${property.calle} ${property.altura}`;
+		if (!property) return "";
+		return property.altura
+			? `${property.ciudad}, ${property.calle} ${property.altura}`
+			: `${property.ciudad}, ${property.calle}`;
 	}, [property]);
 
 	if (loading) {
@@ -74,9 +71,7 @@ export default function PropertyDetailPage() {
 		);
 	}
 
-	if (!property) {
-		return null;
-	}
+	if (!property) return null;
 
 	return (
 		<section className="mx-auto w-[min(1180px,calc(100%_-_24px))] md:w-[min(1180px,calc(100%_-_32px))] pt-4 md:pt-6">
@@ -118,7 +113,8 @@ export default function PropertyDetailPage() {
 						<StatGrid
 							items={[
 								{ label: "Tipo", value: property.tipo },
-								{ label: "Garaje", value: property.garaje === 1 ? "Sí" : "No" },
+								// Fix: garaje es boolean en Supabase
+								{ label: "Garaje", value: property.garaje ? "Sí" : "No" },
 								{ label: "Baños", value: property.banos },
 								{ label: "Ambientes", value: property.ambientes },
 								{ label: "Dormitorios", value: property.dormitorios },
@@ -164,9 +160,15 @@ export default function PropertyDetailPage() {
 					<Card className="grid gap-0 overflow-hidden" padding="none">
 						<div className="flex items-center justify-between gap-3 border-b border-[color:var(--line)] px-4 py-3">
 							<h2 className="m-0 text-base font-extrabold">Ubicación</h2>
-							<span className="text-sm text-[var(--accent)]">
+							{/* Fix: link funcional a Google Maps */}
+							<a
+								href={`https://maps.google.com/?q=${encodeURIComponent(address)}`}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-sm text-[var(--accent)]"
+							>
 								Abrir en Maps →
-							</span>
+							</a>
 						</div>
 						<PropertyMap address={address} />
 					</Card>

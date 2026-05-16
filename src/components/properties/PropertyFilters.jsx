@@ -105,10 +105,10 @@ export default function PropertyFilters({
 					<label className="grid gap-1 text-sm font-bold text-muted">
 						Baños
 						<input
-							name="baños"
+							name="banos"
 							type="number"
 							min="0"
-							value={values.baños}
+							value={values.banos}
 							onChange={onChange}
 							className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
 						/>

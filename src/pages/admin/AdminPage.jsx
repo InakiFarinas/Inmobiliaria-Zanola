@@ -1,5 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
-import { memo } from "react";
+import { useEffect, useState, useMemo, useCallback, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button";
 import Card from "../../components/ui/Card";
@@ -8,10 +7,8 @@ import SectionHeader from "../../components/ui/SectionHeader";
 import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../lib/api";
 
-// Componente memoizado para cada propiedad
 const PropertyRow = memo(({ property, onToggle, onDelete, onEdit }) => (
 	<Card
-		key={property.id_propiedad}
 		padding="md"
 		className="grid gap-4 md:grid-cols-[auto_minmax(0,1fr)_auto] md:items-center"
 	>
@@ -26,7 +23,8 @@ const PropertyRow = memo(({ property, onToggle, onDelete, onEdit }) => (
 		<div className="grid gap-1 min-w-0">
 			<div className="flex flex-wrap items-center gap-2">
 				<span className="truncate font-bold text-sm text-[var(--text)]">
-					{property.tipo} — {property.calle} {property.altura}
+					{property.tipo} — {property.calle}
+					{property.altura ? ` ${property.altura}` : ""}
 				</span>
 				{!property.activa ? (
 					<span className="rounded-full bg-black/5 px-2 py-0.5 text-[10px] text-[var(--muted)]">
@@ -70,6 +68,8 @@ const PropertyRow = memo(({ property, onToggle, onDelete, onEdit }) => (
 	</Card>
 ));
 
+PropertyRow.displayName = "PropertyRow";
+
 const ITEMS_PER_PAGE = 10;
 
 export default function AdminPage() {
@@ -77,55 +77,62 @@ export default function AdminPage() {
 	const navigate = useNavigate();
 	const [properties, setProperties] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
 
-	useEffect(() => {
-		fetchProperties();
-	}, []);
-
-	async function fetchProperties() {
+	const fetchProperties = useCallback(async () => {
 		setLoading(true);
+		setError(null);
 		const { data, error } = await supabase
 			.from("propiedades")
 			.select("*")
 			.order("created_at", { ascending: false });
-		if (!error) setProperties(data || []);
+		if (error) {
+			setError("No se pudieron cargar las propiedades");
+		} else {
+			setProperties(data || []);
+		}
 		setLoading(false);
-	}
-
-	const handleToggleActiva = useCallback(async (property) => {
-		const newValue = !property.activa;
-		// Optimistic update
-		setProperties((prev) =>
-			prev.map((p) =>
-				p.id_propiedad === property.id_propiedad
-					? { ...p, activa: newValue }
-					: p,
-			),
-		);
-		// Update DB
-		const { error } = await supabase
-			.from("propiedades")
-			.update({ activa: newValue })
-			.eq("id_propiedad", property.id_propiedad);
-		if (error) fetchProperties(); // Refetch only on error
 	}, []);
 
-	const handleDelete = useCallback(async (id) => {
-		if (!confirm("¿Seguro que querés eliminar esta propiedad?")) return;
-		// Optimistic delete
-		setProperties((prev) => prev.filter((p) => p.id_propiedad !== id));
-		const { error } = await supabase
-			.from("propiedades")
-			.delete()
-			.eq("id_propiedad", id);
-		if (error) fetchProperties(); // Refetch only on error
-	}, []);
+	useEffect(() => {
+		fetchProperties();
+	}, [fetchProperties]);
+
+	const handleToggleActiva = useCallback(
+		async (property) => {
+			const newValue = !property.activa;
+			setProperties((prev) =>
+				prev.map((p) =>
+					p.id_propiedad === property.id_propiedad
+						? { ...p, activa: newValue }
+						: p,
+				),
+			);
+			const { error } = await supabase
+				.from("propiedades")
+				.update({ activa: newValue })
+				.eq("id_propiedad", property.id_propiedad);
+			if (error) fetchProperties();
+		},
+		[fetchProperties],
+	);
+
+	const handleDelete = useCallback(
+		async (id) => {
+			if (!confirm("¿Seguro que querés eliminar esta propiedad?")) return;
+			setProperties((prev) => prev.filter((p) => p.id_propiedad !== id));
+			const { error } = await supabase
+				.from("propiedades")
+				.delete()
+				.eq("id_propiedad", id);
+			if (error) fetchProperties();
+		},
+		[fetchProperties],
+	);
 
 	const handleEdit = useCallback(
-		(id) => {
-			navigate(`/admin/editar/${id}`);
-		},
+		(id) => navigate(`/admin/editar/${id}`),
 		[navigate],
 	);
 
@@ -134,15 +141,15 @@ export default function AdminPage() {
 		navigate("/admin/login");
 	}, [logout, navigate]);
 
-	// Pagination
 	const paginatedProperties = useMemo(() => {
 		const start = (currentPage - 1) * ITEMS_PER_PAGE;
 		return properties.slice(start, start + ITEMS_PER_PAGE);
 	}, [properties, currentPage]);
 
-	const totalPages = useMemo(() => {
-		return Math.ceil(properties.length / ITEMS_PER_PAGE);
-	}, [properties.length]);
+	const totalPages = useMemo(
+		() => Math.ceil(properties.length / ITEMS_PER_PAGE),
+		[properties.length],
+	);
 
 	return (
 		<div className="min-h-screen bg-[var(--surface)] px-4 py-4">
@@ -179,7 +186,12 @@ export default function AdminPage() {
 						className="mb-0"
 					/>
 
-					{loading ? (
+					{error ? (
+						<EmptyState
+							title={error}
+							action={<Button onClick={fetchProperties}>Reintentar</Button>}
+						/>
+					) : loading ? (
 						<p className="m-0 text-sm text-[var(--muted)]">Cargando...</p>
 					) : properties.length ? (
 						<>
@@ -195,7 +207,6 @@ export default function AdminPage() {
 								))}
 							</div>
 
-							{/* Pagination */}
 							{totalPages > 1 && (
 								<div className="flex items-center justify-between border-t border-[color:var(--line)] pt-4">
 									<p className="text-xs text-[var(--muted)]">

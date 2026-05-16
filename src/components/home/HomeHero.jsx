@@ -4,7 +4,23 @@ import Card from "../ui/Card";
 import FormField from "../ui/FormField";
 import WhatsAppButton from "../ui/WhatsAppButton";
 import { Link } from "react-router-dom";
-import { getImageUrl, getImageUrls } from "../../lib/utils";
+import { getImageUrls } from "../../lib/utils";
+
+function PropertyImage({ src, alt }) {
+	const urls = getImageUrls(src);
+	return (
+		<picture>
+			<source srcSet={urls.webp} type="image/webp" />
+			<img
+				src={urls.fallback}
+				alt={alt}
+				width="1200"
+				height="800"
+				className="h-full w-full object-cover"
+			/>
+		</picture>
+	);
+}
 
 export default function HomeHero({
 	cities = [],
@@ -19,7 +35,7 @@ export default function HomeHero({
 
 	const mainImageUrls = useMemo(
 		() =>
-			heroProperties[0] && heroProperties[0].imagenes?.[0]
+			heroProperties[0]?.imagenes?.[0]
 				? getImageUrls(heroProperties[0].imagenes[0])
 				: null,
 		[heroProperties],
@@ -65,7 +81,6 @@ export default function HomeHero({
 						</WhatsAppButton>
 					</div>
 
-					{/* Small-screen: show a single featured image under the hero text */}
 					{heroProperties[0] && mainImageUrls && (
 						<Link
 							to={`/propiedad/${heroProperties[0].id_propiedad}`}
@@ -73,9 +88,9 @@ export default function HomeHero({
 							aria-label={`Ver propiedad en ${heroProperties[0].ciudad}`}
 						>
 							<picture>
-								<source srcSet={mainImageUrls?.webp} type="image/webp" />
+								<source srcSet={mainImageUrls.webp} type="image/webp" />
 								<img
-									src={mainImageUrls?.fallback}
+									src={mainImageUrls.fallback}
 									alt={heroProperties[0].ciudad}
 									width="1200"
 									height="800"
@@ -153,9 +168,9 @@ export default function HomeHero({
 							aria-label={`Ver propiedad en ${heroProperties[0].ciudad}`}
 						>
 							<picture>
-								<source srcSet={mainImageUrls?.webp} type="image/webp" />
+								<source srcSet={mainImageUrls.webp} type="image/webp" />
 								<img
-									src={mainImageUrls?.fallback}
+									src={mainImageUrls.fallback}
 									alt={heroProperties[0].ciudad}
 									width="1200"
 									height="800"
@@ -193,21 +208,10 @@ export default function HomeHero({
 								key={property.id_propiedad}
 								aria-label={`Ver propiedad en ${property.ciudad}, ${property.calle}`}
 							>
-								{(() => {
-									const urls = getImageUrls(property.imagenes[0]);
-									return (
-										<picture>
-											<source srcSet={urls.webp} type="image/webp" />
-											<img
-												src={urls.fallback}
-												alt={property.ciudad}
-												width="1200"
-												height="800"
-												className="h-full w-full object-cover"
-											/>
-										</picture>
-									);
-								})()}
+								<PropertyImage
+									src={property.imagenes[0]}
+									alt={property.ciudad}
+								/>
 								<div className="absolute bottom-3 left-3 right-3 grid gap-0.5 rounded-2xl bg-black/80 px-3 py-2 text-white backdrop-blur-md">
 									<strong className="text-sm">{property.calle}</strong>
 									<span className="text-xs text-white/70">
