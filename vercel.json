@@ -2,5 +2,43 @@
 	"rewrites": [
 		{ "source": "/favicon.ico", "destination": "/images/icons/logo.png" },
 		{ "source": "/(.*)", "destination": "/index.html" }
+	],
+	"headers": [
+		{
+			"source": "/assets/(.*)",
+			"headers": [
+				{
+					"key": "Cache-Control",
+					"value": "public, max-age=31536000, immutable"
+				}
+			]
+		},
+		{
+			"source": "/images/(.*)",
+			"headers": [
+				{
+					"key": "Cache-Control",
+					"value": "public, max-age=604800"
+				}
+			]
+		},
+		{
+			"source": "/(.*).html",
+			"headers": [
+				{
+					"key": "Cache-Control",
+					"value": "public, max-age=3600, must-revalidate"
+				}
+			]
+		},
+		{
+			"source": "/index.html",
+			"headers": [
+				{
+					"key": "Cache-Control",
+					"value": "public, max-age=3600, must-revalidate"
+				}
+			]
+		}
 	]
 }

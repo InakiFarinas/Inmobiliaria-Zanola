@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { getImageUrl } from "../../lib/utils";
 
@@ -20,38 +20,50 @@ export default function PropertyImageCarousel({
 		setIsAnimating(false);
 	}, [images]);
 
-	const currentImage = images[currentIndex]
-		? getImageUrl(images[currentIndex])
-		: null;
-	const incomingImage =
-		incomingIndex !== null && images[incomingIndex]
-			? getImageUrl(images[incomingIndex])
-			: null;
+	const currentImage = useMemo(
+		() => (images[currentIndex] ? getImageUrl(images[currentIndex]) : null),
+		[images, currentIndex],
+	);
 
-	const moveToIndex = (nextIndex, direction) => {
-		if (!images.length || nextIndex === currentIndex || isAnimating) return;
-		setSlideDirection(direction);
-		setIsAnimating(false);
-		setIncomingIndex(nextIndex);
-		requestAnimationFrame(() => setIsAnimating(true));
-	};
+	const incomingImage = useMemo(
+		() =>
+			incomingIndex !== null && images[incomingIndex]
+				? getImageUrl(images[incomingIndex])
+				: null,
+		[images, incomingIndex],
+	);
 
-	const goPrev = () => {
+	const moveToIndex = useCallback(
+		(nextIndex, direction) => {
+			setIsAnimating((isAnim) => {
+				if (!images.length || nextIndex === currentIndex || isAnim)
+					return isAnim;
+				setSlideDirection(direction);
+				setIsAnimating(false);
+				setIncomingIndex(nextIndex);
+				requestAnimationFrame(() => setIsAnimating(true));
+				return false;
+			});
+		},
+		[images.length, currentIndex],
+	);
+
+	const goPrev = useCallback(() => {
 		const nextIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
 		moveToIndex(nextIndex, "prev");
-	};
+	}, [currentIndex, images.length, moveToIndex]);
 
-	const goNext = () => {
+	const goNext = useCallback(() => {
 		const nextIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
 		moveToIndex(nextIndex, "next");
-	};
+	}, [currentIndex, images.length, moveToIndex]);
 
-	const handleIncomingTransitionEnd = () => {
+	const handleIncomingTransitionEnd = useCallback(() => {
 		if (incomingIndex === null) return;
 		setCurrentIndex(incomingIndex);
 		setIncomingIndex(null);
 		setIsAnimating(false);
-	};
+	}, [incomingIndex]);
 
 	const currentLayerClassName = [
 		"absolute inset-0 h-full w-full object-cover",
@@ -81,6 +93,7 @@ export default function PropertyImageCarousel({
 							width={800}
 							height={600}
 							className={currentLayerClassName}
+							decoding="async"
 						/>
 						{incomingImage ? (
 							<img
@@ -89,6 +102,7 @@ export default function PropertyImageCarousel({
 								width={800}
 								height={600}
 								className={incomingLayerClassName}
+								decoding="async"
 								onTransitionEnd={handleIncomingTransitionEnd}
 							/>
 						) : null}

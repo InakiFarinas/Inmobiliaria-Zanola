@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import Card from "../ui/Card";
 import { getImageUrl } from "../../lib/utils";
 
@@ -27,39 +27,52 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 		);
 	}
 
-	const currentImage = images[currentIndex]
-		? getImageUrl(images[currentIndex])
-		: null;
-	const incomingImage =
-		incomingIndex !== null && images[incomingIndex]
-			? getImageUrl(images[incomingIndex])
-			: null;
+	const currentImage = useMemo(
+		() => (images[currentIndex] ? getImageUrl(images[currentIndex]) : null),
+		[images, currentIndex],
+	);
+
+	const incomingImage = useMemo(
+		() =>
+			incomingIndex !== null && images[incomingIndex]
+				? getImageUrl(images[incomingIndex])
+				: null,
+		[images, incomingIndex],
+	);
+
 	const hasMultipleImages = images.length > 1;
 
-	const moveToIndex = (nextIndex, direction) => {
-		if (!hasMultipleImages || nextIndex === currentIndex || isAnimating) return;
-		setSlideDirection(direction);
-		setIsAnimating(false);
-		setIncomingIndex(nextIndex);
-		requestAnimationFrame(() => setIsAnimating(true));
-	};
+	const moveToIndex = useCallback(
+		(nextIndex, direction) => {
+			setIsAnimating((isAnim) => {
+				if (!hasMultipleImages || nextIndex === currentIndex || isAnim)
+					return isAnim;
+				setSlideDirection(direction);
+				setIsAnimating(false);
+				setIncomingIndex(nextIndex);
+				requestAnimationFrame(() => setIsAnimating(true));
+				return false;
+			});
+		},
+		[hasMultipleImages, currentIndex],
+	);
 
-	const previousImage = () => {
+	const previousImage = useCallback(() => {
 		const nextIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
 		moveToIndex(nextIndex, "prev");
-	};
+	}, [currentIndex, images.length, moveToIndex]);
 
-	const nextImage = () => {
+	const nextImage = useCallback(() => {
 		const nextIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
 		moveToIndex(nextIndex, "next");
-	};
+	}, [currentIndex, images.length, moveToIndex]);
 
-	const handleIncomingTransitionEnd = () => {
+	const handleIncomingTransitionEnd = useCallback(() => {
 		if (incomingIndex === null) return;
 		setCurrentIndex(incomingIndex);
 		setIncomingIndex(null);
 		setIsAnimating(false);
-	};
+	}, [incomingIndex]);
 
 	const currentLayerClassName = [
 		"absolute inset-0 h-full w-full object-cover",
@@ -86,6 +99,7 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 								width="1200"
 								height="900"
 								className={currentLayerClassName}
+								decoding="async"
 							/>
 							{incomingImage ? (
 								<img
@@ -94,6 +108,7 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 									width="1200"
 									height="900"
 									className={incomingLayerClassName}
+									decoding="async"
 									onTransitionEnd={handleIncomingTransitionEnd}
 								/>
 							) : null}
@@ -175,6 +190,8 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 								width="400"
 								height="300"
 								className="aspect-[4/3] w-full object-cover"
+								loading="lazy"
+								decoding="async"
 							/>
 						</button>
 					))}

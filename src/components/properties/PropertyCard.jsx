@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import PropertyImageCarousel from "./PropertyImageCarousel";
 import {
@@ -27,7 +28,7 @@ function getPriceLabel(property) {
 	return `AR$ ${price}${isRental ? "/mes" : ""}`;
 }
 
-export default function PropertyCard({ property, featured = false }) {
+function PropertyCard({ property, featured = false }) {
 	const images = property.imagenes || [];
 	const isRental = normalizeStateLabel(property.estado).includes("alquiler");
 	const stateLabel = isRental ? "Alquiler" : "Venta";
@@ -99,3 +100,5 @@ export default function PropertyCard({ property, featured = false }) {
 		</article>
 	);
 }
+
+export default memo(PropertyCard);

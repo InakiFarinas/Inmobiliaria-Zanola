@@ -1,8 +1,10 @@
-﻿import Button from "../ui/Button";
+﻿import { useMemo, useCallback } from "react";
+import Button from "../ui/Button";
 import Card from "../ui/Card";
 import FormField from "../ui/FormField";
 import WhatsAppButton from "../ui/WhatsAppButton";
 import { Link } from "react-router-dom";
+import { getImageUrl } from "../../lib/utils";
 
 export default function HomeHero({
 	cities = [],
@@ -13,7 +15,30 @@ export default function HomeHero({
 	latest = [],
 	totalCount,
 }) {
-	const heroProperties = latest.slice(0, 3);
+	const heroProperties = useMemo(() => latest.slice(0, 3), [latest]);
+
+	const mainImage = useMemo(
+		() =>
+			heroProperties[0] && heroProperties[0].imagenes?.[0]
+				? getImageUrl(heroProperties[0].imagenes[0])
+				: null,
+		[heroProperties],
+	);
+
+	const handleCityChange = useCallback(
+		(event) => onFormChange("ciudad", event.target.value),
+		[onFormChange],
+	);
+
+	const handleStateChange = useCallback(
+		(event) => onFormChange("estado", event.target.value),
+		[onFormChange],
+	);
+
+	const handlePriceChange = useCallback(
+		(event) => onFormChange("precio_max", event.target.value),
+		[onFormChange],
+	);
 
 	return (
 		<section className="min-h-[calc(100vh-var(--header-height))] md:h-[calc(100vh-var(--header-height))] overflow-visible md:overflow-hidden bg-[var(--accent)]">
@@ -41,18 +66,20 @@ export default function HomeHero({
 					</div>
 
 					{/* Small-screen: show a single featured image under the hero text */}
-					{heroProperties[0] && (
+					{heroProperties[0] && mainImage && (
 						<Link
 							to={`/propiedad/${heroProperties[0].id_propiedad}`}
 							className="mt-4 block overflow-hidden rounded-[18px] bg-white/5 shadow-[0_12px_28px_rgba(0,0,0,0.18)] xl:hidden relative group cursor-pointer"
 							aria-label={`Ver propiedad en ${heroProperties[0].ciudad}`}
 						>
 							<img
-								src={heroProperties[0].imagenes[0]}
+								src={mainImage}
 								alt={heroProperties[0].ciudad}
 								width="1200"
 								height="800"
 								className="h-[200px] w-full object-cover transition-transform duration-300 group-hover:scale-105"
+								loading="lazy"
+								decoding="async"
 							/>
 							<div className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-[0.78rem] font-extrabold text-[var(--text)]">
 								Destacada
@@ -81,7 +108,7 @@ export default function HomeHero({
 						label="Ciudad"
 						as="select"
 						value={form.ciudad}
-						onChange={(event) => onFormChange("ciudad", event.target.value)}
+						onChange={handleCityChange}
 					>
 						<option value="">Todas las ciudades</option>
 						{cities.map((city, idx) => (
@@ -94,7 +121,7 @@ export default function HomeHero({
 						label="Estado"
 						as="select"
 						value={form.estado}
-						onChange={(event) => onFormChange("estado", event.target.value)}
+						onChange={handleStateChange}
 					>
 						<option value="">Seleccionar...</option>
 						{states.map((state, idx) => (
@@ -108,7 +135,7 @@ export default function HomeHero({
 						type="number"
 						placeholder="Sin límite"
 						value={form.precio_max ?? ""}
-						onChange={(event) => onFormChange("precio_max", event.target.value)}
+						onChange={handlePriceChange}
 					/>
 					<Button type="submit" className="self-stretch whitespace-nowrap px-4">
 						Buscar
@@ -116,18 +143,20 @@ export default function HomeHero({
 				</Card>
 
 				<div className="hidden xl:grid gap-3 xl:col-start-2 xl:row-span-2 xl:grid-rows-[minmax(0,1fr)_minmax(0,0.55fr)_auto]">
-					{heroProperties[0] ? (
+					{heroProperties[0] && mainImage ? (
 						<Link
 							to={`/propiedad/${heroProperties[0].id_propiedad}`}
 							className="relative min-h-[240px] overflow-hidden rounded-[22px] bg-white/5 shadow-[0_20px_45px_rgba(0,0,0,0.22)] transition-transform duration-200 hover:-translate-y-0.5 xl:min-h-0 xl:row-span-1"
 							aria-label={`Ver propiedad en ${heroProperties[0].ciudad}`}
 						>
 							<img
-								src={heroProperties[0].imagenes[0]}
+								src={mainImage}
 								alt={heroProperties[0].ciudad}
 								width="1200"
 								height="800"
 								className="h-full w-full object-cover"
+								loading="lazy"
+								decoding="async"
 							/>
 							<div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-2 text-[0.78rem] font-extrabold text-[var(--text)]">
 								Destacada
