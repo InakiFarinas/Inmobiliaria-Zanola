@@ -32,7 +32,7 @@ export default {
 				site: "var(--shadow)",
 			},
 			fontFamily: {
-				sans: ["Manrope", "sans-serif"],
+				sans: ["Bookman Old Style", "serif"],
 				serif: ["Fraunces", "serif"],
 			},
 		},

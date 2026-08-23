@@ -6,17 +6,17 @@
 	:root {
 		color-scheme: light;
 		--text: #1a1a1a;
-		--accent: #2d5644;
+		--accent: #014ba0;
 		--terracota: #e3141a;
 		--surface: #ffffff;
 		--muted: #444a4a;
 		--line: rgba(26, 26, 26, 0.12);
-		--accent-soft: rgba(27, 94, 70, 0.12);
+		--accent-soft: rgba(1, 75, 160, 0.12);
 		--danger: #e3141a;
 		--shadow: 0 22px 70px rgba(26, 26, 26, 0.11);
 		--header-height: 104px;
 		--whatsapp: #25d366;
-		--cta-dark: #1e3a2f;
+		--cta-dark: #012f66;
 	}
 
 	* {
@@ -29,7 +29,8 @@
 
 	body {
 		margin: 0;
-		font-family: "Manrope", sans-serif;
+		font-family: "Bookman Old Style", serif;
+		font-weight: 700;
 		color: var(--text);
 		background:
 			radial-gradient(

@@ -26,7 +26,7 @@ export default function SiteChrome({
 
 	return (
 		<div className="flex min-h-screen flex-col">
-			<header className="sticky top-0 z-20 grid h-[var(--header-height)] grid-cols-[1fr,auto] md:grid-cols-[auto,1fr,auto] items-center gap-3 md:gap-4 bg-[var(--accent)] px-3 md:px-4 text-white shadow-[0_18px_36px_rgba(26,26,26,0.12)] backdrop-blur-[20px]">
+			<header className="sticky top-0 z-20 grid h-[var(--header-height)] grid-cols-[1fr,auto] md:grid-cols-[auto,1fr,auto] items-center gap-3 md:gap-4 bg-[var(--cta-dark)] px-3 md:px-4 text-white shadow-[0_18px_36px_rgba(26,26,26,0.12)] backdrop-blur-[20px]">
 				<Link
 					to="/"
 					className="inline-flex min-w-0 items-center gap-3 md:order-1"
@@ -35,8 +35,8 @@ export default function SiteChrome({
 					<img
 						src="/images/icons/logocompleto.png"
 						alt="Zanola Inmobiliaria"
-						width="210"
-						height="96"
+						width="300"
+						height="144"
 						decoding="async"
 					/>
 				</Link>
