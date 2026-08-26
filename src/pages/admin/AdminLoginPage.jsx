@@ -33,7 +33,7 @@ export default function AdminLoginPage() {
 			<Card className="mx-auto grid w-full max-w-lg gap-6" padding="lg">
 				<SectionHeader
 					kicker="Panel"
-					title="Zanola Admin"
+					title="Cabrera Admin"
 					description="Ingresá con tu cuenta para administrar propiedades."
 					titleAs="h1"
 					className="mb-0"
@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
 						type="email"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
-						placeholder="admin@zanola.com.ar"
+						placeholder="admin@juliancabrerapropiedades.com.ar"
 						required
 					/>
 					<FormField

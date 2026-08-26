@@ -7,7 +7,7 @@ export default function AboutPage() {
 		<section className="mx-auto w-[min(1180px,calc(100%_-_24px))] md:w-[min(1180px,calc(100%_-_32px))] pt-4 md:pt-6">
 			<SectionHeader
 				kicker="Nosotros"
-				title="Sobre Zanola Inmobiliaria"
+				title="Sobre Cabrera Inmobiliaria"
 				titleAs="h1"
 			/>
 
@@ -19,7 +19,7 @@ export default function AboutPage() {
 				>
 					<h2 className="m-0 font-serif text-2xl font-bold">Trayectoria</h2>
 					<p>
-						La familia Zanola forma parte de la comunidad moronense desde la
+						La familia Cabrera forma parte de la comunidad moronense desde la
 						década del '60 y trabaja en el rubro inmobiliario desde 1990.
 					</p>
 					<div className="inline-grid gap-1.5 rounded-xl border border-[color:var(--line)] bg-white/5 px-4 py-3">
@@ -38,12 +38,12 @@ export default function AboutPage() {
 						Atención comercial
 					</h2>
 					<p>
-						La firma está a cargo del Arquitecto Kevin Zanola, con actividad en
+						La firma está a cargo del Arquitecto Kevin Cabrera, con actividad en
 						instituciones educativas, sociales, profesionales y comerciales del
 						Partido de Morón.
 					</p>
 					<div className="grid gap-1">
-						<p className="m-0 font-semibold">Arq. Kevin Zanola</p>
+						<p className="m-0 font-semibold">Arq. Kevin Cabrera</p>
 						<p className="m-0 text-sm text-[var(--muted)]">
 							Responsable comercial
 						</p>
@@ -132,7 +132,7 @@ export default function AboutPage() {
 				</h2>
 				<Card className="overflow-hidden" padding="none">
 					<iframe
-						title="Ubicación de Zanola Inmobiliaria"
+						title="Ubicación de Cabrera Inmobiliaria"
 						src="https://www.google.com/maps?q=25+de+Mayo+372,+Mor%C3%B3n,+Buenos+Aires&output=embed"
 						loading="lazy"
 						style={{ width: "100%", minHeight: 340 }}

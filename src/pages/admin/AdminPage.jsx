@@ -159,7 +159,7 @@ export default function AdminPage() {
 						<p className="m-0 text-xs font-bold uppercase tracking-[0.12em] text-white/55">
 							Panel
 						</p>
-						<h1 className="m-0 text-lg font-black">Zanola Admin</h1>
+						<h1 className="m-0 text-lg font-black">Cabrera Admin</h1>
 					</div>
 					<div className="flex flex-wrap items-center gap-3">
 						<span className="text-sm text-white/70">{user?.email}</span>

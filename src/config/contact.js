@@ -10,6 +10,7 @@ export const WHATSAPP_PROPERTY_URL = (address) =>
 export const WHATSAPP_API_URL = (message) =>
 	`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(message)}`;
 
-export const PHONE_NUMBER = "(011) 4489-0000";
-export const PHONE_LINK = "1144890000";
-export const EMAIL = "info@zanola.com.ar";
+export const PHONE_NUMBER = "4624 - 7581";
+export const PHONE_LINK = "46247581";
+export const EMAIL = "info@juliancabrerapropiedades.com.ar";
+export const ADDRESS = "PTE D. F. SARMIENTO 2401, Morón";

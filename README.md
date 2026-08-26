@@ -2,9 +2,9 @@
 
 Frontend de la app inmobiliaria (Vite + React).
 
-Repositorio: https://github.com/InakiFarinas/Inmobiliaria-Zanola
+Repositorio: https://github.com/InakiFarinas/Inmobiliaria-Cabrera
 
-Sitio desplegado: https://inmobiliaria-zanola.vercel.app
+Sitio desplegado: https://juliancabrerapropiedades.com.ar
 
 ## Descripción
 

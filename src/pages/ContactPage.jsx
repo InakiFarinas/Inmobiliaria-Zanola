@@ -10,6 +10,7 @@ import {
 } from "../components/ui/ContactIcons";
 import SectionHeader from "../components/ui/SectionHeader";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
+import { ADDRESS, EMAIL, PHONE_NUMBER } from "../config/contact";
 
 export default function ContactPage() {
 	const [form, setForm] = useState({
@@ -158,16 +159,14 @@ export default function ContactPage() {
 					</h2>
 					<ul className="grid gap-4 p-0 m-0 list-none">
 						<InfoCard title="Dirección" icon={<LocationIcon />}>
-							<p className="m-0 text-[1.35rem] font-bold">
-								25 de Mayo 372, Morón
-							</p>
+							<p className="m-0 text-[1.35rem] font-bold">{ADDRESS}</p>
 							<small className="text-sm text-muted">Buenos Aires</small>
 						</InfoCard>
 						<InfoCard title="Teléfono" icon={<PhoneIcon />}>
-							<p className="m-0 text-[1.35rem] font-bold">(011) 4489-0000</p>
+							<p className="m-0 text-[1.35rem] font-bold">{PHONE_NUMBER}</p>
 						</InfoCard>
 						<InfoCard title="Email" icon={<MailIcon />}>
-							<p className="m-0 text-[1.35rem] font-bold">info@zanola.com.ar</p>
+							<p className="m-0 text-[1.35rem] font-bold">{EMAIL}</p>
 						</InfoCard>
 					</ul>
 					<div className="border-t border-[color:var(--line)] pt-4 text-center text-muted">

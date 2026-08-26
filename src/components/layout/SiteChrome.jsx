@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import WhatsAppButton from "../ui/WhatsAppButton";
-import { EMAIL, PHONE_LINK, PHONE_NUMBER } from "../../config/contact";
+import { ADDRESS, EMAIL, PHONE_LINK, PHONE_NUMBER } from "../../config/contact";
 import { LocationIcon, PhoneIcon, MailIcon } from "../ui/ContactIcons";
 
 const linkClassName = ({ isActive }) =>
@@ -30,11 +30,11 @@ export default function SiteChrome({
 				<Link
 					to="/"
 					className="inline-flex min-w-0 items-center gap-3 md:order-1"
-					aria-label="Zanola Inmobiliaria"
+					aria-label="juliancabrerapropiedades"
 				>
 					<img
 						src="/images/icons/logocompleto-v2.png"
-						alt="Zanola Inmobiliaria"
+						alt="juliancabrerapropiedades"
 						width="300"
 						height="144"
 						decoding="async"
@@ -103,7 +103,7 @@ export default function SiteChrome({
 						<div className="grid gap-3">
 							<img
 								src="/images/icons/logocompleto-v2.png"
-								alt="Zanola Inmobiliaria"
+								alt="juliancabrerapropiedades"
 								className="w-[140px] max-w-full"
 								width="420"
 								height="96"
@@ -241,7 +241,7 @@ export default function SiteChrome({
 								<span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white">
 									<LocationIcon />
 								</span>
-								<span>25 de Mayo 372 – Morón</span>
+								<span>{ADDRESS}</span>
 							</div>
 							<div className="flex items-center gap-3">
 								<span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white">
@@ -261,7 +261,7 @@ export default function SiteChrome({
 
 				<div className="mt-8 flex w-full flex-col gap-3 border-t border-white/10 pt-4 md:flex-row md:items-center md:justify-between">
 					<p className="text-[0.95rem] text-white/55">
-						© 2026 Zanola Propiedades · Morón, Buenos Aires
+						© 2026 juliancabrerapropiedades · Castelar, Buenos Aires
 					</p>
 					<WhatsAppButton
 						message="Hola, quiero hacer una consulta sobre una propiedad."
