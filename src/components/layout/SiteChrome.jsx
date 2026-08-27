@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import WhatsAppButton from "../ui/WhatsAppButton";
-import { ADDRESS, EMAIL, PHONE_LINK, PHONE_NUMBER } from "../../config/contact";
+import { ADDRESS, EMAIL, PHONE_NUMBER } from "../../config/contact";
 import { LocationIcon, PhoneIcon, MailIcon } from "../ui/ContactIcons";
 
 const linkClassName = ({ isActive }) =>
