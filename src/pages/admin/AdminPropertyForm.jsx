@@ -5,9 +5,10 @@ import Card from "../../components/ui/Card";
 import EmptyState from "../../components/ui/EmptyState";
 import FormField from "../../components/ui/FormField";
 import SectionHeader from "../../components/ui/SectionHeader";
-import { supabase } from "../../lib/api";
+import { supabase, getCities } from "../../lib/api";
 
-const CITY_MAP = { "Morón Sur": 1, "Morón Centro": 2, Morón: 3 };
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const MAX_IMAGE_SIZE_MB = 8;
 
 const emptyForm = {
 	tipo: "Departamento",
@@ -36,9 +37,17 @@ export default function AdminPropertyForm() {
 	const [form, setForm] = useState(emptyForm);
 	const [images, setImages] = useState([]);
 	const [newFiles, setNewFiles] = useState([]);
+	const [cities, setCities] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [fetching, setFetching] = useState(isEditing);
-	const [error, setError] = useState("");
+	const [loadError, setLoadError] = useState("");
+	const [saveError, setSaveError] = useState("");
+
+	useEffect(() => {
+		getCities()
+			.then((data) => setCities(data || []))
+			.catch((err) => console.error(err));
+	}, []);
 
 	useEffect(() => {
 		if (!isEditing) return;
@@ -49,7 +58,7 @@ export default function AdminPropertyForm() {
 			.single()
 			.then(({ data, error }) => {
 				if (error) {
-					setError("No se pudo cargar la propiedad");
+					setLoadError("No se pudo cargar la propiedad");
 					setFetching(false);
 					return;
 				}
@@ -77,25 +86,29 @@ export default function AdminPropertyForm() {
 				setFetching(false);
 			})
 			.catch(() => {
-				setError("No se pudo cargar la propiedad");
+				setLoadError("No se pudo cargar la propiedad");
 				setFetching(false);
 			});
 	}, [id, isEditing]);
 
-	const handleChange = useCallback((e) => {
-		const { name, type, value, checked } = e.target;
-		setForm((f) => {
-			const updated = {
-				...f,
-				[name]: type === "checkbox" ? checked : value,
-			};
-			// sincronizar id_ciudad cuando cambia ciudad
-			if (name === "ciudad") {
-				updated.id_ciudad = CITY_MAP[value] || 1;
-			}
-			return updated;
-		});
-	}, []);
+	const handleChange = useCallback(
+		(e) => {
+			const { name, type, value, checked } = e.target;
+			setForm((f) => {
+				const updated = {
+					...f,
+					[name]: type === "checkbox" ? checked : value,
+				};
+				// sincronizar id_ciudad cuando cambia ciudad
+				if (name === "ciudad") {
+					const match = cities.find((c) => c.nombre === value);
+					updated.id_ciudad = match?.id_ciudad ?? f.id_ciudad;
+				}
+				return updated;
+			});
+		},
+		[cities],
+	);
 
 	const handleFileChange = useCallback((e) => {
 		setNewFiles(Array.from(e.target.files));
@@ -107,6 +120,19 @@ export default function AdminPropertyForm() {
 
 	async function uploadImages() {
 		if (newFiles.length === 0) return [];
+
+		for (const file of newFiles) {
+			if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+				throw new Error(
+					`"${file.name}" no es un formato de imagen permitido (jpg, png o webp).`,
+				);
+			}
+			if (file.size > MAX_IMAGE_SIZE_MB * 1024 * 1024) {
+				throw new Error(
+					`"${file.name}" supera el tamaño máximo de ${MAX_IMAGE_SIZE_MB}MB.`,
+				);
+			}
+		}
 
 		const uploadPromises = newFiles.map(async (file) => {
 			const ext = file.name.split(".").pop();
@@ -124,7 +150,7 @@ export default function AdminPropertyForm() {
 
 	async function handleSubmit(e) {
 		e.preventDefault();
-		setError("");
+		setSaveError("");
 		setLoading(true);
 
 		try {
@@ -144,17 +170,20 @@ export default function AdminPropertyForm() {
 			};
 
 			if (isEditing) {
-				await supabase
+				const { error } = await supabase
 					.from("propiedades")
 					.update(payload)
 					.eq("id_propiedad", id);
+				if (error) throw error;
 			} else {
-				await supabase.from("propiedades").insert(payload);
+				const { error } = await supabase.from("propiedades").insert(payload);
+				if (error) throw error;
 			}
 
 			navigate("/admin");
 		} catch (err) {
-			setError(err.message || "Error al guardar");
+			console.error(err);
+			setSaveError(err.message || "Error al guardar");
 		} finally {
 			setLoading(false);
 		}
@@ -167,11 +196,11 @@ export default function AdminPropertyForm() {
 			</div>
 		);
 
-	if (error && !form.calle)
+	if (loadError)
 		return (
 			<div className="min-h-screen bg-[#f2f0eb] flex items-center justify-center">
 				<EmptyState
-					title={error}
+					title={loadError}
 					action={
 						<Button onClick={() => navigate("/admin")}>Volver al panel</Button>
 					}
@@ -243,9 +272,15 @@ export default function AdminPropertyForm() {
 								value={form.ciudad}
 								onChange={handleChange}
 							>
-								<option>Morón Sur</option>
-								<option>Morón Centro</option>
-								<option>Morón</option>
+								{cities.length > 0 ? (
+									cities.map((city) => (
+										<option key={city.id_ciudad} value={city.nombre}>
+											{city.nombre}
+										</option>
+									))
+								) : (
+									<option value={form.ciudad}>{form.ciudad}</option>
+								)}
 							</FormField>
 						</div>
 						<div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_220px]">
@@ -415,8 +450,8 @@ export default function AdminPropertyForm() {
 						) : null}
 					</Card>
 
-					{error && form.calle ? (
-						<p className="m-0 text-sm font-medium text-red-500">{error}</p>
+					{saveError ? (
+						<p className="m-0 text-sm font-medium text-red-500">{saveError}</p>
 					) : null}
 
 					<Button type="submit" disabled={loading} className="w-full py-3">

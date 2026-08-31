@@ -110,7 +110,7 @@ export default function SiteChrome({
 								decoding="async"
 							/>
 							<p className="max-w-[28ch] text-[1.08rem] leading-8 text-white/72">
-								Inmobiliaria familiar con más de 30 años en el Partido de Morón.
+								Inmobiliaria familiar con más de 30 años en Castelar.
 							</p>
 						</div>
 						<div className="flex gap-3">

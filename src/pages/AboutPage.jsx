@@ -19,7 +19,7 @@ export default function AboutPage() {
 				>
 					<h2 className="m-0 font-serif text-2xl font-bold">Trayectoria</h2>
 					<p>
-						La familia Cabrera forma parte de la comunidad moronense desde la
+						La familia Cabrera forma parte de la comunidad de castelar desde la
 						década del '60 y trabaja en el rubro inmobiliario desde 1990.
 					</p>
 					<div className="inline-grid gap-1.5 rounded-xl border border-[color:var(--line)] bg-white/5 px-4 py-3">
@@ -37,13 +37,9 @@ export default function AboutPage() {
 					<h2 className="m-0 font-serif text-2xl font-bold">
 						Atención comercial
 					</h2>
-					<p>
-						La firma está a cargo del Arquitecto Kevin Cabrera, con actividad en
-						instituciones educativas, sociales, profesionales y comerciales del
-						Partido de Morón.
-					</p>
+					<p>La firma está a cargo de Julian Cabrera</p>
 					<div className="grid gap-1">
-						<p className="m-0 font-semibold">Arq. Kevin Cabrera</p>
+						<p className="m-0 font-semibold">Martillero Julian Cabrera</p>
 						<p className="m-0 text-sm text-[var(--muted)]">
 							Responsable comercial
 						</p>

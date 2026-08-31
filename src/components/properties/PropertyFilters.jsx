@@ -1,4 +1,5 @@
 import Card from "../ui/Card";
+import FormField from "../ui/FormField";
 
 export default function PropertyFilters({
 	values,
@@ -25,105 +26,87 @@ export default function PropertyFilters({
 					</h2>
 				</div>
 
-				<label className="grid gap-1 text-sm font-bold text-muted">
-					Tipo
-					<select
-						name="tipo"
-						value={values.tipo}
-						onChange={onChange}
-						className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
-					>
-						<option value="">Todos los tipos</option>
-						{types.map((type, idx) => (
-							<option key={`type-${idx}`} value={type}>
-								{type}
-							</option>
-						))}
-					</select>
-				</label>
+				<FormField
+					label="Tipo"
+					as="select"
+					name="tipo"
+					value={values.tipo}
+					onChange={onChange}
+				>
+					<option value="">Todos los tipos</option>
+					{types.map((type, idx) => (
+						<option key={`type-${idx}`} value={type}>
+							{type}
+						</option>
+					))}
+				</FormField>
 
-				<label className="grid gap-1 text-sm font-bold text-muted">
-					Estado
-					<select
-						name="estado"
-						value={values.estado}
-						onChange={onChange}
-						className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
-					>
-						<option value="">Cualquier estado</option>
-						{states.map((state, idx) => (
-							<option key={`state-${idx}`} value={state}>
-								{state}
-							</option>
-						))}
-					</select>
-				</label>
+				<FormField
+					label="Estado"
+					as="select"
+					name="estado"
+					value={values.estado}
+					onChange={onChange}
+				>
+					<option value="">Cualquier estado</option>
+					{states.map((state, idx) => (
+						<option key={`state-${idx}`} value={state}>
+							{state}
+						</option>
+					))}
+				</FormField>
 
-				<label className="grid gap-1 text-sm font-bold text-muted">
-					Ciudad
-					<select
-						name="ciudad"
-						value={values.ciudad}
-						onChange={onChange}
-						className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
-					>
-						<option value="">Todas las ciudades</option>
-						{cities.map((city, idx) => (
-							<option key={`city-${idx}`} value={city.nombre}>
-								{city.nombre}
-							</option>
-						))}
-					</select>
-				</label>
+				<FormField
+					label="Ciudad"
+					as="select"
+					name="ciudad"
+					value={values.ciudad}
+					onChange={onChange}
+				>
+					<option value="">Todas las ciudades</option>
+					{cities.map((city, idx) => (
+						<option key={`city-${idx}`} value={city.nombre}>
+							{city.nombre}
+						</option>
+					))}
+				</FormField>
 
 				<div className="grid grid-cols-2 gap-3">
-					<label className="grid gap-1 text-sm font-bold text-muted">
-						Ambientes
-						<input
-							name="ambientes"
-							type="number"
-							min="0"
-							value={values.ambientes}
-							onChange={onChange}
-							className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
-						/>
-					</label>
-					<label className="grid gap-1 text-sm font-bold text-muted">
-						Dormitorios
-						<input
-							name="dormitorios"
-							type="number"
-							min="0"
-							value={values.dormitorios}
-							onChange={onChange}
-							className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
-						/>
-					</label>
+					<FormField
+						label="Ambientes"
+						name="ambientes"
+						type="number"
+						min="0"
+						value={values.ambientes}
+						onChange={onChange}
+					/>
+					<FormField
+						label="Dormitorios"
+						name="dormitorios"
+						type="number"
+						min="0"
+						value={values.dormitorios}
+						onChange={onChange}
+					/>
 				</div>
 
 				<div className="grid grid-cols-2 gap-3">
-					<label className="grid gap-1 text-sm font-bold text-muted">
-						Baños
-						<input
-							name="banos"
-							type="number"
-							min="0"
-							value={values.banos}
-							onChange={onChange}
-							className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
-						/>
-					</label>
-					<label className="grid gap-1 text-sm font-bold text-muted">
-						Antigüedad
-						<input
-							name="antiguedad"
-							type="number"
-							min="0"
-							value={values.antiguedad}
-							onChange={onChange}
-							className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
-						/>
-					</label>
+					<FormField
+						label="Baños"
+						name="banos"
+						type="number"
+						min="0"
+						value={values.banos}
+						onChange={onChange}
+					/>
+					<FormField
+						label="Antigüedad"
+						name="antiguedad"
+						type="number"
+						min="0"
+						value={values.antiguedad}
+						onChange={onChange}
+					/>
 				</div>
 
 				<label className="inline-flex items-center gap-2 text-sm font-bold text-muted">
@@ -137,53 +120,41 @@ export default function PropertyFilters({
 				</label>
 
 				<div className="grid grid-cols-2 gap-3">
-					<label className="grid gap-1 text-sm font-bold text-muted">
-						Precio mín.
-						<input
-							name="precio_min"
-							type="number"
-							min="0"
-							value={values.precio_min}
-							onChange={onChange}
-							className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
-						/>
-					</label>
-					<label className="grid gap-1 text-sm font-bold text-muted">
-						Precio máx.
-						<input
-							name="precio_max"
-							type="number"
-							min="0"
-							value={values.precio_max}
-							onChange={onChange}
-							className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
-						/>
-					</label>
+					<FormField
+						label="Precio mín."
+						name="precio_min"
+						type="number"
+						min="0"
+						value={values.precio_min}
+						onChange={onChange}
+					/>
+					<FormField
+						label="Precio máx."
+						name="precio_max"
+						type="number"
+						min="0"
+						value={values.precio_max}
+						onChange={onChange}
+					/>
 				</div>
 
 				<div className="grid grid-cols-2 gap-3">
-					<label className="grid gap-1 text-sm font-bold text-muted">
-						Superficie mín.
-						<input
-							name="superficie_min"
-							type="number"
-							min="0"
-							value={values.superficie_min}
-							onChange={onChange}
-							className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
-						/>
-					</label>
-					<label className="grid gap-1 text-sm font-bold text-muted">
-						Superficie máx.
-						<input
-							name="superficie_max"
-							type="number"
-							min="0"
-							value={values.superficie_max}
-							onChange={onChange}
-							className="w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]"
-						/>
-					</label>
+					<FormField
+						label="Superficie mín."
+						name="superficie_min"
+						type="number"
+						min="0"
+						value={values.superficie_min}
+						onChange={onChange}
+					/>
+					<FormField
+						label="Superficie máx."
+						name="superficie_max"
+						type="number"
+						min="0"
+						value={values.superficie_max}
+						onChange={onChange}
+					/>
 				</div>
 
 				<div className="mt-4 flex flex-wrap gap-3">

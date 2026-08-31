@@ -74,45 +74,25 @@ export async function getLatestProperties(limit = 3) {
 	return data;
 }
 
-// Retorna las ciudades únicas de propiedades activas
+// Retorna las ciudades únicas de propiedades activas (deduplicado en la DB)
 export async function getCities() {
-	const { data, error } = await supabase
-		.from("propiedades")
-		.select("ciudad, id_ciudad")
-		.eq("activa", true);
-
+	const { data, error } = await supabase.rpc("get_distinct_cities");
 	if (error) throw error;
-
-	const seen = new Set();
-	return data
-		.filter(({ ciudad }) => {
-			if (seen.has(ciudad)) return false;
-			seen.add(ciudad);
-			return true;
-		})
-		.map(({ ciudad, id_ciudad }) => ({ nombre: ciudad, id_ciudad }));
+	return data || [];
 }
 
-// Retorna los tipos únicos de propiedades activas
+// Retorna los tipos únicos de propiedades activas (deduplicado en la DB)
 export async function getPropertyTypes() {
-	const { data, error } = await supabase
-		.from("propiedades")
-		.select("tipo")
-		.eq("activa", true);
-
+	const { data, error } = await supabase.rpc("get_distinct_property_types");
 	if (error) throw error;
-	return [...new Set(data.map(({ tipo }) => tipo))];
+	return (data || []).map(({ tipo }) => tipo);
 }
 
-// Retorna los estados únicos de propiedades activas
+// Retorna los estados únicos de propiedades activas (deduplicado en la DB)
 export async function getPropertyStates() {
-	const { data, error } = await supabase
-		.from("propiedades")
-		.select("estado")
-		.eq("activa", true);
-
+	const { data, error } = await supabase.rpc("get_distinct_property_states");
 	if (error) throw error;
-	return [...new Set(data.map(({ estado }) => estado))];
+	return (data || []).map(({ estado }) => estado);
 }
 
 // Retorna la cantidad de propiedades activas que coinciden con los filtros

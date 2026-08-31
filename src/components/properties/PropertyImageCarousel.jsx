@@ -1,6 +1,7 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { getImageUrl, getImageUrls } from "../../lib/utils";
+import { getImageUrls } from "../../lib/utils";
+import { useImageCarousel } from "../../hooks/useImageCarousel";
 
 export default function PropertyImageCarousel({
 	images = [],
@@ -9,16 +10,16 @@ export default function PropertyImageCarousel({
 	propertyStreet,
 	stateLabel,
 }) {
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const [incomingIndex, setIncomingIndex] = useState(null);
-	const [slideDirection, setSlideDirection] = useState("next");
-	const [isAnimating, setIsAnimating] = useState(false);
-
-	useEffect(() => {
-		setCurrentIndex(0);
-		setIncomingIndex(null);
-		setIsAnimating(false);
-	}, [images]);
+	const {
+		currentIndex,
+		incomingIndex,
+		slideDirection,
+		isAnimating,
+		moveToIndex,
+		goPrev,
+		goNext,
+		handleIncomingTransitionEnd,
+	} = useImageCarousel(images);
 
 	const currentImageUrls = useMemo(
 		() => (images[currentIndex] ? getImageUrls(images[currentIndex]) : null),
@@ -32,38 +33,6 @@ export default function PropertyImageCarousel({
 				: null,
 		[images, incomingIndex],
 	);
-
-	const moveToIndex = useCallback(
-		(nextIndex, direction) => {
-			setIsAnimating((isAnim) => {
-				if (!images.length || nextIndex === currentIndex || isAnim)
-					return isAnim;
-				setSlideDirection(direction);
-				setIsAnimating(false);
-				setIncomingIndex(nextIndex);
-				requestAnimationFrame(() => setIsAnimating(true));
-				return false;
-			});
-		},
-		[images.length, currentIndex],
-	);
-
-	const goPrev = useCallback(() => {
-		const nextIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
-		moveToIndex(nextIndex, "prev");
-	}, [currentIndex, images.length, moveToIndex]);
-
-	const goNext = useCallback(() => {
-		const nextIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
-		moveToIndex(nextIndex, "next");
-	}, [currentIndex, images.length, moveToIndex]);
-
-	const handleIncomingTransitionEnd = useCallback(() => {
-		if (incomingIndex === null) return;
-		setCurrentIndex(incomingIndex);
-		setIncomingIndex(null);
-		setIsAnimating(false);
-	}, [incomingIndex]);
 
 	const currentLayerClassName = [
 		"absolute inset-0 h-full w-full object-cover",

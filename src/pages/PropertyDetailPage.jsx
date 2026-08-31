@@ -37,8 +37,9 @@ export default function PropertyDetailPage() {
 				setProperty(data);
 			})
 			.catch((fetchError) => {
+				console.error(fetchError);
 				if (active) {
-					setError(fetchError.message || "No se pudo cargar la propiedad");
+					setError("No se pudo cargar la propiedad");
 				}
 			})
 			.finally(() => {

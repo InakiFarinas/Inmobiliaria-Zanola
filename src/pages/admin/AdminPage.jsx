@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback, memo } from "react";
+import { useEffect, useState, useCallback, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button";
 import Card from "../../components/ui/Card";
@@ -76,28 +76,35 @@ export default function AdminPage() {
 	const { user, logout } = useAuth();
 	const navigate = useNavigate();
 	const [properties, setProperties] = useState([]);
+	const [totalCount, setTotalCount] = useState(0);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
 
-	const fetchProperties = useCallback(async () => {
+	const totalPages = Math.max(1, Math.ceil(totalCount / ITEMS_PER_PAGE));
+
+	const fetchProperties = useCallback(async (page) => {
 		setLoading(true);
 		setError(null);
-		const { data, error } = await supabase
+		const from = (page - 1) * ITEMS_PER_PAGE;
+		const to = from + ITEMS_PER_PAGE - 1;
+		const { data, error, count } = await supabase
 			.from("propiedades")
-			.select("*")
-			.order("created_at", { ascending: false });
+			.select("*", { count: "exact" })
+			.order("created_at", { ascending: false })
+			.range(from, to);
 		if (error) {
 			setError("No se pudieron cargar las propiedades");
 		} else {
 			setProperties(data || []);
+			setTotalCount(count || 0);
 		}
 		setLoading(false);
 	}, []);
 
 	useEffect(() => {
-		fetchProperties();
-	}, [fetchProperties]);
+		fetchProperties(currentPage);
+	}, [fetchProperties, currentPage]);
 
 	const handleToggleActiva = useCallback(
 		async (property) => {
@@ -113,22 +120,31 @@ export default function AdminPage() {
 				.from("propiedades")
 				.update({ activa: newValue })
 				.eq("id_propiedad", property.id_propiedad);
-			if (error) fetchProperties();
+			if (error) fetchProperties(currentPage);
 		},
-		[fetchProperties],
+		[fetchProperties, currentPage],
 	);
 
 	const handleDelete = useCallback(
 		async (id) => {
 			if (!confirm("¿Seguro que querés eliminar esta propiedad?")) return;
-			setProperties((prev) => prev.filter((p) => p.id_propiedad !== id));
 			const { error } = await supabase
 				.from("propiedades")
 				.delete()
 				.eq("id_propiedad", id);
-			if (error) fetchProperties();
+			if (error) {
+				fetchProperties(currentPage);
+				return;
+			}
+			// Si era el único registro de una página > 1, retrocede una página
+			// para no quedar mostrando una página vacía.
+			if (properties.length === 1 && currentPage > 1) {
+				setCurrentPage((p) => p - 1);
+			} else {
+				fetchProperties(currentPage);
+			}
 		},
-		[fetchProperties],
+		[fetchProperties, currentPage, properties.length],
 	);
 
 	const handleEdit = useCallback(
@@ -140,16 +156,6 @@ export default function AdminPage() {
 		await logout();
 		navigate("/admin/login");
 	}, [logout, navigate]);
-
-	const paginatedProperties = useMemo(() => {
-		const start = (currentPage - 1) * ITEMS_PER_PAGE;
-		return properties.slice(start, start + ITEMS_PER_PAGE);
-	}, [properties, currentPage]);
-
-	const totalPages = useMemo(
-		() => Math.ceil(properties.length / ITEMS_PER_PAGE),
-		[properties.length],
-	);
 
 	return (
 		<div className="min-h-screen bg-[var(--surface)] px-4 py-4">
@@ -189,14 +195,18 @@ export default function AdminPage() {
 					{error ? (
 						<EmptyState
 							title={error}
-							action={<Button onClick={fetchProperties}>Reintentar</Button>}
+							action={
+								<Button onClick={() => fetchProperties(currentPage)}>
+									Reintentar
+								</Button>
+							}
 						/>
 					) : loading ? (
 						<p className="m-0 text-sm text-[var(--muted)]">Cargando...</p>
-					) : properties.length ? (
+					) : totalCount > 0 ? (
 						<>
 							<div className="grid gap-3">
-								{paginatedProperties.map((p) => (
+								{properties.map((p) => (
 									<PropertyRow
 										key={p.id_propiedad}
 										property={p}
