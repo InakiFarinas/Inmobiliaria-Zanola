@@ -2,9 +2,6 @@ import { memo } from "react";
 import { Link } from "react-router-dom";
 import PropertyImageCarousel from "./PropertyImageCarousel";
 import {
-	StatGridAgeIcon,
-	StatGridBathroomsIcon,
-	StatGridBedroomsIcon,
 	StatGridGarageIcon,
 	StatGridRoomsIcon,
 	StatGridSurfaceIcon,
@@ -22,8 +19,7 @@ function normalizeStateLabel(value) {
 		.toLowerCase();
 }
 
-function getPriceLabel(property) {
-	const isRental = normalizeStateLabel(property.estado).includes("alquiler");
+function getPriceLabel(property, isRental) {
 	const price = formatPrice(property.precio);
 	return `AR$ ${price}${isRental ? "/mes" : ""}`;
 }
@@ -53,9 +49,6 @@ function PropertyCard({ property, featured = false }) {
 		property.garaje
 			? { label: "Cochera", Icon: StatGridGarageIcon, stroke: "#a855f7" }
 			: null,
-		property.patio
-			? { label: "Patio", Icon: StatGridAgeIcon, stroke: "#d97706" }
-			: null,
 	].filter(Boolean);
 
 	return (
@@ -76,7 +69,7 @@ function PropertyCard({ property, featured = false }) {
 				className="block p-3 md:p-4"
 			>
 				<div className="text-3xl md:text-4xl font-black text-[var(--text)]">
-					{getPriceLabel(property)}
+					{getPriceLabel(property, isRental)}
 				</div>
 				<h3 className="mt-2 text-base md:text-lg font-bold">
 					{property.ciudad

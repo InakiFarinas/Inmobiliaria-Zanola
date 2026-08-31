@@ -1,31 +1,19 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import Card from "../ui/Card";
-import { getImageUrl, getImageUrls } from "../../lib/utils";
+import { getImageUrls } from "../../lib/utils";
+import { useImageCarousel } from "../../hooks/useImageCarousel";
 
 export default function PropertyGallery({ images = [], title = "Propiedad" }) {
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const [incomingIndex, setIncomingIndex] = useState(null);
-	const [slideDirection, setSlideDirection] = useState("next");
-	const [isAnimating, setIsAnimating] = useState(false);
-
-	useEffect(() => {
-		setCurrentIndex(0);
-		setIncomingIndex(null);
-		setIsAnimating(false);
-	}, [images]);
-
-	if (!images.length) {
-		return (
-			<Card
-				className="grid min-h-[240px] place-items-center gap-4"
-				padding="md"
-			>
-				<p className="m-0 rounded-[28px] border border-[color:var(--line)] bg-[var(--surface)] px-5 py-3 text-center leading-[1.6] text-[var(--muted)] shadow-[var(--shadow)] backdrop-blur-[18px]">
-					No hay imágenes disponibles.
-				</p>
-			</Card>
-		);
-	}
+	const {
+		currentIndex,
+		incomingIndex,
+		slideDirection,
+		isAnimating,
+		moveToIndex,
+		goPrev: previousImage,
+		goNext: nextImage,
+		handleIncomingTransitionEnd,
+	} = useImageCarousel(images);
 
 	const currentImageUrls = useMemo(
 		() => (images[currentIndex] ? getImageUrls(images[currentIndex]) : null),
@@ -42,38 +30,6 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 
 	const hasMultipleImages = images.length > 1;
 
-	const moveToIndex = useCallback(
-		(nextIndex, direction) => {
-			setIsAnimating((isAnim) => {
-				if (!hasMultipleImages || nextIndex === currentIndex || isAnim)
-					return isAnim;
-				setSlideDirection(direction);
-				setIsAnimating(false);
-				setIncomingIndex(nextIndex);
-				requestAnimationFrame(() => setIsAnimating(true));
-				return false;
-			});
-		},
-		[hasMultipleImages, currentIndex],
-	);
-
-	const previousImage = useCallback(() => {
-		const nextIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
-		moveToIndex(nextIndex, "prev");
-	}, [currentIndex, images.length, moveToIndex]);
-
-	const nextImage = useCallback(() => {
-		const nextIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
-		moveToIndex(nextIndex, "next");
-	}, [currentIndex, images.length, moveToIndex]);
-
-	const handleIncomingTransitionEnd = useCallback(() => {
-		if (incomingIndex === null) return;
-		setCurrentIndex(incomingIndex);
-		setIncomingIndex(null);
-		setIsAnimating(false);
-	}, [incomingIndex]);
-
 	const currentLayerClassName = [
 		"absolute inset-0 h-full w-full object-cover",
 	].join(" ");
@@ -86,6 +42,19 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 				? "translate-x-[115%]"
 				: "-translate-x-[115%]",
 	].join(" ");
+
+	if (!images.length) {
+		return (
+			<Card
+				className="grid min-h-[240px] place-items-center gap-4"
+				padding="md"
+			>
+				<p className="m-0 rounded-[28px] border border-[color:var(--line)] bg-[var(--surface)] px-5 py-3 text-center leading-[1.6] text-[var(--muted)] shadow-[var(--shadow)] backdrop-blur-[18px]">
+					No hay imágenes disponibles.
+				</p>
+			</Card>
+		);
+	}
 
 	return (
 		<Card className="grid gap-3 overflow-hidden" padding="none">

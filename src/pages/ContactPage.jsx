@@ -11,6 +11,7 @@ import {
 import SectionHeader from "../components/ui/SectionHeader";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
 import { ADDRESS, EMAIL, PHONE_NUMBER } from "../config/contact";
+import { supabase } from "../lib/api";
 
 export default function ContactPage() {
 	const [form, setForm] = useState({
@@ -57,19 +58,28 @@ export default function ContactPage() {
 
 		setStatus("Enviando...");
 
-		try {
-			await new Promise((r) => setTimeout(r, 700));
-			setStatus("Consulta enviada. Te respondemos a la brevedad.");
-			setForm({
-				nombre: "",
-				email: "",
-				telefono: "",
-				descripcion: "",
-				intereses: [],
-			});
-		} catch (err) {
+		const { error } = await supabase.from("consultas").insert({
+			nombre: form.nombre,
+			email: form.email,
+			telefono: form.telefono,
+			descripcion: form.descripcion,
+			intereses: form.intereses,
+		});
+
+		if (error) {
+			console.error(error);
 			setStatus("Error al enviar. Intentá de nuevo.");
+			return;
 		}
+
+		setStatus("Consulta enviada. Te respondemos a la brevedad.");
+		setForm({
+			nombre: "",
+			email: "",
+			telefono: "",
+			descripcion: "",
+			intereses: [],
+		});
 	};
 
 	return (
