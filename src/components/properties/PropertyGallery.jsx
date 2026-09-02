@@ -49,7 +49,7 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 				className="grid min-h-[240px] place-items-center gap-4"
 				padding="md"
 			>
-				<p className="m-0 rounded-[28px] border border-[color:var(--line)] bg-[var(--surface)] px-5 py-3 text-center leading-[1.6] text-[var(--muted)] shadow-[var(--shadow)] backdrop-blur-[18px]">
+				<p className="m-0 text-center leading-[1.6] text-[var(--muted)]">
 					No hay imágenes disponibles.
 				</p>
 			</Card>
@@ -58,7 +58,7 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 
 	return (
 		<Card className="grid gap-3 overflow-hidden" padding="none">
-			<div className="relative overflow-hidden rounded-[28px] bg-[var(--surface)]">
+			<div className="relative overflow-hidden rounded-[var(--radius-lg)] bg-[var(--surface)]">
 				<div className="relative aspect-[4/3] w-full overflow-hidden bg-[color:var(--accent-soft)]">
 					{currentImageUrls ? (
 						<>
@@ -97,7 +97,7 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 					{hasMultipleImages ? (
 						<button
 							type="button"
-							className="absolute left-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-[var(--text)] shadow-[0_8px_22px_rgba(26,26,26,0.16)] transition hover:bg-white"
+							className="absolute left-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-[var(--text)] [box-shadow:var(--shadow-sm)] transition hover:bg-white"
 							onClick={previousImage}
 							aria-label="Imagen anterior"
 						>
@@ -117,7 +117,7 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 					{hasMultipleImages ? (
 						<button
 							type="button"
-							className="absolute right-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-[var(--text)] shadow-[0_8px_22px_rgba(26,26,26,0.16)] transition hover:bg-white"
+							className="absolute right-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-[var(--text)] [box-shadow:var(--shadow-sm)] transition hover:bg-white"
 							onClick={nextImage}
 							aria-label="Imagen siguiente"
 						>
@@ -135,7 +135,7 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 					) : null}
 
 					{hasMultipleImages ? (
-						<div className="absolute bottom-3 right-3 rounded-full bg-[rgba(26,26,26,0.82)] px-3 py-1 text-xs font-bold text-white shadow-[0_8px_22px_rgba(26,26,26,0.22)]">
+						<div className="absolute bottom-3 right-3 rounded-full bg-[rgba(26,26,26,0.82)] px-3 py-1 text-xs font-bold text-white [box-shadow:var(--shadow-sm)]">
 							{currentIndex + 1} / {images.length}
 						</div>
 					) : null}
@@ -148,7 +148,7 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 						<button
 							key={image + index}
 							type="button"
-							className={`overflow-hidden rounded-[14px] border-2 p-0 transition duration-200 ${
+							className={`overflow-hidden rounded-[var(--radius-md)] border-2 p-0 transition duration-200 ${
 								index === currentIndex
 									? "border-[color:var(--accent)] opacity-100"
 									: "border-transparent opacity-70 hover:opacity-100"

@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-02T00:00:00.000Z",
+  "title": "Design System: Cabrera Inmobiliaria — La Escritura",
+  "extensions": {
+    "colorMeta": {
+      "navy-ink": { "role": "primary", "displayName": "Navy Ink", "canonical": "#1c2b4a", "tonalRamp": ["#0d1524", "#141f36", "#1c2b4a", "#26385e", "#3a507a", "#5c6f96", "#8fa0bc", "#c7d1e2"] },
+      "wax-seal": { "role": "tertiary", "displayName": "Wax Seal Crimson", "canonical": "#9c2b26", "tonalRamp": ["#3e1210", "#5c1a17", "#7a231f", "#9c2b26", "#bb4a41", "#d17b73", "#e5aca6", "#f4dad6"] },
+      "gilt-edge": { "role": "secondary", "displayName": "Gilt Ledger Edge", "canonical": "#a9822f", "tonalRamp": ["#453521", "#5f4a29", "#836430", "#a9822f", "#c39f4c", "#d6bc7c", "#e7d6ab", "#f5ecd8"] },
+      "vellum-surface": { "role": "neutral", "displayName": "Vellum Surface", "canonical": "#fbf8ef", "tonalRamp": ["#2b2822", "#4a4638", "#736c58", "#a89f85", "#cfc7ae", "#e6e0cf", "#f5f2e6", "#fbf8ef"] },
+      "aged-paper": { "role": "neutral", "displayName": "Aged Paper", "canonical": "#f3ecdc", "tonalRamp": ["#2a2519", "#463d29", "#6d5f3f", "#998763", "#c1b28c", "#ded2b3", "#ece2ca", "#f3ecdc"] },
+      "ink-muted": { "role": "neutral", "displayName": "Ink Muted", "canonical": "#5c5645", "tonalRamp": ["#141310", "#242219", "#3a3728", "#5c5645", "#7d7660", "#a19a80", "#c6c0a8", "#e5e1d3"] },
+      "ledger-cover": { "role": "neutral", "displayName": "Ledger Cover", "canonical": "#131f38", "tonalRamp": ["#080d18", "#0e1626", "#131f38", "#1e2f4e", "#31456c", "#4f6088", "#7c8faa", "#b5c0d3"] },
+      "danger": { "role": "neutral", "displayName": "Distinct Danger Red", "canonical": "#b3402e", "tonalRamp": ["#481912", "#652319", "#8a301f", "#b3402e", "#c9634e", "#dc8d7c", "#eab7ab", "#f6ddd6"] },
+      "whatsapp-deep": { "role": "neutral", "displayName": "WhatsApp Deep Green", "canonical": "#0e6b3c", "tonalRamp": ["#052617", "#0a3d24", "#0d5530", "#0e6b3c", "#1c9153", "#4fb47a", "#93d3ac", "#d0eddc"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero H1 only." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles via SectionHeader." },
+      "title": { "displayName": "Title", "purpose": "Card headings and property price display." },
+      "body": { "displayName": "Body", "purpose": "Paragraph copy." },
+      "label": { "displayName": "Label / Stamp", "purpose": "Folio codes, form labels, section dividers, filter toggles." },
+      "signature": { "displayName": "Signature", "purpose": "Julián Cabrera's single handwritten attestation on the About page. Not a system display face." }
+    },
+    "shadows": [
+      { "name": "shadow", "value": "0 1px 0 rgba(28,43,74,0.05), 0 14px 32px rgba(28,43,74,0.1)", "purpose": "Default card elevation." },
+      { "name": "shadow-sm", "value": "0 1px 0 rgba(28,43,74,0.05), 0 6px 16px rgba(28,43,74,0.08)", "purpose": "Compact elements: stat tiles, pills, gallery arrows." },
+      { "name": "shadow-cta", "value": "0 10px 22px rgba(28,43,74,0.22)", "purpose": "Primary and WhatsApp buttons only." },
+      { "name": "shadow-image", "value": "0 16px 34px rgba(20,26,20,0.22)", "purpose": "Property photography." }
+    ],
+    "motion": [
+      { "name": "colors-transition", "value": "transition-colors duration-150", "purpose": "Button hover color changes." },
+      { "name": "lift-hover", "value": "transition-transform duration-200, hover:-translate-y-0.5 to -translate-y-1", "purpose": "Card and hero image hover lift." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Default call-to-action button, ledger-cover navy fill.",
+      "html": "<button class=\"ds-btn-primary\">Ver el libro completo</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #131f38; color: #ffffff; border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; padding: 8px 16px; font-weight: 600; letter-spacing: 0.01em; box-shadow: 0 10px 22px rgba(28,43,74,0.22); transition: background-color 0.15s; } .ds-btn-primary:hover { background: #1c2b4a; } .ds-btn-primary:focus-visible { outline: 2px solid #1c2b4a; outline-offset: 2px; }"
+    },
+    {
+      "name": "WhatsApp Button",
+      "kind": "button",
+      "refersTo": "button-whatsapp",
+      "description": "Branded WhatsApp contact CTA, deep green fill.",
+      "html": "<button class=\"ds-btn-whatsapp\">Contactar</button>",
+      "css": ".ds-btn-whatsapp { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #0e6b3c; color: #ffffff; border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; padding: 8px 16px; font-weight: 600; box-shadow: 0 10px 22px rgba(28,43,74,0.22); transition: background-color 0.15s; } .ds-btn-whatsapp:hover { background: #25d366; }"
+    },
+    {
+      "name": "Pill Button (filter toggle)",
+      "kind": "button",
+      "refersTo": "button-pill",
+      "description": "Ghost/pill button used for filters and secondary actions; gains navy fill when active.",
+      "html": "<button class=\"ds-btn-pill\">Limpiar</button>",
+      "css": ".ds-btn-pill { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #fbf8ef; color: #1c2b4a; border: 1px solid rgba(28,43,74,0.18); border-radius: 6px; padding: 8px 16px; font-weight: 600; transition: border-color 0.15s; } .ds-btn-pill:hover { border-color: #1c2b4a; } .ds-btn-pill.is-active { background: #1c2b4a; border-color: #1c2b4a; color: #ffffff; box-shadow: 0 1px 0 rgba(28,43,74,0.05), 0 6px 16px rgba(28,43,74,0.08); }"
+    },
+    {
+      "name": "Ledger Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Standard content card: vellum surface, hairline border, soft paper shadow.",
+      "html": "<article class=\"ds-card\"><h3 class=\"ds-card-title\">Atención directa</h3><p class=\"ds-card-body\">Teléfono, WhatsApp y correo publicados para consultas rápidas.</p></article>",
+      "css": ".ds-card { background: #fbf8ef; border: 1px solid rgba(28,43,74,0.18); border-radius: 8px; box-shadow: 0 1px 0 rgba(28,43,74,0.05), 0 14px 32px rgba(28,43,74,0.1); padding: 24px; } .ds-card-title { margin: 0; font-family: Spectral, serif; font-size: 1.4rem; font-weight: 500; line-height: 1.2; color: #1c2b4a; } .ds-card-body { margin: 8px 0 0; font-family: 'Public Sans', system-ui, sans-serif; color: #1c2b4a; }"
+    },
+    {
+      "name": "Form Field",
+      "kind": "input",
+      "refersTo": "form-field",
+      "description": "Labeled text/select input with stamped mono-label above.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Ciudad</span><input class=\"ds-field-input\" type=\"text\" placeholder=\"Todas las ciudades\" /></label>",
+      "css": ".ds-field { display: grid; gap: 6px; font-family: 'Fragment Mono', monospace; font-size: 0.72rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: #5c5645; } .ds-field-input { width: 100%; border-radius: 2px; border: 1px solid rgba(28,43,74,0.18); background: #fbf8ef; padding: 8px 12px; color: #1c2b4a; font-family: 'Public Sans', system-ui, sans-serif; text-transform: none; letter-spacing: normal; outline: none; transition: border-color 0.15s, box-shadow 0.15s; } .ds-field-input:focus-visible { border-color: #1c2b4a; box-shadow: 0 0 0 2px rgba(28,43,74,0.08); }"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Sticky ledger-cover navy header nav with gilt active-state underline.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link is-active\" href=\"#\">Inicio</a><a class=\"ds-nav-link\" href=\"#\">Propiedades</a><a class=\"ds-nav-link\" href=\"#\">Nosotros</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 10px; background: #131f38; padding: 8px; border-bottom: 2px solid #a9822f; } .ds-nav-link { border-bottom: 2px solid transparent; padding: 8px 12px; font-size: 0.95rem; font-weight: 500; color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.2s, border-color 0.2s; } .ds-nav-link:hover { color: #ffffff; border-color: rgba(255,255,255,0.5); } .ds-nav-link.is-active { border-color: #a9822f; color: #ffffff; }"
+    },
+    {
+      "name": "Wax Seal",
+      "kind": "custom",
+      "refersTo": "wax-seal",
+      "description": "Signature stamp marking the one destacada (featured) listing; crimson wax with a Spectral initial and dashed inner ring.",
+      "html": "<span class=\"ds-wax-seal\" aria-hidden=\"true\"><svg viewBox=\"0 0 44 44\" width=\"44\" height=\"44\"><circle cx=\"22\" cy=\"22\" r=\"20\" fill=\"#9c2b26\"/><circle cx=\"22\" cy=\"22\" r=\"20\" fill=\"none\" stroke=\"rgba(0,0,0,0.18)\" stroke-width=\"1\"/><circle cx=\"22\" cy=\"22\" r=\"15.5\" fill=\"none\" stroke=\"rgba(255,255,255,0.55)\" stroke-width=\"1\" stroke-dasharray=\"1.5 2.6\"/><text x=\"22\" y=\"25\" text-anchor=\"middle\" font-family=\"Spectral, serif\" font-size=\"15\" font-weight=\"600\" fill=\"rgba(255,255,255,0.92)\">C</text></svg></span>",
+      "css": ".ds-wax-seal { display: inline-grid; place-items: center; width: 44px; height: 44px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Notarial Ledger",
+    "overview": "Every listing is a ledger entry, not a portal card. The site reads as the agency's own bound registry of properties: navy ink on warm aged vellum, a folio number stamped on every entry (formatFolio, \"N.° 0007\"), a wax seal reserved for the one entry the martillero has personally singled out, and a hand-signed attestation from Julián Cabrera. The build carries this through system-wide, not just on the homepage: folio numbers and address formatting are shared helpers (src/lib/utils.js) consumed by every card, hero, and detail view, so the ledger conceit is a structural rule, not a one-page flourish. The palette is warm and paper-toned rather than white-and-gray SaaS neutral; typography pairs a measured serif (Spectral) for anything that speaks with authority (headlines, prices, folio numerals) against a plain, legible sans (Public Sans) for body copy, with a monospace label face (Fragment Mono) standing in for the registrar's stamped annotations. Depth is soft and paper-like — no hard offset shadows, no neobrutalist blocking — consistent with a bound document lying under lamplight, not a UI kit.",
+    "keyCharacteristics": [
+      "Ledger-entry structure: every property carries a stamped folio number and address, formatted by one shared rule.",
+      "Crimson wax seal exclusively marks the one \"destacada\" (featured) listing per view; everywhere else, gold carries the accent role.",
+      "Dashed rule-lines and repeating horizontal hairlines stand in for a bound ledger's page rules.",
+      "Serif display type, mono labels, and one cursive signature line are the only three typographic voices; no fourth face is introduced."
+    ],
+    "rules": [
+      { "name": "The One Seal Rule", "body": "Wax-seal crimson (--seal) is licensed exclusively for the destacada/featured-listing marker and its paired badge. It is never reused for CTAs, links, errors, or generic emphasis — its rarity is what makes a featured listing read as singled-out by the martillero, not just decorated.", "section": "colors" },
+      { "name": "The Distinct-Danger Rule", "body": "--danger (#b3402e) is a separate token from --seal (#9c2b26), deliberately a different hue for destructive actions and form errors. Never substitute the seal color for an error state, even though they're visually adjacent — conflating them would make the wax seal read as a warning.", "section": "colors" },
+      { "name": "The Gilt-Edge-Is-A-Line Rule", "body": "--gold marks edges and active states (header top-border, active nav tab, CTA banner border) — it is never used as a fill, background, or button color.", "section": "colors" },
+      { "name": "The Stamped-Numeral Rule", "body": "Folio numbers and prices use .tabular (tabular-nums) and Spectral, never the sans body face — numerals that look counted, not typed.", "section": "typography" },
+      { "name": "The One Signature Rule", "body": "Caveat is used exactly once, for Julián Cabrera's handwritten attestation on the About page. It is not a system display face; don't extend it to headings, buttons, or other \"handwritten\" flourishes.", "section": "typography" },
+      { "name": "The Soft-Ledger Rule", "body": "All shadows are diffuse and low-contrast; no hard-edged offset shadow (a neobrutalist device) belongs in this world, since the page itself is meant to read as paper under lamplight, not as a stacked object.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep --seal (crimson) exclusive to the destacada marker and its badge; every other emphasis need routes to --gold (edges/active-states) or navy (fills/text).",
+      "Do run folio numbers and prices through the shared formatFolio/formatPrice/formatAddress helpers (src/lib/utils.js) rather than reformatting inline — the ledger's numbering rule must stay identical across hero, card, and detail views.",
+      "Do use Fragment Mono, uppercase, and letter-spacing for anything that functions as a stamped label (folio codes, section dividers, filter toggles, form labels).",
+      "Do keep shadows diffuse and paper-soft (see --shadow* tokens); reserve --shadow-cta for actionable buttons only."
+    ],
+    "donts": [
+      "Don't reuse --seal for links, CTAs, hover states, or generic highlighting — a second use anywhere breaks the rarity the featured marker depends on.",
+      "Don't substitute --seal for --danger (or vice versa) even though both are crimson-adjacent reds; they must stay two distinct hues so the wax seal never reads as an error or warning.",
+      "Don't introduce hard-edged offset shadows or fully square corners; both are foreign to this world's soft-paper depth language.",
+      "Don't extend Caveat (the signature cursive) beyond Julián Cabrera's one handwritten attestation on the About page — it is not a system display face."
+    ]
+  }
+}

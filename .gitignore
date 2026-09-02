@@ -5,3 +5,12 @@ npm-debug.log*
 .vercel
 .env
 .env.local
+
+# Impeccable design-tool session state (screenshots, build/live/hook state) —
+# transient, not durable design decisions. Keep config.json, design.json,
+# and surfaces/ (those are committed).
+/.impeccable/review/
+/.impeccable/build/
+/.impeccable/live/
+/.impeccable/questions/
+/.impeccable/hook.cache.json

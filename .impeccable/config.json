@@ -1,0 +1,63 @@
+{
+  "buildPath": "code",
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0, 0, 0, 0.5)",
+        "files": [
+          "src/styles/tailwind.css"
+        ],
+        "createdAt": "2026-09-02T18:27:01.777Z",
+        "reason": "CSS mask-image alpha stop controlling opacity falloff, not a painted color; unrelated to the palette"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "1.05rem",
+        "files": [
+          "src/components/layout/SiteChrome.jsx"
+        ],
+        "createdAt": "2026-09-02T18:27:11.809Z",
+        "reason": "footer column heading — a small uppercase sub-heading role distinct from body/label, not the flagged paragraph/list text"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "0.95rem",
+        "files": [
+          "src/components/layout/SiteChrome.jsx"
+        ],
+        "createdAt": "2026-09-02T18:27:11.906Z",
+        "reason": "copyright fine print, conventionally smaller than body text by design intent"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "0.95rem",
+        "files": [
+          "src/components/properties/PropertyCard.jsx"
+        ],
+        "createdAt": "2026-09-02T18:27:12.010Z",
+        "reason": "listing address line — intentional secondary tier between the 0.72rem label and 1.02rem body, sits between price and stat pills"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "10px",
+        "files": [
+          "src/pages/admin/AdminPage.jsx"
+        ],
+        "createdAt": "2026-09-02T18:28:04.958Z",
+        "reason": "Inactiva/Destacada status chips — intentional micro-badge tier, smaller than the 0.72rem label so dense admin rows stay scannable"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "0.62rem",
+        "files": [
+          "src/components/home/HomeHero.jsx"
+        ],
+        "createdAt": "2026-09-02T18:28:05.065Z",
+        "reason": "secondary hero folio numbers — deliberately smaller than the featured slot's large serif numeral per the FIRST VIEWPORT numeral-mayor contract; snapping to the label size would erase that hierarchy"
+      }
+    ]
+  }
+}

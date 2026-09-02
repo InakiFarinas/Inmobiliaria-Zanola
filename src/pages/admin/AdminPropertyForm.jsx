@@ -191,14 +191,14 @@ export default function AdminPropertyForm() {
 
 	if (fetching)
 		return (
-			<div className="min-h-screen bg-[#f2f0eb] flex items-center justify-center">
+			<div className="min-h-screen bg-[var(--paper)] flex items-center justify-center">
 				<p className="text-[var(--muted)]">Cargando...</p>
 			</div>
 		);
 
 	if (loadError)
 		return (
-			<div className="min-h-screen bg-[#f2f0eb] flex items-center justify-center">
+			<div className="min-h-screen bg-[var(--paper)] flex items-center justify-center">
 				<EmptyState
 					title={loadError}
 					action={
@@ -209,14 +209,11 @@ export default function AdminPropertyForm() {
 		);
 
 	return (
-		<div className="min-h-screen bg-[var(--surface)] px-4 py-4 md:px-6 md:py-6">
+		<div className="min-h-screen bg-[var(--paper)] px-4 py-4 md:px-6 md:py-6">
 			<Card className="mx-auto max-w-5xl overflow-hidden p-0" padding="none">
-				<div className="flex flex-col gap-4 border-b border-[color:var(--line)] bg-[var(--accent)] px-5 py-4 text-white md:flex-row md:items-center md:justify-between md:px-6">
+				<div className="flex flex-col gap-4 border-b-2 border-[var(--gold)] bg-[var(--cta-dark)] px-5 py-4 text-white md:flex-row md:items-center md:justify-between md:px-6">
 					<div>
-						<p className="m-0 text-xs font-bold uppercase tracking-[0.12em] text-white/55">
-							Panel
-						</p>
-						<h1 className="m-0 text-lg font-black">
+						<h1 className="m-0 font-serif text-lg font-medium">
 							{isEditing ? "Editar propiedad" : "Nueva propiedad"}
 						</h1>
 					</div>
@@ -231,7 +228,6 @@ export default function AdminPropertyForm() {
 
 				<form onSubmit={handleSubmit} className="grid gap-6 p-5 md:p-6">
 					<SectionHeader
-						kicker="Formulario"
 						title="Información de la propiedad"
 						description="Completá los datos principales, características e imágenes."
 						className="mb-0"
@@ -419,9 +415,12 @@ export default function AdminPropertyForm() {
 											type="button"
 											onClick={() => removeExistingImage(url)}
 											variant="pill"
-											className="absolute -right-2 -top-2 h-6 w-6 border border-red-100 bg-red-500 px-0 py-0 text-xs text-white hover:bg-red-600"
+											aria-label="Quitar imagen"
+											className="absolute -right-2 -top-2 h-6 w-6 border border-[color:var(--danger)] bg-[color:var(--danger)] px-0 py-0 text-xs text-white hover:bg-[var(--cta-dark)]"
 										>
-											×
+											<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+												<path d="M6 6l12 12M18 6L6 18" />
+											</svg>
 										</Button>
 									</div>
 								))}
@@ -451,7 +450,9 @@ export default function AdminPropertyForm() {
 					</Card>
 
 					{saveError ? (
-						<p className="m-0 text-sm font-medium text-red-500">{saveError}</p>
+						<p role="alert" aria-live="polite" className="m-0 text-sm font-semibold text-[color:var(--danger)]">
+						{saveError}
+					</p>
 					) : null}
 
 					<Button type="submit" disabled={loading} className="w-full py-3">

@@ -29,12 +29,11 @@ export default function AdminLoginPage() {
 	}
 
 	return (
-		<div className="min-h-screen bg-[var(--surface)] px-4 py-10 md:px-6 md:py-14">
+		<div className="min-h-screen bg-[var(--paper)] px-4 py-10 md:px-6 md:py-14">
 			<Card className="mx-auto grid w-full max-w-lg gap-6" padding="lg">
 				<SectionHeader
-					kicker="Panel"
 					title="Cabrera Admin"
-					description="Ingresá con tu cuenta para administrar propiedades."
+					description="Ingresá con tu cuenta para administrar el libro de propiedades."
 					titleAs="h1"
 					className="mb-0"
 				/>
@@ -58,7 +57,13 @@ export default function AdminLoginPage() {
 					/>
 
 					{error ? (
-						<p className="m-0 text-sm font-medium text-red-500">{error}</p>
+						<p
+							role="alert"
+							aria-live="polite"
+							className="m-0 text-sm font-semibold text-[color:var(--danger)]"
+						>
+							{error}
+						</p>
 					) : null}
 
 					<Button type="submit" disabled={loading} className="w-full">

@@ -26,6 +26,37 @@ export function getImageUrl(imagePath) {
 }
 
 /**
+ * Format a listing's street address, omitting the house number when the
+ * record has none (altura 0/empty) — the one address-formatting rule every
+ * component showing an address must share.
+ */
+export function formatAddress(property) {
+	if (!property) return "";
+	const { ciudad, calle, altura } = property;
+	const street = altura ? `${calle} ${altura}` : calle;
+	return ciudad ? `${ciudad}, ${street}` : street;
+}
+
+/**
+ * Format a listing's price with the agency's one price label: "AR$" prefix,
+ * thousands separators, "/mes" suffix for rentals.
+ */
+export function formatPrice(property) {
+	const amount = new Intl.NumberFormat("es-AR").format(Number(property?.precio || 0));
+	const isRental = String(property?.estado || "")
+		.normalize("NFD")
+		.replace(/[̀-ͯ]/g, "")
+		.toLowerCase()
+		.includes("alquiler");
+	return `AR$ ${amount}${isRental ? "/mes" : ""}`;
+}
+
+/** The ledger entry number stamped on every listing: "N.° 0007". */
+export function formatFolio(id) {
+	return `N.° ${String(id || 0).padStart(4, "0")}`;
+}
+
+/**
  * Get WebP and fallback image URLs for picture element
  * @param {string} imagePath - Image path
  * @returns {{webp: string, fallback: string}} Object with webp and fallback URLs

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import HomeHero from "../components/home/HomeHero";
 import PropertyCard from "../components/properties/PropertyCard";
+import Card from "../components/ui/Card";
+import Container from "../components/ui/Container";
 import SectionHeader from "../components/ui/SectionHeader";
 import Button from "../components/ui/Button";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
@@ -94,33 +96,37 @@ export default function HomePage() {
 				totalCount={totalCount}
 			/>
 
-			<section className="mt-6 w-full p-6 md:p-10">
+			<Container className="pt-10 md:pt-14">
 				<SectionHeader
-					kicker="Por qué elegirnos"
 					title="Propiedades y contacto en un solo lugar"
 				/>
 				<div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
 					{heroPoints.map((item, i) => (
 						<Reveal key={item.title} delay={i * 100}>
-							<article className="grid gap-3 rounded-[28px] border border-[color:var(--line)] border-l-[4px] border-l-[color:var(--accent)] bg-[var(--surface)] p-6 shadow-[var(--shadow)] backdrop-blur-[18px]">
-								<h3 className="m-0 text-[1.4rem] font-serif leading-tight">
+							<Card
+								as="article"
+								className="grid gap-3"
+							>
+								<h3 className="m-0 text-[1.4rem] font-serif font-medium leading-tight">
 									{item.title}
 								</h3>
 								<p>{item.text}</p>
-							</article>
+							</Card>
 						</Reveal>
 					))}
 				</div>
-			</section>
-			<div className="flex items-center gap-3 my-8">
-				<div className="flex-1 h-px bg-black/10" />
-				<span className="text-[16px] tracking-[2px] text-[color:var(--accent)] font-bold whitespace-nowrap">
-					ÚLTIMAS PROPIEDADES
-				</span>
-				<div className="flex-1 h-px bg-black/10" />
-			</div>
+			</Container>
 
-			<section className="mt-6 w-full p-10">
+			<Container
+				as="div"
+				className="my-10 md:my-14 flex items-center gap-3 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-[var(--muted)]"
+			>
+				<div className="flex-1 border-t border-dashed border-[color:var(--line)]" />
+				<span className="whitespace-nowrap">§ Últimas propiedades</span>
+				<div className="flex-1 border-t border-dashed border-[color:var(--line)]" />
+			</Container>
+
+			<Container>
 				<SectionHeader
 					align="inline"
 					title="Nuevas oportunidades"
@@ -136,23 +142,19 @@ export default function HomePage() {
 
 				{latest.length > 0 ? (
 					<div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-						{latest.map((property, i) => (
-							<Reveal key={property.id_propiedad} delay={i * 100}>
-								<PropertyCard property={property} />
-							</Reveal>
+						{latest.map((property) => (
+							<PropertyCard key={property.id_propiedad} property={property} />
 						))}
 					</div>
 				) : (
-					<p className="rounded-[28px] border border-[color:var(--line)] bg-[var(--surface)] p-[30px] text-center leading-[1.6] text-[var(--muted)] shadow-[var(--shadow)] backdrop-blur-[18px]">
-						No hay propiedades para mostrar todavía.
-					</p>
+					<EmptyState title="No hay propiedades para mostrar todavía." />
 				)}
-			</section>
+			</Container>
 
-			<section className="mx-auto w-[min(1180px,calc(100%_-_24px))] md:w-[min(1180px,calc(100%_-_32px))] py-8 md:py-12">
-				<div className="rounded-[28px] bg-[var(--accent)] p-6 md:p-10 text-white md:flex md:items-center md:justify-between md:gap-8">
+			<Container className="py-8 md:py-12">
+				<div className="border-t-2 border-[var(--gold)] bg-[var(--cta-dark)] p-6 md:p-10 text-white md:flex md:items-center md:justify-between md:gap-8">
 					<div className="mb-6 md:mb-0 md:flex-1">
-						<h2 className="m-0 font-serif text-2xl md:text-3xl font-bold leading-tight">
+						<h2 className="m-0 font-serif text-2xl md:text-3xl font-medium leading-tight">
 							¿Tenés una propiedad para publicar?
 						</h2>
 						<p className="m-0 mt-2 text-white/80">
@@ -161,7 +163,7 @@ export default function HomePage() {
 					</div>
 					<div className="flex flex-wrap gap-2 md:gap-3">
 						<Button
-							to="/"
+							to="/nosotros"
 							variant="ghost"
 							className="border border-white/30 hover:bg-white/10 text-sm md:text-base"
 						>
@@ -169,13 +171,13 @@ export default function HomePage() {
 						</Button>
 						<WhatsAppButton
 							message="Hola, quisiera publicar una propiedad."
-							className="!bg-white !text-[var(--accent)] px-3 md:px-4 text-sm md:text-base"
+							className="px-3 md:px-4 text-sm md:text-base"
 						>
 							Escribinos
 						</WhatsAppButton>
 					</div>
 				</div>
-			</section>
+			</Container>
 		</>
 	);
 }

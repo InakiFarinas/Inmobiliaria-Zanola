@@ -89,7 +89,7 @@ export default function PropertyImageCarousel({
 				)}
 			</Link>
 
-			<span className="absolute right-2 top-2 rounded-full bg-[var(--surface)] px-2 py-1 text-xs font-bold uppercase text-[var(--accent)] md:right-3 md:top-3 md:px-3">
+			<span className="absolute right-2 top-2 rounded-[var(--radius-sm)] bg-[var(--cta-dark)]/92 px-2 py-1 font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-white md:right-3 md:top-3 md:px-2.5">
 				{stateLabel}
 			</span>
 

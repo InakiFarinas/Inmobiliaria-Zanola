@@ -8,10 +8,18 @@ import {
 	PhoneIcon,
 	MailIcon,
 } from "../components/ui/ContactIcons";
+import Container from "../components/ui/Container";
 import SectionHeader from "../components/ui/SectionHeader";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
 import { ADDRESS, EMAIL, PHONE_NUMBER } from "../config/contact";
 import { supabase } from "../lib/api";
+
+const FIELD_LABELS = {
+	nombre: "tu nombre",
+	email: "tu email",
+	telefono: "tu teléfono",
+	descripcion: "una descripción",
+};
 
 export default function ContactPage() {
 	const [form, setForm] = useState({
@@ -22,6 +30,7 @@ export default function ContactPage() {
 		intereses: [],
 	});
 	const [status, setStatus] = useState("");
+	const [statusKind, setStatusKind] = useState("");
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -51,11 +60,14 @@ export default function ContactPage() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (!form.nombre || !form.email || !form.telefono || !form.descripcion) {
-			setStatus("Completá nombre, email, telefono y descripcion.");
+		const missing = Object.keys(FIELD_LABELS).find((field) => !form[field].trim());
+		if (missing) {
+			setStatusKind("error");
+			setStatus(`Falta completar ${FIELD_LABELS[missing]}.`);
 			return;
 		}
 
+		setStatusKind("pending");
 		setStatus("Enviando...");
 
 		const { error } = await supabase.from("consultas").insert({
@@ -68,10 +80,12 @@ export default function ContactPage() {
 
 		if (error) {
 			console.error(error);
+			setStatusKind("error");
 			setStatus("Error al enviar. Intentá de nuevo.");
 			return;
 		}
 
+		setStatusKind("success");
 		setStatus("Consulta enviada. Te respondemos a la brevedad.");
 		setForm({
 			nombre: "",
@@ -83,27 +97,23 @@ export default function ContactPage() {
 	};
 
 	return (
-		<section className="mx-auto w-[min(1180px,calc(100%_-_24px))] md:w-[min(1180px,calc(100%_-_32px))] pt-4 md:pt-6">
+		<Container className="pt-4 md:pt-6">
 			<SectionHeader
 				className="mb-4"
-				kicker="Contacto"
 				title="Escribinos"
 				titleAs="h1"
 				description="Te respondemos a la brevedad en horario comercial."
 			/>
 
 			<div className="grid items-start gap-4 md:gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.9fr)]">
-				<Card
-					as="form"
-					className="grid gap-4"
-					onSubmit={handleSubmit}
-					padding="md"
-				>
-					<h2 className="m-0 font-serif text-2xl leading-none">
+				<Card as="form" className="grid gap-4" onSubmit={handleSubmit} padding="md">
+					<h2 className="m-0 font-serif text-2xl font-medium leading-none">
 						Envianos un mensaje
 					</h2>
 					<div className="grid gap-2">
-						<label className="text-sm font-bold text-muted">Me interesa</label>
+						<label className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-[var(--muted)]">
+							Me interesa
+						</label>
 						<div className="flex flex-wrap gap-2">
 							{interestOptions.map((opt) => {
 								const active = form.intereses.includes(opt);
@@ -160,37 +170,50 @@ export default function ContactPage() {
 					<Button type="submit" className="w-full md:w-auto">
 						Enviar consulta
 					</Button>
-					{status ? <p>{status}</p> : null}
+					{status ? (
+						<p
+							role={statusKind === "error" ? "alert" : "status"}
+							aria-live="polite"
+							className={`m-0 text-sm font-semibold ${
+								statusKind === "error"
+									? "text-[color:var(--danger)]"
+									: statusKind === "success"
+										? "text-[var(--whatsapp-deep)]"
+										: "text-[var(--muted)]"
+							}`}
+						>
+							{status}
+						</p>
+					) : null}
 				</Card>
 
 				<Card as="aside" className="grid gap-4" padding="md">
-					<h2 className="m-0 font-serif text-2xl leading-none">
+					<h2 className="m-0 font-serif text-2xl font-medium leading-none">
 						Información de contacto
 					</h2>
 					<ul className="grid gap-4 p-0 m-0 list-none">
 						<InfoCard title="Dirección" icon={<LocationIcon />}>
-							<p className="m-0 text-[1.35rem] font-bold">{ADDRESS}</p>
+							<p className="m-0 text-[1.4rem] font-semibold">{ADDRESS}</p>
 							<small className="text-sm text-muted">Buenos Aires</small>
 						</InfoCard>
 						<InfoCard title="Teléfono" icon={<PhoneIcon />}>
-							<p className="m-0 text-[1.35rem] font-bold">{PHONE_NUMBER}</p>
+							<p className="m-0 text-[1.4rem] font-semibold">{PHONE_NUMBER}</p>
 						</InfoCard>
 						<InfoCard title="Email" icon={<MailIcon />}>
-							<p className="m-0 text-[1.35rem] font-bold">{EMAIL}</p>
+							<p className="m-0 text-[1.4rem] font-semibold">{EMAIL}</p>
 						</InfoCard>
 					</ul>
-					<div className="border-t border-[color:var(--line)] pt-4 text-center text-muted">
+					<div className="border-t border-dashed border-[color:var(--line)] pt-4 text-center text-muted">
 						o contactanos directo
 					</div>
 					<WhatsAppButton
 						message="Hola, quisiera que me contacten."
-						className="w-full border-0 py-3 font-black"
-						style={{ backgroundColor: "var(--cta-dark)", color: "white" }}
+						className="w-full py-3 font-semibold"
 					>
 						Escribinos por WhatsApp
 					</WhatsAppButton>
 				</Card>
 			</div>
-		</section>
+		</Container>
 	);
 }

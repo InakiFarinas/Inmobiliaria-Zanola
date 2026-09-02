@@ -5,8 +5,8 @@ import { LocationIcon, PhoneIcon, MailIcon } from "../ui/ContactIcons";
 
 const linkClassName = ({ isActive }) =>
 	[
-		"rounded-full px-3 py-2 text-sm md:text-base text-white/90 transition-colors transition-transform duration-200 hover:bg-white/20 hover:text-white",
-		isActive ? "bg-white/20 text-white" : "",
+		"border-b-2 px-3 py-2 text-sm md:text-base font-medium text-white/85 transition-colors duration-200 hover:border-white/50 hover:text-white",
+		isActive ? "border-[var(--gold)] text-white" : "border-transparent",
 	].join(" ");
 
 export default function SiteChrome({
@@ -26,19 +26,22 @@ export default function SiteChrome({
 
 	return (
 		<div className="flex min-h-screen flex-col">
-			<header className="sticky top-0 z-20 grid h-[var(--header-height)] grid-cols-[1fr,auto] md:grid-cols-[auto,1fr,auto] items-center gap-3 md:gap-4 bg-[var(--cta-dark)] px-3 md:px-4 text-white shadow-[0_18px_36px_rgba(26,26,26,0.12)] backdrop-blur-[20px]">
+			<header className="sticky top-0 z-20 grid h-[var(--header-height)] grid-cols-[1fr,auto] md:grid-cols-[auto,1fr,auto] items-center gap-3 md:gap-4 border-b-2 border-[var(--gold)] bg-[var(--cta-dark)] px-3 md:px-4 text-white shadow-[0_10px_24px_rgba(19,31,56,0.28)]">
 				<Link
 					to="/"
 					className="inline-flex min-w-0 items-center gap-3 md:order-1"
 					aria-label="juliancabrerapropiedades"
 				>
-					<img
-						src="/images/icons/logocompleto-v2.png"
-						alt="juliancabrerapropiedades"
-						width="300"
-						height="144"
-						decoding="async"
-					/>
+					<picture>
+						<source srcSet="/images/icons/logocompleto-v2.webp" type="image/webp" />
+						<img
+							src="/images/icons/logocompleto-v2.png"
+							alt="juliancabrerapropiedades"
+							width="300"
+							height="85"
+							decoding="async"
+						/>
+					</picture>
 				</Link>
 
 				<button
@@ -71,18 +74,18 @@ export default function SiteChrome({
 						Propiedades
 					</NavLink>
 					<NavLink
-						to="/contacto"
-						onClick={onCloseMenu}
-						className={linkClassName}
-					>
-						Contacto
-					</NavLink>
-					<NavLink
 						to="/nosotros"
 						onClick={onCloseMenu}
 						className={linkClassName}
 					>
 						Nosotros
+					</NavLink>
+					<NavLink
+						to="/contacto"
+						onClick={onCloseMenu}
+						className={linkClassName}
+					>
+						Contacto
 					</NavLink>
 				</nav>
 
@@ -101,15 +104,18 @@ export default function SiteChrome({
 				<div className=" grid w-full gap-6 lg:grid-cols-[1.15fr_0.85fr_0.7fr_1fr] lg:gap-6 items-start">
 					<div className="grid gap-5">
 						<div className="grid gap-3">
-							<img
-								src="/images/icons/logocompleto-v2.png"
-								alt="juliancabrerapropiedades"
-								className="w-[140px] max-w-full"
-								width="420"
-								height="96"
-								decoding="async"
-							/>
-							<p className="max-w-[28ch] text-[1.08rem] leading-8 text-white/72">
+							<picture>
+								<source srcSet="/images/icons/logocompleto-v2.webp" type="image/webp" />
+								<img
+									src="/images/icons/logocompleto-v2.png"
+									alt="juliancabrerapropiedades"
+									className="w-[140px] max-w-full"
+									width="420"
+									height="120"
+									decoding="async"
+								/>
+							</picture>
+							<p className="max-w-[28ch] text-[1.02rem] leading-8 text-white/72">
 								Inmobiliaria familiar con más de 30 años en Castelar.
 							</p>
 						</div>
@@ -117,7 +123,7 @@ export default function SiteChrome({
 							<a
 								href="https://www.instagram.com"
 								aria-label="Instagram"
-								className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/18 text-white/80 transition hover:border-white/40 hover:text-white"
+								className="inline-flex h-12 w-12 items-center justify-center rounded-[var(--radius-md)] border border-white/18 text-white/80 transition hover:border-white/40 hover:text-white"
 							>
 								<svg
 									width="22"
@@ -143,7 +149,7 @@ export default function SiteChrome({
 							<a
 								href="https://www.facebook.com"
 								aria-label="Facebook"
-								className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/18 text-white/80 transition hover:border-white/40 hover:text-white"
+								className="inline-flex h-12 w-12 items-center justify-center rounded-[var(--radius-md)] border border-white/18 text-white/80 transition hover:border-white/40 hover:text-white"
 							>
 								<svg
 									width="22"
@@ -165,7 +171,7 @@ export default function SiteChrome({
 						<h2 className="text-[1.05rem] font-extrabold uppercase tracking-[0.12em] text-white">
 							Encontrá lo que buscás
 						</h2>
-						<ul className="grid gap-3 text-[1.06rem] text-white/72">
+						<ul className="grid gap-3 text-[1.02rem] text-white/72">
 							<li>
 								<a
 									href="/propiedades?tipo=Departamento"
@@ -213,7 +219,7 @@ export default function SiteChrome({
 						<h2 className="text-[1.05rem] font-extrabold uppercase tracking-[0.12em] text-white">
 							Menú
 						</h2>
-						<nav className="grid gap-3 text-[1.06rem] text-white/72">
+						<nav className="grid gap-3 text-[1.02rem] text-white/72">
 							<NavLink to="/" end className="transition hover:text-white">
 								Inicio
 							</NavLink>
@@ -223,11 +229,11 @@ export default function SiteChrome({
 							>
 								Propiedades
 							</NavLink>
-							<NavLink to="/contacto" className="transition hover:text-white">
-								Contacto
-							</NavLink>
 							<NavLink to="/nosotros" className="transition hover:text-white">
 								Quiénes somos
+							</NavLink>
+							<NavLink to="/contacto" className="transition hover:text-white">
+								Contacto
 							</NavLink>
 						</nav>
 					</div>
@@ -238,19 +244,19 @@ export default function SiteChrome({
 						</h2>
 						<div className="grid gap-3 text-[1.02rem] text-white/80">
 							<div className="flex items-center gap-3">
-								<span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white">
+								<span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-white/10 text-white">
 									<LocationIcon />
 								</span>
 								<span>{ADDRESS}</span>
 							</div>
 							<div className="flex items-center gap-3">
-								<span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white">
+								<span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-white/10 text-white">
 									<PhoneIcon />
 								</span>
 								<span>{PHONE_NUMBER}</span>
 							</div>
 							<div className="flex items-center gap-3">
-								<span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white">
+								<span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-white/10 text-white">
 									<MailIcon />
 								</span>
 								<span>{EMAIL}</span>
@@ -260,7 +266,7 @@ export default function SiteChrome({
 				</div>
 
 				<div className="mt-8 flex w-full flex-col gap-3 border-t border-white/10 pt-4 md:flex-row md:items-center md:justify-between">
-					<p className="text-[0.95rem] text-white/55">
+					<p className="text-[0.95rem] text-white/75">
 						© 2026 juliancabrerapropiedades · Castelar, Buenos Aires
 					</p>
 					<WhatsAppButton
