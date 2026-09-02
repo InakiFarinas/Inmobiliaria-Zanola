@@ -97,7 +97,7 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 					{hasMultipleImages ? (
 						<button
 							type="button"
-							className="absolute left-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-[var(--text)] [box-shadow:var(--shadow-sm)] transition hover:bg-white"
+							className="absolute left-3 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-[var(--text)] [box-shadow:var(--shadow-sm)] transition hover:bg-white"
 							onClick={previousImage}
 							aria-label="Imagen anterior"
 						>
@@ -117,7 +117,7 @@ export default function PropertyGallery({ images = [], title = "Propiedad" }) {
 					{hasMultipleImages ? (
 						<button
 							type="button"
-							className="absolute right-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-[var(--text)] [box-shadow:var(--shadow-sm)] transition hover:bg-white"
+							className="absolute right-3 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-[var(--text)] [box-shadow:var(--shadow-sm)] transition hover:bg-white"
 							onClick={nextImage}
 							aria-label="Imagen siguiente"
 						>

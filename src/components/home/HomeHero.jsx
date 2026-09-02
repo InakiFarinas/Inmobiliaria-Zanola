@@ -116,7 +116,7 @@ export default function HomeHero({
 
 				<div className="xl:col-start-1 xl:row-start-2">
 					<form
-						className="rounded-[var(--radius-lg)] border border-[var(--gold)]/25 bg-[var(--cta-dark)] p-5 md:p-6 [box-shadow:var(--shadow-cta)]"
+						className="rounded-[var(--radius-lg)] border border-[rgb(var(--gold-rgb)/25%)] bg-[var(--cta-dark)] p-5 md:p-6 [box-shadow:var(--shadow-cta)]"
 						role="search"
 						onSubmit={onSubmit}
 					>
@@ -126,7 +126,7 @@ export default function HomeHero({
 									Ciudad
 								</span>
 								<select
-									className="min-w-[10ch] border-0 border-b-2 border-[var(--gold)]/40 bg-transparent pb-1 font-serif text-lg text-white outline-none transition focus:border-[var(--gold)]"
+									className="min-w-[10ch] border-0 border-b-2 border-[rgb(var(--gold-rgb)/40%)] bg-transparent py-2 font-serif text-lg text-white outline-none transition focus:border-[var(--gold)]"
 									value={form.ciudad}
 									onChange={handleCityChange}
 								>
@@ -151,7 +151,7 @@ export default function HomeHero({
 									Estado
 								</span>
 								<select
-									className="min-w-[9ch] border-0 border-b-2 border-[var(--gold)]/40 bg-transparent pb-1 font-serif text-lg text-white outline-none transition focus:border-[var(--gold)]"
+									className="min-w-[9ch] border-0 border-b-2 border-[rgb(var(--gold-rgb)/40%)] bg-transparent py-2 font-serif text-lg text-white outline-none transition focus:border-[var(--gold)]"
 									value={form.estado}
 									onChange={handleStateChange}
 								>
@@ -178,7 +178,7 @@ export default function HomeHero({
 								<input
 									type="number"
 									placeholder="sin límite"
-									className="tabular w-[9ch] border-0 border-b-2 border-[var(--gold)]/40 bg-transparent pb-1 font-serif text-lg text-white outline-none transition placeholder:font-sans placeholder:text-base placeholder:italic placeholder:text-white/55 focus:border-[var(--gold)]"
+									className="tabular w-[9ch] border-0 border-b-2 border-[rgb(var(--gold-rgb)/40%)] bg-transparent py-2 font-serif text-lg text-white outline-none transition placeholder:font-sans placeholder:text-base placeholder:italic placeholder:text-white/55 focus:border-[var(--gold)]"
 									value={form.precio_max ?? ""}
 									onChange={handlePriceChange}
 								/>
@@ -239,7 +239,7 @@ export default function HomeHero({
 								aria-label={`Ver propiedad en ${property.ciudad}, ${property.calle}`}
 							>
 								<PropertyImage src={property.imagenes[0]} alt={property.ciudad} />
-								<div className="absolute bottom-3 left-3 right-3 rounded-[var(--radius-sm)] bg-[var(--cta-dark)]/90 px-3 py-2 text-white">
+								<div className="absolute bottom-3 left-3 right-3 rounded-[var(--radius-sm)] bg-[rgb(var(--cta-dark-rgb)/90%)] px-3 py-2 text-white">
 									<p className="tabular m-0 font-mono text-[0.62rem] text-white/60">
 										{formatFolio(property.id_propiedad)}
 									</p>

@@ -64,6 +64,7 @@ export default function PropertyImageCarousel({
 								width={800}
 								height={600}
 								className={currentLayerClassName}
+								loading="lazy"
 								decoding="async"
 							/>
 						</picture>
@@ -76,6 +77,7 @@ export default function PropertyImageCarousel({
 									width={800}
 									height={600}
 									className={incomingLayerClassName}
+									loading="lazy"
 									decoding="async"
 									onTransitionEnd={handleIncomingTransitionEnd}
 								/>
@@ -89,7 +91,7 @@ export default function PropertyImageCarousel({
 				)}
 			</Link>
 
-			<span className="absolute right-2 top-2 rounded-[var(--radius-sm)] bg-[var(--cta-dark)]/92 px-2 py-1 font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-white md:right-3 md:top-3 md:px-2.5">
+			<span className="absolute right-2 top-2 rounded-[var(--radius-sm)] bg-[rgb(var(--cta-dark-rgb)/92%)] px-2 py-1 font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-white md:right-3 md:top-3 md:px-2.5">
 				{stateLabel}
 			</span>
 
@@ -98,7 +100,7 @@ export default function PropertyImageCarousel({
 					<button
 						type="button"
 						onClick={goPrev}
-						className="absolute left-1 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/75 p-1.5 text-[var(--text)] transition hover:bg-white md:left-2 md:bg-white/80 md:p-2"
+						className="absolute left-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/75 text-[var(--text)] transition hover:bg-white md:left-2 md:bg-white/80"
 						aria-label="Imagen anterior"
 					>
 						<svg
@@ -115,7 +117,7 @@ export default function PropertyImageCarousel({
 					<button
 						type="button"
 						onClick={goNext}
-						className="absolute right-1 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/75 p-1.5 text-[var(--text)] transition hover:bg-white md:right-2 md:bg-white/80 md:p-2"
+						className="absolute right-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/75 text-[var(--text)] transition hover:bg-white md:right-2 md:bg-white/80"
 						aria-label="Siguiente imagen"
 					>
 						<svg
