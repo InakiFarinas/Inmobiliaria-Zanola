@@ -1,12 +1,13 @@
 import Card from "../components/ui/Card";
+import Container from "../components/ui/Container";
 import SectionHeader from "../components/ui/SectionHeader";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
+import { ADDRESS } from "../config/contact";
 
 export default function AboutPage() {
 	return (
-		<section className="mx-auto w-[min(1180px,calc(100%_-_24px))] md:w-[min(1180px,calc(100%_-_32px))] pt-4 md:pt-6">
+		<Container className="pt-4 md:pt-6">
 			<SectionHeader
-				kicker="Nosotros"
 				title="Sobre Cabrera Inmobiliaria"
 				titleAs="h1"
 			/>
@@ -17,16 +18,18 @@ export default function AboutPage() {
 					className="mx-auto grid max-w-[880px] gap-3 text-left"
 					padding="md"
 				>
-					<h2 className="m-0 font-serif text-2xl font-bold">Trayectoria</h2>
+					<h2 className="m-0 font-serif text-2xl font-medium">Trayectoria</h2>
 					<p>
-						La familia Cabrera forma parte de la comunidad de castelar desde la
-						década del '60 y trabaja en el rubro inmobiliario desde 1990.
+						La familia Cabrera forma parte de la comunidad de Castelar desde la
+						década del &apos;60 y trabaja en el rubro inmobiliario desde 1990.
 					</p>
-					<div className="inline-grid gap-1.5 rounded-xl border border-[color:var(--line)] bg-white/5 px-4 py-3">
-						<strong className="text-lg font-extrabold text-[color:var(--accent)]">
+					<div className="grid gap-1 border-t border-dashed border-[color:var(--line)] pt-3">
+						<strong className="font-serif text-lg font-medium text-[color:var(--accent)]">
 							30+ años
 						</strong>
-						<span>Atención familiar desde 1990</span>
+						<span className="text-sm text-[var(--muted)]">
+							Atención familiar desde 1990
+						</span>
 					</div>
 				</Card>
 				<Card
@@ -34,14 +37,21 @@ export default function AboutPage() {
 					className="mx-auto grid max-w-[880px] gap-3 text-left"
 					padding="md"
 				>
-					<h2 className="m-0 font-serif text-2xl font-bold">
+					<h2 className="m-0 font-serif text-2xl font-medium">
 						Atención comercial
 					</h2>
-					<p>La firma está a cargo de Julian Cabrera</p>
-					<div className="grid gap-1">
-						<p className="m-0 font-semibold">Martillero Julian Cabrera</p>
+					<p>La firma está a cargo de Julián Cabrera</p>
+					<div className="grid gap-1 border-t border-dashed border-[color:var(--line)] pt-3">
+						<p className="m-0 font-semibold">Martillero Julián Cabrera</p>
 						<p className="m-0 text-sm text-[var(--muted)]">
 							Responsable comercial
+						</p>
+						<p
+							className="m-0 mt-1 text-3xl text-[color:var(--accent)]"
+							style={{ fontFamily: "'Caveat', cursive" }}
+							aria-hidden="true"
+						>
+							Julián Cabrera
 						</p>
 					</div>
 				</Card>
@@ -50,65 +60,35 @@ export default function AboutPage() {
 					className="mx-auto grid max-w-[880px] gap-3 text-left"
 					padding="md"
 				>
-					<h2 className="m-0 font-serif text-2xl font-bold">
+					<h2 className="m-0 font-serif text-2xl font-medium">
 						Lo que valoramos
 					</h2>
 					<p>
 						Honestidad, atención directa y acompañamiento en cada consulta o
 						operación.
 					</p>
-					<div className="inline-grid gap-2.5 rounded-xl border border-[color:var(--line)] bg-white/5 px-4 py-3">
-						<ul className="m-0 flex list-none flex-wrap justify-center gap-4 p-0">
-							<li className="inline-flex items-center gap-2 rounded-full bg-transparent px-3 py-1">
-								<svg
-									className="h-4 w-4 text-[color:var(--accent)]"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="2"
-								>
-									<path
-										d="M20 6L9 17l-5-5"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-								</svg>
-								Honestidad
-							</li>
-							<li className="inline-flex items-center gap-2 rounded-full bg-transparent px-3 py-1">
-								<svg
-									className="h-4 w-4 text-[color:var(--accent)]"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="2"
-								>
-									<path
-										d="M20 6L9 17l-5-5"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-								</svg>
-								Atención personalizada
-							</li>
-							<li className="inline-flex items-center gap-2 rounded-full bg-transparent px-3 py-1">
-								<svg
-									className="h-4 w-4 text-[color:var(--accent)]"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="2"
-								>
-									<path
-										d="M20 6L9 17l-5-5"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-								</svg>
-								Respaldo técnico
-							</li>
-						</ul>
-					</div>
+					<ul className="m-0 grid list-none gap-2 border-t border-dashed border-[color:var(--line)] p-0 pt-3 text-sm">
+						{["Honestidad", "Atención personalizada", "Respaldo técnico"].map(
+							(item) => (
+								<li key={item} className="inline-flex items-center gap-2">
+									<svg
+										className="h-4 w-4 shrink-0 text-[color:var(--accent)]"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeWidth="2"
+									>
+										<path
+											d="M20 6L9 17l-5-5"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+										/>
+									</svg>
+									{item}
+								</li>
+							),
+						)}
+					</ul>
 				</Card>
 			</div>
 
@@ -116,25 +96,24 @@ export default function AboutPage() {
 				<WhatsAppButton
 					message="Hola, quisiera que me contacten."
 					className="w-[220px] justify-center"
-					style={{ backgroundColor: "var(--cta-dark)", color: "white" }}
 				>
 					Contactanos
 				</WhatsAppButton>
 			</div>
 
 			<div className="mt-8">
-				<h2 className="m-0 font-serif text-2xl font-bold mb-4">
+				<h2 className="m-0 font-serif text-2xl font-medium mb-4">
 					Dónde encontrarnos
 				</h2>
 				<Card className="overflow-hidden" padding="none">
 					<iframe
 						title="Ubicación de Cabrera Inmobiliaria"
-						src="https://www.google.com/maps?q=25+de+Mayo+372,+Mor%C3%B3n,+Buenos+Aires&output=embed"
+						src={`https://www.google.com/maps?q=${encodeURIComponent(ADDRESS)}&output=embed`}
 						loading="lazy"
 						style={{ width: "100%", minHeight: 340 }}
 					/>
 				</Card>
 			</div>
-		</section>
+		</Container>
 	);
 }

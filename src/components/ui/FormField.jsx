@@ -8,7 +8,7 @@ export default function FormField({
 	...props
 }) {
 	const fieldClassName = [
-		"w-full rounded-md border border-[color:var(--line)] bg-[rgba(255,255,255,0.9)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]",
+		"w-full rounded-[var(--radius-sm)] border border-[color:var(--line)] bg-[var(--surface)] px-3 py-2 text-[var(--text)] outline-none transition focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[color:var(--accent-soft)]",
 		controlClassName,
 		className,
 	]
@@ -17,7 +17,7 @@ export default function FormField({
 
 	return (
 		<label
-			className={`grid gap-1 text-sm font-bold text-muted ${labelClassName}`.trim()}
+			className={`grid gap-1.5 font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-[var(--muted)] ${labelClassName}`.trim()}
 		>
 			<span>{label}</span>
 			<Tag className={fieldClassName} {...props}>

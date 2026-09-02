@@ -1,5 +1,4 @@
 export default function SectionHeader({
-	kicker,
 	title,
 	description,
 	action,
@@ -20,12 +19,7 @@ export default function SectionHeader({
 	return (
 		<div className={rootClassName}>
 			<div>
-				{kicker ? (
-					<span className="inline-flex w-fit rounded-full bg-[color:var(--accent-soft)] px-3 py-1 text-xs font-extrabold uppercase tracking-[0.08em] text-[color:var(--accent)]">
-						{kicker}
-					</span>
-				) : null}
-				<TitleTag className="m-0 font-serif text-[clamp(1.9rem,3vw,3.3rem)] leading-[1.08] text-[var(--text)]">
+				<TitleTag className="m-0 font-serif text-[clamp(1.9rem,3vw,3.3rem)] font-medium leading-[1.08] text-[var(--text)]">
 					{title}
 				</TitleTag>
 				{description ? (

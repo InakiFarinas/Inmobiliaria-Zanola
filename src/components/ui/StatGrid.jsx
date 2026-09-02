@@ -8,23 +8,23 @@ import {
 	StatGridTypeIcon,
 } from "./StatGridIcons";
 
-export default function StatGrid({ items = [] }) {
-	const iconByLabel = {
-		Tipo: StatGridTypeIcon,
-		Garaje: StatGridGarageIcon,
-		Baños: StatGridBathroomsIcon,
-		Ambientes: StatGridRoomsIcon,
-		Dormitorios: StatGridBedroomsIcon,
-		Superficie: StatGridSurfaceIcon,
-		Antigüedad: StatGridAgeIcon,
-	};
+const iconByLabel = {
+	Tipo: StatGridTypeIcon,
+	Garaje: StatGridGarageIcon,
+	Baños: StatGridBathroomsIcon,
+	Ambientes: StatGridRoomsIcon,
+	Dormitorios: StatGridBedroomsIcon,
+	Superficie: StatGridSurfaceIcon,
+	Antigüedad: StatGridAgeIcon,
+};
 
+export default function StatGrid({ items = [] }) {
 	return (
 		<dl className="grid grid-cols-1 gap-3 sm:grid-cols-2">
 			{items.map((item) => (
 				<div
 					key={item.label}
-					className="flex items-start gap-3 rounded-2xl border border-[color:var(--line)] bg-[var(--surface)] px-4 py-3 shadow-[0_10px_24px_rgba(26,26,26,0.05)]"
+					className="flex items-start gap-3 rounded-[var(--radius-md)] border border-[color:var(--line)] bg-[var(--surface)] px-4 py-3 [box-shadow:var(--shadow-sm)]"
 				>
 					<div className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[color:var(--accent-soft)] text-[color:var(--accent)]">
 						{(() => {

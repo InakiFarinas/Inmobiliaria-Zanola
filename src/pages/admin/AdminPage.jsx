@@ -6,39 +6,44 @@ import EmptyState from "../../components/ui/EmptyState";
 import SectionHeader from "../../components/ui/SectionHeader";
 import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../lib/api";
+import { formatFolio } from "../../lib/utils";
 
 const PropertyRow = memo(({ property, onToggle, onDelete, onEdit }) => (
 	<Card
 		padding="md"
-		className="grid gap-4 md:grid-cols-[auto_minmax(0,1fr)_auto] md:items-center"
+		className="grid gap-4 md:grid-cols-[auto_auto_minmax(0,1fr)_auto] md:items-center"
 	>
+		<span className="tabular font-mono text-[0.72rem] uppercase tracking-[0.08em] text-[var(--muted)]">
+			{formatFolio(property.id_propiedad)}
+		</span>
+
 		{property.imagenes?.[0] && (
 			<img
 				src={property.imagenes[0]}
 				alt={`${property.tipo} en ${property.ciudad}`}
-				className="h-14 w-14 flex-shrink-0 rounded-lg object-cover"
+				className="h-14 w-14 flex-shrink-0 rounded-[var(--radius-md)] object-cover"
 			/>
 		)}
 
 		<div className="grid gap-1 min-w-0">
 			<div className="flex flex-wrap items-center gap-2">
-				<span className="truncate font-bold text-sm text-[var(--text)]">
+				<span className="truncate font-semibold text-sm text-[var(--text)]">
 					{property.tipo} — {property.calle}
 					{property.altura ? ` ${property.altura}` : ""}
 				</span>
 				{!property.activa ? (
-					<span className="rounded-full bg-black/5 px-2 py-0.5 text-[10px] text-[var(--muted)]">
+					<span className="rounded-[var(--radius-sm)] border border-[color:var(--line)] px-2 py-0.5 font-mono text-[10px] uppercase text-[var(--muted)]">
 						Inactiva
 					</span>
 				) : null}
 				{property.destacada ? (
-					<span className="rounded-full bg-[color:var(--accent-soft)] px-2 py-0.5 text-[10px] text-[color:var(--accent)]">
+					<span className="rounded-[var(--radius-sm)] bg-[color:var(--seal-soft)] px-2 py-0.5 font-mono text-[10px] uppercase text-[color:var(--seal)]">
 						Destacada
 					</span>
 				) : null}
 			</div>
 			<p className="m-0 text-xs text-[var(--muted)]">
-				{property.ciudad} · {property.estado} · $
+				{property.ciudad} · {property.estado} · AR${" "}
 				{new Intl.NumberFormat("es-AR").format(property.precio)}
 			</p>
 		</div>
@@ -59,7 +64,7 @@ const PropertyRow = memo(({ property, onToggle, onDelete, onEdit }) => (
 			</Button>
 			<Button
 				variant="pill"
-				className="border border-red-100 bg-red-50 px-3 py-1.5 text-xs text-red-500 hover:bg-red-100"
+				className="border border-[color:var(--danger)] bg-[color:var(--danger-soft)] px-3 py-1.5 text-xs text-[color:var(--danger)] hover:bg-[color:var(--danger)] hover:text-white"
 				onClick={() => onDelete(property.id_propiedad)}
 			>
 				Eliminar
@@ -158,14 +163,11 @@ export default function AdminPage() {
 	}, [logout, navigate]);
 
 	return (
-		<div className="min-h-screen bg-[var(--surface)] px-4 py-4">
+		<div className="min-h-screen bg-[var(--paper)] px-4 py-4">
 			<Card className="w-full overflow-hidden p-0" padding="none">
-				<div className="flex flex-col gap-4 border-b border-[color:var(--line)] bg-[var(--accent)] px-5 py-4 text-white md:flex-row md:items-center md:justify-between md:px-6">
+				<div className="flex flex-col gap-4 border-b-2 border-[var(--gold)] bg-[var(--cta-dark)] px-5 py-4 text-white md:flex-row md:items-center md:justify-between md:px-6">
 					<div>
-						<p className="m-0 text-xs font-bold uppercase tracking-[0.12em] text-white/55">
-							Panel
-						</p>
-						<h1 className="m-0 text-lg font-black">Cabrera Admin</h1>
+						<h1 className="m-0 font-serif text-lg font-medium">Cabrera Admin</h1>
 					</div>
 					<div className="flex flex-wrap items-center gap-3">
 						<span className="text-sm text-white/70">{user?.email}</span>
@@ -182,7 +184,6 @@ export default function AdminPage() {
 				<div className="grid gap-6 p-5 md:p-6">
 					<SectionHeader
 						align="inline"
-						kicker="Propiedades"
 						title="Listado"
 						action={
 							<Button to="/admin/nueva" className="px-4 py-2">

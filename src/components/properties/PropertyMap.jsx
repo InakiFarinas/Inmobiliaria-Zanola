@@ -3,7 +3,7 @@ export default function PropertyMap({ address = "Morón, Buenos Aires" }) {
 	const src = `https://maps.google.com/maps?q=${query}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
 
 	return (
-		<div className="overflow-hidden rounded-[20px] p-0">
+		<div className="overflow-hidden rounded-[var(--radius-lg)] p-0">
 			<iframe
 				title={`Ubicación de ${address}`}
 				src={src}
