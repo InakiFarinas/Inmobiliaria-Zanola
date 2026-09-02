@@ -8,11 +8,11 @@ const iconProps = {
 	strokeLinejoin: "round",
 };
 
-function createIcon(stroke = "#1c2b4a") {
+function createIcon(stroke = "var(--accent)") {
 	return { ...iconProps, stroke };
 }
 
-export function StatGridTypeIcon({ stroke = "#1c2b4a" } = {}) {
+export function StatGridTypeIcon({ stroke = "var(--accent)" } = {}) {
 	return (
 		<svg {...createIcon(stroke)}>
 			<rect x="3" y="3" width="18" height="18" rx="2" />
@@ -21,7 +21,7 @@ export function StatGridTypeIcon({ stroke = "#1c2b4a" } = {}) {
 	);
 }
 
-export function StatGridBedroomsIcon({ stroke = "#1c2b4a" } = {}) {
+export function StatGridBedroomsIcon({ stroke = "var(--accent)" } = {}) {
 	return (
 		<svg {...createIcon(stroke)}>
 			<path d="M3 17v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6" />
@@ -31,7 +31,7 @@ export function StatGridBedroomsIcon({ stroke = "#1c2b4a" } = {}) {
 	);
 }
 
-export function StatGridBathroomsIcon({ stroke = "#1c2b4a" } = {}) {
+export function StatGridBathroomsIcon({ stroke = "var(--accent)" } = {}) {
 	return (
 		<svg {...createIcon(stroke)}>
 			<path d="M4 12h16M4 12V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v6" />
@@ -40,7 +40,7 @@ export function StatGridBathroomsIcon({ stroke = "#1c2b4a" } = {}) {
 	);
 }
 
-export function StatGridRoomsIcon({ stroke = "#1c2b4a" } = {}) {
+export function StatGridRoomsIcon({ stroke = "var(--accent)" } = {}) {
 	return (
 		<svg {...createIcon(stroke)}>
 			<rect x="3" y="3" width="7" height="7" rx="1" />
@@ -51,7 +51,7 @@ export function StatGridRoomsIcon({ stroke = "#1c2b4a" } = {}) {
 	);
 }
 
-export function StatGridSurfaceIcon({ stroke = "#1c2b4a" } = {}) {
+export function StatGridSurfaceIcon({ stroke = "var(--accent)" } = {}) {
 	return (
 		<svg {...createIcon(stroke)}>
 			<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
@@ -61,7 +61,7 @@ export function StatGridSurfaceIcon({ stroke = "#1c2b4a" } = {}) {
 	);
 }
 
-export function StatGridGarageIcon({ stroke = "#1c2b4a" } = {}) {
+export function StatGridGarageIcon({ stroke = "var(--accent)" } = {}) {
 	return (
 		<svg {...createIcon(stroke)}>
 			<path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3" />
@@ -71,7 +71,7 @@ export function StatGridGarageIcon({ stroke = "#1c2b4a" } = {}) {
 	);
 }
 
-export function StatGridAgeIcon({ stroke = "#1c2b4a" } = {}) {
+export function StatGridAgeIcon({ stroke = "var(--accent)" } = {}) {
 	return (
 		<svg {...createIcon(stroke)}>
 			<rect x="3" y="4" width="18" height="18" rx="2" />

@@ -62,7 +62,7 @@ export default function PropertyFilters({
 				<button
 					type="button"
 					onClick={() => setExpanded((v) => !v)}
-					className="flex items-center justify-between border-t border-dashed border-[color:var(--line)] pt-3 text-left font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-[var(--muted)]"
+					className="flex items-center justify-between border-t border-dashed border-[color:var(--line)] py-3.5 text-left font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-[var(--muted)]"
 					aria-expanded={expanded}
 				>
 					<span>{expanded ? "Menos filtros" : "Más filtros"}</span>
