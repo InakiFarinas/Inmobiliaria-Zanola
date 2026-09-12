@@ -11,106 +11,56 @@ export default function AboutPage() {
 				titleAs="h1"
 			/>
 
-			<div className="grid gap-3 md:gap-4 md:grid-cols-2 xl:grid-cols-3">
-				<Card
-					as="article"
-					className="mx-auto grid max-w-[880px] gap-3 text-left"
-					padding="md"
-				>
-					<h2 className="m-0 font-serif text-2xl font-bold">Trayectoria</h2>
-					<p>
-						La familia Cabrera forma parte de la comunidad de castelar desde la
-						década del '60 y trabaja en el rubro inmobiliario desde 1990.
-					</p>
-					<div className="inline-grid gap-1.5 rounded-xl border border-[color:var(--line)] bg-white/5 px-4 py-3">
-						<strong className="text-lg font-extrabold text-[color:var(--accent)]">
-							30+ años
-						</strong>
-						<span>Atención familiar desde 1990</span>
-					</div>
-				</Card>
-				<Card
-					as="article"
-					className="mx-auto grid max-w-[880px] gap-3 text-left"
-					padding="md"
-				>
-					<h2 className="m-0 font-serif text-2xl font-bold">
-						Atención comercial
-					</h2>
-					<p>La firma está a cargo de Julian Cabrera</p>
-					<div className="grid gap-1">
-						<p className="m-0 font-semibold">Martillero Julian Cabrera</p>
-						<p className="m-0 text-sm text-[var(--muted)]">
-							Responsable comercial
-						</p>
-					</div>
-				</Card>
-				<Card
-					as="article"
-					className="mx-auto grid max-w-[880px] gap-3 text-left"
-					padding="md"
-				>
-					<h2 className="m-0 font-serif text-2xl font-bold">
-						Lo que valoramos
-					</h2>
-					<p>
-						Honestidad, atención directa y acompañamiento en cada consulta o
-						operación.
-					</p>
-					<div className="inline-grid gap-2.5 rounded-xl border border-[color:var(--line)] bg-white/5 px-4 py-3">
-						<ul className="m-0 flex list-none flex-wrap justify-center gap-4 p-0">
-							<li className="inline-flex items-center gap-2 rounded-full bg-transparent px-3 py-1">
-								<svg
-									className="h-4 w-4 text-[color:var(--accent)]"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="2"
-								>
-									<path
-										d="M20 6L9 17l-5-5"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-								</svg>
-								Honestidad
-							</li>
-							<li className="inline-flex items-center gap-2 rounded-full bg-transparent px-3 py-1">
-								<svg
-									className="h-4 w-4 text-[color:var(--accent)]"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="2"
-								>
-									<path
-										d="M20 6L9 17l-5-5"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-								</svg>
-								Atención personalizada
-							</li>
-							<li className="inline-flex items-center gap-2 rounded-full bg-transparent px-3 py-1">
-								<svg
-									className="h-4 w-4 text-[color:var(--accent)]"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="2"
-								>
-									<path
-										d="M20 6L9 17l-5-5"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-								</svg>
-								Respaldo técnico
-							</li>
-						</ul>
-					</div>
-				</Card>
-			</div>
+			<article className="mx-auto mb-6 grid max-w-[880px] gap-3 text-left md:mb-8">
+				<h2 className="m-0 font-serif text-2xl font-bold">Nuestra historia</h2>
+				<p>
+					En 1969, a los 25 años de edad, Alberto Milano dio sus primeros
+					pasos en el mundo inmobiliario con la apertura de su primera
+					oficina, bajo el nombre de Milano y Cía., ubicada en José María Paz
+					481, Ituzaingó.
+				</p>
+				<p>
+					En 1972, con la visión de continuar creciendo y desarrollando su
+					actividad en un lugar más competitivo, decidió trasladarse a Carlos
+					Casares 883, Castelar, realizando como parte de pago la entrega de
+					su dúplex en Parque Ayerza.
+				</p>
+				<p>
+					Tres años más tarde, en 1975, su socio decidió retirarse del rubro.
+					Fue entonces cuando Alberto asumió el desafío de continuar de
+					manera independiente, dando origen a Alberto J. Milano Propiedades.
+				</p>
+				<p>
+					A partir de ese momento, su compromiso y pasión por la profesión
+					marcaron el camino de una etapa de gran crecimiento. Alberto
+					encontró en el mundo inmobiliario mucho más que una actividad
+					profesional: encontró una verdadera vocación, a la que se dedicó
+					con entusiasmo, esfuerzo y una profunda pasión.
+				</p>
+				<p>
+					En 1978 adquirió el local ubicado en Arias 2542, donde comenzó a
+					consolidar un equipo de trabajo formado por numerosos vendedores
+					que, con dedicación y compromiso, acompañaron el crecimiento y la
+					evolución de la empresa.
+				</p>
+				<p>
+					Finalmente, en 1997, llegó otro momento significativo en su
+					trayectoria: Alberto hizo realidad el proyecto de trasladarse a la
+					que sería la oficina de sus sueños, ubicada en Presidente Domingo
+					Faustino Sarmiento 2401.
+				</p>
+				<p>
+					Cada una de estas etapas representa una parte fundamental de una
+					historia construida a lo largo de los años, basada en el trabajo,
+					la perseverancia, la pasión por la profesión y, sobre todo, en el
+					vínculo y la confianza con cada persona que acompañó este camino.
+				</p>
+				<p>
+					Hoy esa historia continúa de la mano de Julián Cabrera, quien lleva
+					adelante el legado de Alberto Milano al frente de Cabrera
+					Inmobiliaria en Morón y Castelar.
+				</p>
+			</article>
 
 			<div className="flex justify-center mt-6">
 				<WhatsAppButton
