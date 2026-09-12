@@ -1,119 +1,90 @@
 import Card from "../components/ui/Card";
-import Container from "../components/ui/Container";
 import SectionHeader from "../components/ui/SectionHeader";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
-import { ADDRESS } from "../config/contact";
 
 export default function AboutPage() {
 	return (
-		<Container className="pt-4 md:pt-6">
+		<section className="mx-auto w-[min(1180px,calc(100%_-_24px))] md:w-[min(1180px,calc(100%_-_32px))] pt-4 md:pt-6">
 			<SectionHeader
+				kicker="Nosotros"
 				title="Sobre Cabrera Inmobiliaria"
 				titleAs="h1"
 			/>
 
-			<div className="grid gap-3 md:gap-4 md:grid-cols-2 xl:grid-cols-3">
-				<Card
-					as="article"
-					className="mx-auto grid max-w-[880px] gap-3 text-left"
-					padding="md"
-				>
-					<h2 className="m-0 font-serif text-2xl font-medium">Trayectoria</h2>
-					<p>
-						La familia Cabrera forma parte de la comunidad de Castelar desde la
-						década del &apos;60 y trabaja en el rubro inmobiliario desde 1990.
-					</p>
-					<div className="grid gap-1 border-t border-dashed border-[color:var(--line)] pt-3">
-						<strong className="font-serif text-lg font-medium text-[color:var(--accent)]">
-							30+ años
-						</strong>
-						<span className="text-sm text-[var(--muted)]">
-							Atención familiar desde 1990
-						</span>
-					</div>
-				</Card>
-				<Card
-					as="article"
-					className="mx-auto grid max-w-[880px] gap-3 text-left"
-					padding="md"
-				>
-					<h2 className="m-0 font-serif text-2xl font-medium">
-						Atención comercial
-					</h2>
-					<p>La firma está a cargo de Julián Cabrera</p>
-					<div className="grid gap-1 border-t border-dashed border-[color:var(--line)] pt-3">
-						<p className="m-0 font-semibold">Martillero Julián Cabrera</p>
-						<p className="m-0 text-sm text-[var(--muted)]">
-							Responsable comercial
-						</p>
-						<p
-							className="m-0 mt-1 text-3xl text-[color:var(--accent)]"
-							style={{ fontFamily: "'Caveat', cursive" }}
-							aria-hidden="true"
-						>
-							Julián Cabrera
-						</p>
-					</div>
-				</Card>
-				<Card
-					as="article"
-					className="mx-auto grid max-w-[880px] gap-3 text-left"
-					padding="md"
-				>
-					<h2 className="m-0 font-serif text-2xl font-medium">
-						Lo que valoramos
-					</h2>
-					<p>
-						Honestidad, atención directa y acompañamiento en cada consulta o
-						operación.
-					</p>
-					<ul className="m-0 grid list-none gap-2 border-t border-dashed border-[color:var(--line)] p-0 pt-3 text-sm">
-						{["Honestidad", "Atención personalizada", "Respaldo técnico"].map(
-							(item) => (
-								<li key={item} className="inline-flex items-center gap-2">
-									<svg
-										className="h-4 w-4 shrink-0 text-[color:var(--accent)]"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										strokeWidth="2"
-									>
-										<path
-											d="M20 6L9 17l-5-5"
-											strokeLinecap="round"
-											strokeLinejoin="round"
-										/>
-									</svg>
-									{item}
-								</li>
-							),
-						)}
-					</ul>
-				</Card>
-			</div>
+			<article className="mx-auto mb-6 grid max-w-[880px] gap-3 text-left md:mb-8">
+				<h2 className="m-0 font-serif text-2xl font-bold">Nuestra historia</h2>
+				<p>
+					En 1969, a los 25 años de edad, Alberto Milano dio sus primeros
+					pasos en el mundo inmobiliario con la apertura de su primera
+					oficina, bajo el nombre de Milano y Cía., ubicada en José María Paz
+					481, Ituzaingó.
+				</p>
+				<p>
+					En 1972, con la visión de continuar creciendo y desarrollando su
+					actividad en un lugar más competitivo, decidió trasladarse a Carlos
+					Casares 883, Castelar, realizando como parte de pago la entrega de
+					su dúplex en Parque Ayerza.
+				</p>
+				<p>
+					Tres años más tarde, en 1975, su socio decidió retirarse del rubro.
+					Fue entonces cuando Alberto asumió el desafío de continuar de
+					manera independiente, dando origen a Alberto J. Milano Propiedades.
+				</p>
+				<p>
+					A partir de ese momento, su compromiso y pasión por la profesión
+					marcaron el camino de una etapa de gran crecimiento. Alberto
+					encontró en el mundo inmobiliario mucho más que una actividad
+					profesional: encontró una verdadera vocación, a la que se dedicó
+					con entusiasmo, esfuerzo y una profunda pasión.
+				</p>
+				<p>
+					En 1978 adquirió el local ubicado en Arias 2542, donde comenzó a
+					consolidar un equipo de trabajo formado por numerosos vendedores
+					que, con dedicación y compromiso, acompañaron el crecimiento y la
+					evolución de la empresa.
+				</p>
+				<p>
+					Finalmente, en 1997, llegó otro momento significativo en su
+					trayectoria: Alberto hizo realidad el proyecto de trasladarse a la
+					que sería la oficina de sus sueños, ubicada en Presidente Domingo
+					Faustino Sarmiento 2401.
+				</p>
+				<p>
+					Cada una de estas etapas representa una parte fundamental de una
+					historia construida a lo largo de los años, basada en el trabajo,
+					la perseverancia, la pasión por la profesión y, sobre todo, en el
+					vínculo y la confianza con cada persona que acompañó este camino.
+				</p>
+				<p>
+					Hoy esa historia continúa de la mano de Julián Cabrera, quien lleva
+					adelante el legado de Alberto Milano al frente de Cabrera
+					Inmobiliaria en Morón y Castelar.
+				</p>
+			</article>
 
 			<div className="flex justify-center mt-6">
 				<WhatsAppButton
 					message="Hola, quisiera que me contacten."
 					className="w-[220px] justify-center"
+					style={{ backgroundColor: "var(--cta-dark)", color: "white" }}
 				>
 					Contactanos
 				</WhatsAppButton>
 			</div>
 
 			<div className="mt-8">
-				<h2 className="m-0 font-serif text-2xl font-medium mb-4">
+				<h2 className="m-0 font-serif text-2xl font-bold mb-4">
 					Dónde encontrarnos
 				</h2>
 				<Card className="overflow-hidden" padding="none">
 					<iframe
 						title="Ubicación de Cabrera Inmobiliaria"
-						src={`https://www.google.com/maps?q=${encodeURIComponent(ADDRESS)}&output=embed`}
+						src="https://www.google.com/maps?q=25+de+Mayo+372,+Mor%C3%B3n,+Buenos+Aires&output=embed"
 						loading="lazy"
 						style={{ width: "100%", minHeight: 340 }}
 					/>
 				</Card>
 			</div>
-		</Container>
+		</section>
 	);
 }

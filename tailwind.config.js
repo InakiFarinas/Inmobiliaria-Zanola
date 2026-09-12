@@ -4,12 +4,23 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				seal: "var(--seal)",
+				carbon: "var(--carbon)",
+				griso: "var(--griso)",
+				lino: "var(--lino)",
+				blanco: "var(--blanco)",
+				bronze: "var(--bronze)",
+				arena: "var(--arena)",
+				cuero: "var(--cuero)",
+				cazador: "var(--cazador)",
+				salvia: "var(--salvia)",
+				pizarra: "var(--pizarra)",
+				mostaza: "var(--mostaza)",
+				terracota: "var(--terracota)",
 				accent: "var(--accent)",
+				"accent-dark": "var(--accent-dark)",
 				"accent-soft": "var(--accent-soft)",
 				whatsapp: "var(--whatsapp)",
 				"cta-dark": "var(--cta-dark)",
-				gold: "var(--gold)",
 			},
 			borderRadius: {
 				xl: "var(--radius-xl)",
@@ -21,9 +32,8 @@ export default {
 				site: "var(--shadow)",
 			},
 			fontFamily: {
-				sans: ["Public Sans", "system-ui", "sans-serif"],
-				serif: ["Spectral", "serif"],
-				mono: ["Fragment Mono", "monospace"],
+				sans: ["Bookman Old Style", "serif"],
+				serif: ["Fraunces", "serif"],
 			},
 		},
 	},
