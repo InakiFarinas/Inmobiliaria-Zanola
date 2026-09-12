@@ -2,9 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import PropertyCard from "../components/properties/PropertyCard";
 import PropertyFilters from "../components/properties/PropertyFilters";
-import Container from "../components/ui/Container";
 import EmptyState from "../components/ui/EmptyState";
 import SectionHeader from "../components/ui/SectionHeader";
+import Reveal from "../components/ui/Reveal";
 import {
 	getCities,
 	getProperties,
@@ -150,22 +150,23 @@ export default function PropertiesPage() {
 	};
 
 	return (
-		<Container className="pt-4 md:pt-6">
+		<section className="mx-auto w-[min(1180px,calc(100%_-_24px))] md:w-[min(1180px,calc(100%_-_32px))] pt-4 md:pt-6">
 			<SectionHeader
 				align="inline"
+				kicker="Explora"
 				title="Listado de propiedades"
 				description="Filtrá por tipo, ciudad, presupuesto y características clave."
 			/>
 
-			<div className="mb-4 lg:hidden flex items-center justify-between border-y border-dashed border-[color:var(--line)] py-2.5">
+			<div className="mb-4 lg:hidden flex items-center justify-between">
 				<button
 					type="button"
-					className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] border border-[color:var(--line)] bg-[var(--surface)] px-4 py-2 font-semibold text-[var(--text)]"
+					className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-extrabold text-[color:var(--accent)] bg-white/90 shadow-sm"
 					onClick={() => setFiltersOpen(true)}
 				>
 					Filtros
 				</button>
-				<span className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-[var(--muted)]">
+				<span className="text-sm text-muted">
 					{properties.length} resultados
 				</span>
 			</div>
@@ -183,19 +184,18 @@ export default function PropertiesPage() {
 
 				<div className="min-w-0">
 					{error ? (
-						<EmptyState
-							title={error}
-							className="text-left"
-						/>
+						<EmptyState title={error} />
 					) : loading ? (
-						<EmptyState
-							title="Cargando propiedades..."
-							className="animate-pulse text-left font-mono text-[0.72rem] uppercase tracking-[0.08em]"
-						/>
+						<EmptyState title="Cargando propiedades..." />
 					) : properties.length > 0 ? (
 						<div className="grid gap-4 md:grid-cols-2">
-							{properties.map((property) => (
-								<PropertyCard key={property.id_propiedad} property={property} />
+							{properties.map((property, i) => (
+								<Reveal
+									key={property.id_propiedad}
+									delay={Math.min(i * 80, 400)}
+								>
+									<PropertyCard property={property} />
+								</Reveal>
 							))}
 						</div>
 					) : (
@@ -204,9 +204,9 @@ export default function PropertiesPage() {
 				</div>
 			</div>
 
-			{/* Mobile drawer for filters — breakpoint must match the trigger button's lg:hidden above */}
+			{/* Mobile drawer for filters */}
 			<div
-				className={`fixed inset-0 z-50 lg:hidden ${filtersOpen ? "" : "pointer-events-none"}`}
+				className={`fixed inset-0 z-50 md:hidden ${filtersOpen ? "" : "pointer-events-none"}`}
 				aria-hidden={!filtersOpen}
 			>
 				<div
@@ -219,23 +219,13 @@ export default function PropertiesPage() {
 					}`}
 				>
 					<div className="flex items-center justify-between mb-3">
-						<h3 className="m-0 font-serif text-xl font-medium">Filtros</h3>
+						<h3 className="m-0 font-extrabold">Filtros</h3>
 						<button
 							className="inline-flex items-center justify-center rounded-full p-2"
 							onClick={() => setFiltersOpen(false)}
 							aria-label="Cerrar filtros"
 						>
-							<svg
-								width="18"
-								height="18"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2.2"
-								strokeLinecap="round"
-							>
-								<path d="M6 6l12 12M18 6L6 18" />
-							</svg>
+							✕
 						</button>
 					</div>
 					<PropertyFilters
@@ -250,6 +240,6 @@ export default function PropertiesPage() {
 					/>
 				</aside>
 			</div>
-		</Container>
+		</section>
 	);
 }

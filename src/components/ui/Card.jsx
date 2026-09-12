@@ -12,7 +12,7 @@ export default function Card({
 	}[padding];
 
 	const rootClassName = [
-		"rounded-[var(--radius-xl)] border border-[color:var(--line)] bg-[var(--surface)] [box-shadow:var(--shadow)]",
+		"rounded-[28px] border border-[color:var(--line)] bg-[var(--surface)] shadow-[var(--shadow)] backdrop-blur-[18px]",
 		paddingClassName,
 		className,
 	]
