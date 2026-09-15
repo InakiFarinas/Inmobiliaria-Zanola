@@ -1,6 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import WhatsAppButton from "../ui/WhatsAppButton";
-import { ADDRESS, EMAIL, PHONE_NUMBER } from "../../config/contact";
+import {
+	ADDRESS,
+	EMAIL,
+	LANDLINE_NUMBER,
+	PHONE_NUMBER,
+} from "../../config/contact";
 import { LocationIcon, PhoneIcon, MailIcon } from "../ui/ContactIcons";
 
 const linkClassName = ({ isActive }) =>
@@ -247,7 +252,9 @@ export default function SiteChrome({
 								<span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white">
 									<PhoneIcon />
 								</span>
-								<span>{PHONE_NUMBER}</span>
+								<span>
+									{PHONE_NUMBER} · Fijo: {LANDLINE_NUMBER}
+								</span>
 							</div>
 							<div className="flex items-center gap-3">
 								<span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white">

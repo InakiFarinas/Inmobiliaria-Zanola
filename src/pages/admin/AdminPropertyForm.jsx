@@ -322,6 +322,7 @@ export default function AdminPropertyForm() {
 								value={form.ambientes}
 								onChange={handleChange}
 								type="number"
+								required
 							/>
 							<FormField
 								label="Dormitorios"
@@ -329,6 +330,7 @@ export default function AdminPropertyForm() {
 								value={form.dormitorios}
 								onChange={handleChange}
 								type="number"
+								required
 							/>
 							<FormField
 								label="Baños"
@@ -336,6 +338,7 @@ export default function AdminPropertyForm() {
 								value={form.banos}
 								onChange={handleChange}
 								type="number"
+								required
 							/>
 							<FormField
 								label="Superficie (m²)"
@@ -343,6 +346,7 @@ export default function AdminPropertyForm() {
 								value={form.superficie}
 								onChange={handleChange}
 								type="number"
+								required
 							/>
 							<FormField
 								label="Antigüedad (años)"
@@ -350,6 +354,7 @@ export default function AdminPropertyForm() {
 								value={form.antiguedad}
 								onChange={handleChange}
 								type="number"
+								required
 							/>
 						</div>
 						<div className="flex flex-wrap gap-6 pt-1 text-sm text-[var(--text)]">
@@ -413,13 +418,17 @@ export default function AdminPropertyForm() {
 										<img
 											src={url}
 											alt="Imagen cargada"
+											width={96}
+											height={96}
+											loading="lazy"
 											className="h-24 w-24 rounded-lg border border-[color:var(--line)] object-cover"
 										/>
 										<Button
 											type="button"
 											onClick={() => removeExistingImage(url)}
 											variant="pill"
-											className="absolute -right-2 -top-2 h-6 w-6 border border-red-100 bg-red-500 px-0 py-0 text-xs text-white hover:bg-red-600"
+											aria-label="Quitar esta imagen"
+											className="absolute -right-2 -top-2 flex h-11 w-11 items-center justify-center border border-[rgba(227,20,26,0.3)] bg-[color:var(--danger)] px-0 py-0 text-base text-white hover:bg-[#8f0e13]"
 										>
 											×
 										</Button>
@@ -451,7 +460,12 @@ export default function AdminPropertyForm() {
 					</Card>
 
 					{saveError ? (
-						<p className="m-0 text-sm font-medium text-red-500">{saveError}</p>
+						<p
+							role="alert"
+							className="m-0 text-sm font-medium text-[color:var(--danger)]"
+						>
+							{saveError}
+						</p>
 					) : null}
 
 					<Button type="submit" disabled={loading} className="w-full py-3">

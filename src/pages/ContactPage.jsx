@@ -10,7 +10,7 @@ import {
 } from "../components/ui/ContactIcons";
 import SectionHeader from "../components/ui/SectionHeader";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
-import { ADDRESS, EMAIL, PHONE_NUMBER } from "../config/contact";
+import { ADDRESS, EMAIL, LANDLINE_NUMBER, PHONE_NUMBER } from "../config/contact";
 import { supabase } from "../lib/api";
 
 export default function ContactPage() {
@@ -174,6 +174,9 @@ export default function ContactPage() {
 						</InfoCard>
 						<InfoCard title="Teléfono" icon={<PhoneIcon />}>
 							<p className="m-0 text-[1.35rem] font-bold">{PHONE_NUMBER}</p>
+							<small className="text-sm text-muted">
+								Fijo: {LANDLINE_NUMBER}
+							</small>
 						</InfoCard>
 						<InfoCard title="Email" icon={<MailIcon />}>
 							<p className="m-0 text-[1.35rem] font-bold">{EMAIL}</p>

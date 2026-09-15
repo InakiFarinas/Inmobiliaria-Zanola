@@ -8,49 +8,46 @@ import WhatsAppButton from "../components/ui/WhatsAppButton";
 import Reveal from "../components/ui/Reveal";
 import EmptyState from "../components/ui/EmptyState";
 import {
-	getCities,
 	getLatestProperties,
-	getPropertyStates,
+	getPropertyTypes,
 	getPropertiesCount,
 } from "../lib/api";
+import { NEARBY_CITIES } from "../config/cities";
 
 const heroPoints = [
 	{
-		title: "Morón Sur y Morón Centro",
-		text: "Propiedades en las zonas más buscadas de Morón, con alternativas de venta y alquiler.",
-	},
-	{
 		title: "Casa, departamento y local",
-		text: "Publicaciones activas en los rubros que la inmobiliaria trabaja de forma habitual.",
+		text: "Propiedades en las zonas más buscadas de Morón, con alternativas de venta y alquiler.",
 	},
 	{
 		title: "Atención directa",
 		text: "Teléfono, WhatsApp y correo publicados para consultas rápidas.",
 	},
+	{
+		title: "Administración de alquileres",
+		text: "Gestión de contratos, cobros y atención a propietarios e inquilinos.",
+	},
 ];
 
 export default function HomePage() {
 	const navigate = useNavigate();
-	const [cities, setCities] = useState([]);
-	const [states, setStates] = useState([]);
+	const [types, setTypes] = useState([]);
 	const [latest, setLatest] = useState([]);
 	const [totalCount, setTotalCount] = useState(0);
-	const [form, setForm] = useState({ ciudad: "", estado: "", precio_max: "" });
+	const [form, setForm] = useState({ ciudad: "", estado: "", tipo: "" });
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
 		let active = true;
 
 		Promise.all([
-			getCities(),
-			getPropertyStates(),
+			getPropertyTypes(),
 			getLatestProperties(5),
 			getPropertiesCount(),
 		])
-			.then(([cityData, stateData, propertyData, count]) => {
+			.then(([typeData, propertyData, count]) => {
 				if (!active) return;
-				setCities(cityData || []);
-				setStates(stateData || []);
+				setTypes(typeData || []);
 				setLatest(propertyData || []);
 				setTotalCount(count || 0);
 			})
@@ -69,7 +66,7 @@ export default function HomePage() {
 		const params = new URLSearchParams();
 		if (form.ciudad) params.set("ciudad", form.ciudad);
 		if (form.estado) params.set("estado", form.estado);
-		if (form.precio_max) params.set("precio_max", form.precio_max);
+		if (form.tipo) params.set("tipo", form.tipo);
 		navigate(`/propiedades${params.toString() ? `?${params.toString()}` : ""}`);
 	};
 
@@ -85,8 +82,8 @@ export default function HomePage() {
 	return (
 		<>
 			<HomeHero
-				cities={cities}
-				states={states}
+				cities={NEARBY_CITIES}
+				types={types}
 				form={form}
 				onFormChange={handleFormChange}
 				onSubmit={handleSubmit}

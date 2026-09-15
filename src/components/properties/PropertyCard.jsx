@@ -21,7 +21,7 @@ function normalizeStateLabel(value) {
 
 function getPriceLabel(property, isRental) {
 	const price = formatPrice(property.precio);
-	return `AR$ ${price}${isRental ? "/mes" : ""}`;
+	return `US$ ${price}${isRental ? "/mes" : ""}`;
 }
 
 function PropertyCard({ property, featured = false }) {
@@ -68,7 +68,7 @@ function PropertyCard({ property, featured = false }) {
 				to={`/propiedad/${property.id_propiedad}`}
 				className="block p-3 md:p-4"
 			>
-				<div className="text-3xl md:text-4xl font-black text-[var(--text)]">
+				<div className="text-2xl md:text-3xl font-black text-[var(--text)] font-['DM_Sans']">
 					{getPriceLabel(property, isRental)}
 				</div>
 				<h3 className="mt-2 text-base md:text-lg font-bold">

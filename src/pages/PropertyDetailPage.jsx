@@ -134,8 +134,8 @@ export default function PropertyDetailPage() {
 									? "Precio de alquiler"
 									: "Precio de venta"}
 							</span>
-							<strong className="text-[clamp(2rem,4vw,3rem)] font-black text-[var(--text)]">
-								${formatPrice(property.precio)}
+							<strong className="text-[clamp(2rem,4vw,3rem)] font-black text-[var(--text)] font-['DM_Sans']">
+								US$ {formatPrice(property.precio)}
 							</strong>
 						</div>
 

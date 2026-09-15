@@ -5,10 +5,12 @@ export default function EmptyState({
 	description,
 	action,
 	className = "",
+	...props
 }) {
 	return (
 		<Card
 			className={`text-center leading-[1.6] text-[var(--muted)] ${className}`.trim()}
+			{...props}
 		>
 			{title ? (
 				<p className="m-0 font-bold text-[var(--text)]">{title}</p>

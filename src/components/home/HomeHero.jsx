@@ -22,9 +22,11 @@ function PropertyImage({ src, alt }) {
 	);
 }
 
+const ESTADOS = ["Venta", "Alquiler", "Alquiler temporario"];
+
 export default function HomeHero({
 	cities = [],
-	states = [],
+	types = [],
 	form,
 	onFormChange,
 	onSubmit,
@@ -51,8 +53,8 @@ export default function HomeHero({
 		[onFormChange],
 	);
 
-	const handlePriceChange = useCallback(
-		(event) => onFormChange("precio_max", event.target.value),
+	const handleTypeChange = useCallback(
+		(event) => onFormChange("tipo", event.target.value),
 		[onFormChange],
 	);
 
@@ -123,6 +125,19 @@ export default function HomeHero({
 					onSubmit={onSubmit}
 				>
 					<FormField
+						label="Tipo de operación"
+						as="select"
+						value={form.estado}
+						onChange={handleStateChange}
+					>
+						<option value="">Seleccionar...</option>
+						{ESTADOS.map((state) => (
+							<option key={state} value={state}>
+								{state}
+							</option>
+						))}
+					</FormField>
+					<FormField
 						label="Ciudad"
 						as="select"
 						value={form.ciudad}
@@ -136,25 +151,18 @@ export default function HomeHero({
 						))}
 					</FormField>
 					<FormField
-						label="Estado"
+						label="Tipo"
 						as="select"
-						value={form.estado}
-						onChange={handleStateChange}
+						value={form.tipo}
+						onChange={handleTypeChange}
 					>
-						<option value="">Seleccionar...</option>
-						{states.map((state, idx) => (
-							<option key={`${state}-${idx}`} value={state}>
-								{state}
+						<option value="">Todos los tipos</option>
+						{types.map((type, idx) => (
+							<option key={`${type}-${idx}`} value={type}>
+								{type}
 							</option>
 						))}
 					</FormField>
-					<FormField
-						label="Precio Máximo"
-						type="number"
-						placeholder="Sin límite"
-						value={form.precio_max ?? ""}
-						onChange={handlePriceChange}
-					/>
 					<Button type="submit" className="self-stretch whitespace-nowrap px-4">
 						Buscar
 					</Button>

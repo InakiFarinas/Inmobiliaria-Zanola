@@ -79,7 +79,7 @@ export default function AboutPage() {
 				<Card className="overflow-hidden" padding="none">
 					<iframe
 						title="Ubicación de Cabrera Inmobiliaria"
-						src="https://www.google.com/maps?q=25+de+Mayo+372,+Mor%C3%B3n,+Buenos+Aires&output=embed"
+						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.3659684085596!2d-58.64382805923285!3d-34.645459473052064!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb8ac3e920227%3A0x3d80fa46d2387cde!2sPres.%20Domingo%20Faustino%20Sarmiento%202401%2C%20B1712%20Castelar%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1789498971847!5m2!1ses-419!2sar"
 						loading="lazy"
 						style={{ width: "100%", minHeight: 340 }}
 					/>

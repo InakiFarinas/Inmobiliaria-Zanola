@@ -6,11 +6,11 @@ import EmptyState from "../components/ui/EmptyState";
 import SectionHeader from "../components/ui/SectionHeader";
 import Reveal from "../components/ui/Reveal";
 import {
-	getCities,
 	getProperties,
 	getPropertyStates,
 	getPropertyTypes,
 } from "../lib/api";
+import { NEARBY_CITIES } from "../config/cities";
 
 const defaultFilters = {
 	tipo: "",
@@ -63,7 +63,6 @@ function serializeFilters(values) {
 export default function PropertiesPage() {
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
-	const [cities, setCities] = useState([]);
 	const [types, setTypes] = useState([]);
 	const [states, setStates] = useState([]);
 	const [properties, setProperties] = useState([]);
@@ -76,12 +75,11 @@ export default function PropertiesPage() {
 	useEffect(() => {
 		let active = true;
 
-		Promise.all([getCities(), getPropertyTypes(), getPropertyStates()])
-			.then(([cityData, typeData, stateData]) => {
+		Promise.all([getPropertyTypes(), getPropertyStates()])
+			.then(([typeData, stateData]) => {
 				if (!active) {
 					return;
 				}
-				setCities(cityData || []);
 				setTypes(typeData || []);
 				setStates(stateData || []);
 			})
@@ -178,7 +176,7 @@ export default function PropertiesPage() {
 						onChange={handleChange}
 						onSubmit={handleSubmit}
 						onReset={handleReset}
-						options={{ cities, types, states }}
+						options={{ cities: NEARBY_CITIES, types, states }}
 					/>
 				</div>
 
@@ -188,7 +186,7 @@ export default function PropertiesPage() {
 					) : loading ? (
 						<EmptyState title="Cargando propiedades..." />
 					) : properties.length > 0 ? (
-						<div className="grid gap-4 md:grid-cols-2">
+						<div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
 							{properties.map((property, i) => (
 								<Reveal
 									key={property.id_propiedad}
@@ -236,7 +234,7 @@ export default function PropertiesPage() {
 							handleReset();
 							setFiltersOpen(false);
 						}}
-						options={{ cities, types, states }}
+						options={{ cities: NEARBY_CITIES, types, states }}
 					/>
 				</aside>
 			</div>

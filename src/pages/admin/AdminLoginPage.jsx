@@ -58,7 +58,12 @@ export default function AdminLoginPage() {
 					/>
 
 					{error ? (
-						<p className="m-0 text-sm font-medium text-red-500">{error}</p>
+						<p
+							role="alert"
+							className="m-0 text-sm font-medium text-[color:var(--danger)]"
+						>
+							{error}
+						</p>
 					) : null}
 
 					<Button type="submit" disabled={loading} className="w-full">

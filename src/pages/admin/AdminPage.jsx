@@ -16,6 +16,9 @@ const PropertyRow = memo(({ property, onToggle, onDelete, onEdit }) => (
 			<img
 				src={property.imagenes[0]}
 				alt={`${property.tipo} en ${property.ciudad}`}
+				width={56}
+				height={56}
+				loading="lazy"
 				className="h-14 w-14 flex-shrink-0 rounded-lg object-cover"
 			/>
 		)}
@@ -46,20 +49,21 @@ const PropertyRow = memo(({ property, onToggle, onDelete, onEdit }) => (
 		<div className="flex flex-wrap items-center gap-2">
 			<Button
 				variant="pill"
-				className="px-3 py-1.5 text-xs"
+				className="inline-flex min-h-11 items-center px-3 text-xs"
 				onClick={() => onToggle(property)}
 			>
 				{property.activa ? "Desactivar" : "Activar"}
 			</Button>
 			<Button
-				className="px-3 py-1.5 text-xs"
+				className="inline-flex min-h-11 items-center px-3 text-xs"
 				onClick={() => onEdit(property.id_propiedad)}
 			>
 				Editar
 			</Button>
 			<Button
 				variant="pill"
-				className="border border-red-100 bg-red-50 px-3 py-1.5 text-xs text-red-500 hover:bg-red-100"
+				aria-label={`Eliminar propiedad ${property.tipo} en ${property.ciudad}`}
+				className="inline-flex min-h-11 items-center border border-[rgba(227,20,26,0.18)] bg-[rgba(227,20,26,0.06)] px-3 text-xs text-[color:var(--danger)] hover:bg-[rgba(227,20,26,0.12)]"
 				onClick={() => onDelete(property.id_propiedad)}
 			>
 				Eliminar
@@ -194,6 +198,8 @@ export default function AdminPage() {
 
 					{error ? (
 						<EmptyState
+							role="alert"
+							aria-live="assertive"
 							title={error}
 							action={
 								<Button onClick={() => fetchProperties(currentPage)}>
@@ -227,7 +233,7 @@ export default function AdminPage() {
 											variant="pill"
 											disabled={currentPage === 1}
 											onClick={() => setCurrentPage((p) => p - 1)}
-											className="px-3 py-1.5 text-xs disabled:opacity-50"
+											className="inline-flex min-h-11 items-center px-3 text-xs disabled:opacity-50"
 										>
 											← Anterior
 										</Button>
@@ -235,7 +241,7 @@ export default function AdminPage() {
 											variant="pill"
 											disabled={currentPage === totalPages}
 											onClick={() => setCurrentPage((p) => p + 1)}
-											className="px-3 py-1.5 text-xs disabled:opacity-50"
+											className="inline-flex min-h-11 items-center px-3 text-xs disabled:opacity-50"
 										>
 											Siguiente →
 										</Button>
