@@ -74,13 +74,6 @@ export async function getLatestProperties(limit = 3) {
 	return data;
 }
 
-// Retorna las ciudades únicas de propiedades activas (deduplicado en la DB)
-export async function getCities() {
-	const { data, error } = await supabase.rpc("get_distinct_cities");
-	if (error) throw error;
-	return data || [];
-}
-
 // Retorna la cantidad de propiedades activas que coinciden con los filtros
 export async function getPropertiesCount(searchParams) {
 	let query = supabase

@@ -1,12 +1,13 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/ui/Button";
 import Card from "../../components/ui/Card";
 import EmptyState from "../../components/ui/EmptyState";
 import FormField from "../../components/ui/FormField";
 import SectionHeader from "../../components/ui/SectionHeader";
-import { supabase, getCities } from "../../lib/api";
+import { supabase } from "../../lib/api";
 import { PROPERTY_TYPES, OPERATION_STATES } from "../../config/propertyOptions";
+import { NEARBY_CITIES } from "../../config/cities";
 
 const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_IMAGE_SIZE_MB = 8;
@@ -14,8 +15,8 @@ const MAX_IMAGE_SIZE_MB = 8;
 const emptyForm = {
 	tipo: "Departamento",
 	estado: "Venta",
-	ciudad: "Morón Sur",
-	id_ciudad: 1,
+	ciudad: NEARBY_CITIES[0].nombre,
+	id_ciudad: NEARBY_CITIES[0].id_ciudad,
 	calle: "",
 	altura: "",
 	precio: "",
@@ -38,17 +39,11 @@ export default function AdminPropertyForm() {
 	const [form, setForm] = useState(emptyForm);
 	const [images, setImages] = useState([]);
 	const [newFiles, setNewFiles] = useState([]);
-	const [cities, setCities] = useState([]);
+	const [isDragging, setIsDragging] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [fetching, setFetching] = useState(isEditing);
 	const [loadError, setLoadError] = useState("");
 	const [saveError, setSaveError] = useState("");
-
-	useEffect(() => {
-		getCities()
-			.then((data) => setCities(data || []))
-			.catch((err) => console.error(err));
-	}, []);
 
 	useEffect(() => {
 		if (!isEditing) return;
@@ -102,22 +97,76 @@ export default function AdminPropertyForm() {
 				};
 				// sincronizar id_ciudad cuando cambia ciudad
 				if (name === "ciudad") {
-					const match = cities.find((c) => c.nombre === value);
+					const match = NEARBY_CITIES.find((c) => c.nombre === value);
 					updated.id_ciudad = match?.id_ciudad ?? f.id_ciudad;
 				}
 				return updated;
 			});
 		},
-		[cities],
+		[],
 	);
 
-	const handleFileChange = useCallback((e) => {
-		setNewFiles(Array.from(e.target.files));
+	const addFiles = useCallback((fileList) => {
+		const incoming = Array.from(fileList).filter((file) =>
+			file.type.startsWith("image/"),
+		);
+		if (incoming.length === 0) return;
+		setNewFiles((current) => {
+			const existingKeys = new Set(
+				current.map((file) => `${file.name}-${file.size}`),
+			);
+			const deduped = incoming.filter(
+				(file) => !existingKeys.has(`${file.name}-${file.size}`),
+			);
+			return [...current, ...deduped];
+		});
 	}, []);
+
+	const handleFileChange = useCallback(
+		(e) => {
+			addFiles(e.target.files);
+			e.target.value = "";
+		},
+		[addFiles],
+	);
+
+	const removeNewFile = useCallback((file) => {
+		setNewFiles((current) => current.filter((f) => f !== file));
+	}, []);
+
+	const handleDragOver = useCallback((e) => {
+		e.preventDefault();
+		setIsDragging(true);
+	}, []);
+
+	const handleDragLeave = useCallback((e) => {
+		e.preventDefault();
+		setIsDragging(false);
+	}, []);
+
+	const handleDrop = useCallback(
+		(e) => {
+			e.preventDefault();
+			setIsDragging(false);
+			addFiles(e.dataTransfer.files);
+		},
+		[addFiles],
+	);
 
 	const removeExistingImage = useCallback((url) => {
 		setImages((imgs) => imgs.filter((i) => i !== url));
 	}, []);
+
+	const newFilePreviews = useMemo(
+		() => newFiles.map((file) => ({ file, url: URL.createObjectURL(file) })),
+		[newFiles],
+	);
+
+	useEffect(() => {
+		return () => {
+			newFilePreviews.forEach(({ url }) => URL.revokeObjectURL(url));
+		};
+	}, [newFilePreviews]);
 
 	async function uploadImages() {
 		if (newFiles.length === 0) return [];
@@ -272,15 +321,11 @@ export default function AdminPropertyForm() {
 								value={form.ciudad}
 								onChange={handleChange}
 							>
-								{cities.length > 0 ? (
-									cities.map((city) => (
-										<option key={city.id_ciudad} value={city.nombre}>
-											{city.nombre}
-										</option>
-									))
-								) : (
-									<option value={form.ciudad}>{form.ciudad}</option>
-								)}
+								{NEARBY_CITIES.map((city) => (
+									<option key={city.id_ciudad} value={city.nombre}>
+										{city.nombre}
+									</option>
+								))}
 							</FormField>
 						</div>
 						<div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_220px]">
@@ -435,27 +480,61 @@ export default function AdminPropertyForm() {
 									</div>
 								))}
 							</div>
-						) : (
-							<EmptyState
-								title="Sin imágenes cargadas"
-								description="Podés subir una o varias imágenes desde el selector de archivos."
-								className="py-6"
-							/>
-						)}
+						) : null}
 
-						<FormField
-							label="Subir imágenes"
-							as="input"
-							type="file"
-							accept="image/*"
-							multiple
-							onChange={handleFileChange}
-							className="px-3 py-2 text-sm"
-						/>
-						{newFiles.length > 0 ? (
-							<p className="m-0 text-xs font-medium text-[color:var(--accent)]">
-								{newFiles.length} imagen(es) seleccionada(s)
+						<label
+							onDragOver={handleDragOver}
+							onDragLeave={handleDragLeave}
+							onDrop={handleDrop}
+							className={`grid cursor-pointer place-items-center rounded-[28px] border-2 border-dashed p-6 text-center transition-colors ${
+								isDragging
+									? "border-[color:var(--accent)] bg-[color:var(--accent-soft)]"
+									: "border-[color:var(--line)]"
+							}`}
+						>
+							<p className="m-0 font-bold text-[var(--text)]">
+								Arrastrá imágenes acá
 							</p>
+							<p className="m-0 text-sm text-[var(--muted)]">
+								o hacé clic para elegirlas desde tu equipo (jpg, png o webp)
+							</p>
+							<input
+								type="file"
+								accept="image/*"
+								multiple
+								onChange={handleFileChange}
+								className="sr-only"
+							/>
+						</label>
+
+						{newFilePreviews.length > 0 ? (
+							<div className="grid gap-2">
+								<p className="m-0 text-xs font-medium text-[color:var(--accent)]">
+									{newFilePreviews.length} imagen(es) seleccionada(s)
+								</p>
+								<div className="flex flex-wrap gap-3">
+									{newFilePreviews.map(({ file, url }) => (
+										<div key={`${file.name}-${file.size}`} className="relative">
+											<img
+												src={url}
+												alt={file.name}
+												width={96}
+												height={96}
+												className="h-24 w-24 rounded-lg border border-[color:var(--line)] object-cover"
+											/>
+											<Button
+												type="button"
+												onClick={() => removeNewFile(file)}
+												variant="pill"
+												aria-label={`Quitar ${file.name}`}
+												className="absolute -right-2 -top-2 flex h-11 w-11 items-center justify-center border border-[rgba(227,20,26,0.3)] bg-[color:var(--danger)] px-0 py-0 text-base text-white hover:bg-[#8f0e13]"
+											>
+												×
+											</Button>
+										</div>
+									))}
+								</div>
+							</div>
 						) : null}
 					</Card>
 
