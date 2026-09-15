@@ -1,16 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import PropertyCard from "../components/properties/PropertyCard";
 import PropertyFilters from "../components/properties/PropertyFilters";
 import EmptyState from "../components/ui/EmptyState";
 import SectionHeader from "../components/ui/SectionHeader";
 import Reveal from "../components/ui/Reveal";
-import {
-	getProperties,
-	getPropertyStates,
-	getPropertyTypes,
-} from "../lib/api";
+import { getProperties } from "../lib/api";
 import { NEARBY_CITIES } from "../config/cities";
+import { PROPERTY_TYPES, OPERATION_STATES } from "../config/propertyOptions";
 
 const defaultFilters = {
 	tipo: "",
@@ -63,35 +60,11 @@ function serializeFilters(values) {
 export default function PropertiesPage() {
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
-	const [types, setTypes] = useState([]);
-	const [states, setStates] = useState([]);
 	const [properties, setProperties] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [filters, setFilters] = useState(() => readFilters(searchParams));
 	const [filtersOpen, setFiltersOpen] = useState(false);
-	const [optionsError, setOptionsError] = useState(null);
 	const [error, setError] = useState(null);
-
-	useEffect(() => {
-		let active = true;
-
-		Promise.all([getPropertyTypes(), getPropertyStates()])
-			.then(([typeData, stateData]) => {
-				if (!active) {
-					return;
-				}
-				setTypes(typeData || []);
-				setStates(stateData || []);
-			})
-			.catch((error) => {
-				console.error(error);
-				if (active) setOptionsError("No pudimos cargar los filtros.");
-			});
-
-		return () => {
-			active = false;
-		};
-	}, []);
 
 	const queryFilters = useMemo(() => readFilters(searchParams), [searchParams]);
 
@@ -176,7 +149,7 @@ export default function PropertiesPage() {
 						onChange={handleChange}
 						onSubmit={handleSubmit}
 						onReset={handleReset}
-						options={{ cities: NEARBY_CITIES, types, states }}
+						options={{ cities: NEARBY_CITIES, types: PROPERTY_TYPES, states: OPERATION_STATES }}
 					/>
 				</div>
 
@@ -234,7 +207,7 @@ export default function PropertiesPage() {
 							handleReset();
 							setFiltersOpen(false);
 						}}
-						options={{ cities: NEARBY_CITIES, types, states }}
+						options={{ cities: NEARBY_CITIES, types: PROPERTY_TYPES, states: OPERATION_STATES }}
 					/>
 				</aside>
 			</div>

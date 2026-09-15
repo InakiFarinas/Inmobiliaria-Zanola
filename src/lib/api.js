@@ -81,20 +81,6 @@ export async function getCities() {
 	return data || [];
 }
 
-// Retorna los tipos únicos de propiedades activas (deduplicado en la DB)
-export async function getPropertyTypes() {
-	const { data, error } = await supabase.rpc("get_distinct_property_types");
-	if (error) throw error;
-	return (data || []).map(({ tipo }) => tipo);
-}
-
-// Retorna los estados únicos de propiedades activas (deduplicado en la DB)
-export async function getPropertyStates() {
-	const { data, error } = await supabase.rpc("get_distinct_property_states");
-	if (error) throw error;
-	return (data || []).map(({ estado }) => estado);
-}
-
 // Retorna la cantidad de propiedades activas que coinciden con los filtros
 export async function getPropertiesCount(searchParams) {
 	let query = supabase

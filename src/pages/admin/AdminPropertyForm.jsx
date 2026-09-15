@@ -6,6 +6,7 @@ import EmptyState from "../../components/ui/EmptyState";
 import FormField from "../../components/ui/FormField";
 import SectionHeader from "../../components/ui/SectionHeader";
 import { supabase, getCities } from "../../lib/api";
+import { PROPERTY_TYPES, OPERATION_STATES } from "../../config/propertyOptions";
 
 const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_IMAGE_SIZE_MB = 8;
@@ -249,11 +250,9 @@ export default function AdminPropertyForm() {
 								value={form.tipo}
 								onChange={handleChange}
 							>
-								<option>Departamento</option>
-								<option>Casa</option>
-								<option>PH</option>
-								<option>Local</option>
-								<option>Lote</option>
+								{PROPERTY_TYPES.map((type) => (
+									<option key={type}>{type}</option>
+								))}
 							</FormField>
 							<FormField
 								label="Estado"
@@ -262,8 +261,9 @@ export default function AdminPropertyForm() {
 								value={form.estado}
 								onChange={handleChange}
 							>
-								<option>Venta</option>
-								<option>Alquiler</option>
+								{OPERATION_STATES.map((state) => (
+									<option key={state}>{state}</option>
+								))}
 							</FormField>
 							<FormField
 								label="Ciudad"

@@ -27,28 +27,13 @@ export default function PropertyFilters({
 				</div>
 
 				<FormField
-					label="Tipo"
-					as="select"
-					name="tipo"
-					value={values.tipo}
-					onChange={onChange}
-				>
-					<option value="">Todos los tipos</option>
-					{types.map((type, idx) => (
-						<option key={`type-${idx}`} value={type}>
-							{type}
-						</option>
-					))}
-				</FormField>
-
-				<FormField
-					label="Estado"
+					label="Tipo de operación"
 					as="select"
 					name="estado"
 					value={values.estado}
 					onChange={onChange}
 				>
-					<option value="">Cualquier estado</option>
+					<option value="">Cualquier operación</option>
 					{states.map((state, idx) => (
 						<option key={`state-${idx}`} value={state}>
 							{state}
@@ -67,6 +52,21 @@ export default function PropertyFilters({
 					{cities.map((city, idx) => (
 						<option key={`city-${idx}`} value={city.nombre}>
 							{city.nombre}
+						</option>
+					))}
+				</FormField>
+
+				<FormField
+					label="Tipo"
+					as="select"
+					name="tipo"
+					value={values.tipo}
+					onChange={onChange}
+				>
+					<option value="">Todos los tipos</option>
+					{types.map((type, idx) => (
+						<option key={`type-${idx}`} value={type}>
+							{type}
 						</option>
 					))}
 				</FormField>

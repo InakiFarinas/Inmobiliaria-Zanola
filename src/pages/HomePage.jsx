@@ -7,12 +7,9 @@ import Button from "../components/ui/Button";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
 import Reveal from "../components/ui/Reveal";
 import EmptyState from "../components/ui/EmptyState";
-import {
-	getLatestProperties,
-	getPropertyTypes,
-	getPropertiesCount,
-} from "../lib/api";
+import { getLatestProperties, getPropertiesCount } from "../lib/api";
 import { NEARBY_CITIES } from "../config/cities";
+import { PROPERTY_TYPES } from "../config/propertyOptions";
 
 const heroPoints = [
 	{
@@ -31,7 +28,6 @@ const heroPoints = [
 
 export default function HomePage() {
 	const navigate = useNavigate();
-	const [types, setTypes] = useState([]);
 	const [latest, setLatest] = useState([]);
 	const [totalCount, setTotalCount] = useState(0);
 	const [form, setForm] = useState({ ciudad: "", estado: "", tipo: "" });
@@ -40,14 +36,9 @@ export default function HomePage() {
 	useEffect(() => {
 		let active = true;
 
-		Promise.all([
-			getPropertyTypes(),
-			getLatestProperties(5),
-			getPropertiesCount(),
-		])
-			.then(([typeData, propertyData, count]) => {
+		Promise.all([getLatestProperties(5), getPropertiesCount()])
+			.then(([propertyData, count]) => {
 				if (!active) return;
-				setTypes(typeData || []);
 				setLatest(propertyData || []);
 				setTotalCount(count || 0);
 			})
@@ -83,7 +74,7 @@ export default function HomePage() {
 		<>
 			<HomeHero
 				cities={NEARBY_CITIES}
-				types={types}
+				types={PROPERTY_TYPES}
 				form={form}
 				onFormChange={handleFormChange}
 				onSubmit={handleSubmit}

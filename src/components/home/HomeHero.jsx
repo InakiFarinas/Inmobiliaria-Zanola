@@ -5,6 +5,7 @@ import FormField from "../ui/FormField";
 import WhatsAppButton from "../ui/WhatsAppButton";
 import { Link } from "react-router-dom";
 import { getImageUrls } from "../../lib/utils";
+import { OPERATION_STATES } from "../../config/propertyOptions";
 
 function PropertyImage({ src, alt }) {
 	const urls = getImageUrls(src);
@@ -21,8 +22,6 @@ function PropertyImage({ src, alt }) {
 		</picture>
 	);
 }
-
-const ESTADOS = ["Venta", "Alquiler", "Alquiler temporario"];
 
 export default function HomeHero({
 	cities = [],
@@ -131,7 +130,7 @@ export default function HomeHero({
 						onChange={handleStateChange}
 					>
 						<option value="">Seleccionar...</option>
-						{ESTADOS.map((state) => (
+						{OPERATION_STATES.map((state) => (
 							<option key={state} value={state}>
 								{state}
 							</option>
