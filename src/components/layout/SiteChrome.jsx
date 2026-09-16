@@ -33,7 +33,7 @@ export default function SiteChrome({
 					aria-label="juliancabrerapropiedades"
 				>
 					<img
-						src="/images/icons/logocompleto-v2.png"
+						src="/images/icons/logocompleto-v3.png"
 						alt="juliancabrerapropiedades"
 						width="300"
 						height="144"
