@@ -48,7 +48,7 @@ export default function AdminLoginPage() {
 						type="email"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
-						placeholder="admin@juliancabrerapropiedades.com.ar"
+						placeholder="admin@juliancabrerapropiedades.com"
 						required
 					/>
 					<FormField
