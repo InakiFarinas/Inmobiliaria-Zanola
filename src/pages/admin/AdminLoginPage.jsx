@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Panel from "../../components/admin/Panel";
 import Button from "../../components/ui/Button";
-import Card from "../../components/ui/Card";
 import FormField from "../../components/ui/FormField";
-import SectionHeader from "../../components/ui/SectionHeader";
 import { useAuth } from "../../context/AuthContext";
 
 export default function AdminLoginPage() {
@@ -29,15 +28,19 @@ export default function AdminLoginPage() {
 	}
 
 	return (
-		<div className="min-h-screen bg-[var(--surface)] px-4 py-10 md:px-6 md:py-14">
-			<Card className="mx-auto grid w-full max-w-lg gap-6" padding="lg">
-				<SectionHeader
-					kicker="Panel"
-					title="Cabrera Admin"
-					description="Ingresá con tu cuenta para administrar propiedades."
-					titleAs="h1"
-					className="mb-0"
-				/>
+		<div className="flex min-h-screen items-center justify-center bg-[#f5f4f1] px-4 py-10">
+			<Panel className="grid w-full max-w-md gap-6 p-6 md:p-8">
+				<div>
+					<p className="m-0 text-xs font-bold uppercase tracking-[0.12em] text-[color:var(--accent)]">
+						Panel
+					</p>
+					<h1 className="m-0 font-serif text-3xl text-[var(--text)]">
+						Cabrera Admin
+					</h1>
+					<p className="m-0 mt-1 text-sm text-[var(--muted)]">
+						Ingresá con tu cuenta para administrar propiedades.
+					</p>
+				</div>
 
 				<form onSubmit={handleSubmit} className="grid gap-4">
 					<FormField
@@ -70,7 +73,7 @@ export default function AdminLoginPage() {
 						{loading ? "Ingresando..." : "Ingresar"}
 					</Button>
 				</form>
-			</Card>
+			</Panel>
 		</div>
 	);
 }

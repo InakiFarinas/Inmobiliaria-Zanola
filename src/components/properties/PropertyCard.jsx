@@ -1,16 +1,13 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import PropertyImageCarousel from "./PropertyImageCarousel";
+import { formatPrice } from "../../lib/utils";
 import {
 	StatGridGarageIcon,
 	StatGridRoomsIcon,
 	StatGridSurfaceIcon,
 	StatGridTypeIcon,
 } from "../ui/StatGridIcons";
-
-function formatPrice(value) {
-	return new Intl.NumberFormat("es-AR").format(Number(value || 0));
-}
 
 function normalizeStateLabel(value) {
 	return String(value || "")
@@ -20,8 +17,7 @@ function normalizeStateLabel(value) {
 }
 
 function getPriceLabel(property, isRental) {
-	const price = formatPrice(property.precio);
-	return `US$ ${price}${isRental ? "/mes" : ""}`;
+	return `${formatPrice(property.precio, property.moneda)}${isRental ? "/mes" : ""}`;
 }
 
 function PropertyCard({ property, featured = false }) {

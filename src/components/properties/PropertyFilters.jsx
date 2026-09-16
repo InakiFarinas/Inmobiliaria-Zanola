@@ -57,7 +57,7 @@ export default function PropertyFilters({
 				</FormField>
 
 				<FormField
-					label="Tipo"
+					label="Tipo de Propiedad"
 					as="select"
 					name="tipo"
 					value={values.tipo}

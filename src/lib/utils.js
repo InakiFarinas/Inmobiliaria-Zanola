@@ -1,3 +1,17 @@
+const CURRENCY_SYMBOLS = { USD: "US$", ARS: "AR$" };
+
+/**
+ * Format a property price with its currency symbol.
+ * @param {number|string} precio
+ * @param {"USD"|"ARS"} [moneda]
+ * @returns {string}
+ */
+export function formatPrice(precio, moneda = "USD") {
+	const symbol = CURRENCY_SYMBOLS[moneda] || CURRENCY_SYMBOLS.USD;
+	const amount = new Intl.NumberFormat("es-AR").format(Number(precio || 0));
+	return `${symbol} ${amount}`;
+}
+
 /**
  * Resolve image URLs with proper base path handling for deployment environments.
  * Supports WebP format with automatic fallback for local images.

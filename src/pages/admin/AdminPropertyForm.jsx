@@ -1,13 +1,84 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import AdminShell from "../../components/admin/AdminShell";
+import Panel from "../../components/admin/Panel";
 import Button from "../../components/ui/Button";
-import Card from "../../components/ui/Card";
 import EmptyState from "../../components/ui/EmptyState";
 import FormField from "../../components/ui/FormField";
-import SectionHeader from "../../components/ui/SectionHeader";
 import { supabase } from "../../lib/api";
 import { PROPERTY_TYPES, OPERATION_STATES } from "../../config/propertyOptions";
 import { NEARBY_CITIES } from "../../config/cities";
+
+// Reordenar por arrastre una lista de imágenes (existentes o recién
+// seleccionadas) sin acoplar el estado de arrastre a cuál lista es.
+function useDragReorder(setList) {
+	const [draggedIndex, setDraggedIndex] = useState(null);
+	const [dragOverIndex, setDragOverIndex] = useState(null);
+
+	const onDragStart = useCallback(
+		(index) => (e) => {
+			setDraggedIndex(index);
+			e.dataTransfer.effectAllowed = "move";
+		},
+		[],
+	);
+
+	const onDragEnter = useCallback(
+		(index) => (e) => {
+			e.preventDefault();
+			setDraggedIndex((current) => {
+				if (current !== null && current !== index) setDragOverIndex(index);
+				return current;
+			});
+		},
+		[],
+	);
+
+	const onDragOver = useCallback((e) => {
+		e.preventDefault();
+	}, []);
+
+	const onDrop = useCallback(
+		(index) => (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			setDraggedIndex((current) => {
+				if (current !== null && current !== index) {
+					setList((items) => {
+						const updated = [...items];
+						const [moved] = updated.splice(current, 1);
+						updated.splice(index, 0, moved);
+						return updated;
+					});
+				}
+				return null;
+			});
+			setDragOverIndex(null);
+		},
+		[setList],
+	);
+
+	const onDragEnd = useCallback(() => {
+		setDraggedIndex(null);
+		setDragOverIndex(null);
+	}, []);
+
+	return {
+		draggedIndex,
+		dragOverIndex,
+		onDragStart,
+		onDragEnter,
+		onDragOver,
+		onDrop,
+		onDragEnd,
+	};
+}
+
+// Botón "×" en su propio <button> (no el componente Button compartido):
+// así el texto blanco no compite con las clases de color de ningún
+// variant y el contraste contra el fondo rojo queda garantizado.
+const removeImageButtonClassName =
+	"absolute -right-1.5 -top-1.5 flex h-6 w-6 items-center justify-center rounded-full border border-[rgba(227,20,26,0.35)] bg-[color:var(--danger)] text-sm font-bold leading-none text-white shadow-[0_2px_8px_rgba(0,0,0,0.25)] hover:bg-[#8f0e13]";
 
 const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_IMAGE_SIZE_MB = 8;
@@ -20,6 +91,7 @@ const emptyForm = {
 	calle: "",
 	altura: "",
 	precio: "",
+	moneda: "USD",
 	ambientes: "",
 	dormitorios: "",
 	banos: "",
@@ -67,6 +139,7 @@ export default function AdminPropertyForm() {
 						calle: data.calle,
 						altura: data.altura,
 						precio: data.precio,
+						moneda: data.moneda || "USD",
 						ambientes: data.ambientes,
 						dormitorios: data.dormitorios,
 						banos: data.banos,
@@ -157,6 +230,9 @@ export default function AdminPropertyForm() {
 		setImages((imgs) => imgs.filter((i) => i !== url));
 	}, []);
 
+	const existingImagesReorder = useDragReorder(setImages);
+	const newFilesReorder = useDragReorder(setNewFiles);
+
 	const newFilePreviews = useMemo(
 		() => newFiles.map((file) => ({ file, url: URL.createObjectURL(file) })),
 		[newFiles],
@@ -241,14 +317,14 @@ export default function AdminPropertyForm() {
 
 	if (fetching)
 		return (
-			<div className="min-h-screen bg-[#f2f0eb] flex items-center justify-center">
+			<div className="flex min-h-screen items-center justify-center bg-[#f5f4f1]">
 				<p className="text-[var(--muted)]">Cargando...</p>
 			</div>
 		);
 
 	if (loadError)
 		return (
-			<div className="min-h-screen bg-[#f2f0eb] flex items-center justify-center">
+			<div className="flex min-h-screen items-center justify-center bg-[#f5f4f1]">
 				<EmptyState
 					title={loadError}
 					action={
@@ -259,41 +335,55 @@ export default function AdminPropertyForm() {
 		);
 
 	return (
-		<div className="min-h-screen bg-[var(--surface)] px-4 py-4 md:px-6 md:py-6">
-			<Card className="mx-auto max-w-5xl overflow-hidden p-0" padding="none">
-				<div className="flex flex-col gap-4 border-b border-[color:var(--line)] bg-[var(--accent)] px-5 py-4 text-white md:flex-row md:items-center md:justify-between md:px-6">
-					<div>
-						<p className="m-0 text-xs font-bold uppercase tracking-[0.12em] text-white/55">
-							Panel
-						</p>
-						<h1 className="m-0 text-lg font-black">
-							{isEditing ? "Editar propiedad" : "Nueva propiedad"}
-						</h1>
+		<AdminShell
+			title={isEditing ? "Editar propiedad" : "Nueva propiedad"}
+			fullBleed
+			actions={
+				<Button
+					variant="ghost"
+					className="border border-white/20 px-4 py-2"
+					onClick={() => navigate("/admin")}
+				>
+					← Volver
+				</Button>
+			}
+		>
+			<form
+				onSubmit={handleSubmit}
+				className="grid h-full grid-rows-[auto_1fr] gap-3 overflow-hidden p-4 md:p-5"
+			>
+				<div className="flex flex-wrap items-center justify-between gap-3">
+					<h2 className="m-0 font-serif text-xl text-[var(--text)] md:text-2xl">
+						Información de la propiedad
+					</h2>
+					<div className="flex items-center gap-3">
+						{saveError ? (
+							<p
+								role="alert"
+								className="m-0 text-xs font-medium text-[color:var(--danger)]"
+							>
+								{saveError}
+							</p>
+						) : null}
+						<Button
+							type="submit"
+							disabled={loading}
+							className="px-5 py-2 text-sm"
+						>
+							{loading
+								? "Guardando..."
+								: isEditing
+									? "Guardar cambios"
+									: "Crear propiedad"}
+						</Button>
 					</div>
-					<Button
-						variant="ghost"
-						className="border border-white/20 px-4 py-2"
-						onClick={() => navigate("/admin")}
-					>
-						← Volver
-					</Button>
 				</div>
 
-				<form onSubmit={handleSubmit} className="grid gap-6 p-5 md:p-6">
-					<SectionHeader
-						kicker="Formulario"
-						title="Información de la propiedad"
-						description="Completá los datos principales, características e imágenes."
-						className="mb-0"
-					/>
-
-					<Card padding="md" className="grid gap-4">
-						<h2 className="m-0 text-sm font-bold text-[var(--text)]">
-							Información general
-						</h2>
-						<div className="grid gap-4 md:grid-cols-3">
+				<div className="grid min-h-0 gap-3 lg:grid-cols-[1.15fr_0.85fr]">
+					<Panel className="grid min-h-0 grid-rows-[auto_auto_1fr] gap-3 overflow-y-auto p-4">
+						<div className="grid grid-cols-2 gap-3 md:grid-cols-4">
 							<FormField
-								label="Tipo"
+								label="Tipo de Propiedad"
 								as="select"
 								name="tipo"
 								value={form.tipo}
@@ -320,6 +410,7 @@ export default function AdminPropertyForm() {
 								name="ciudad"
 								value={form.ciudad}
 								onChange={handleChange}
+								className="col-span-2 md:col-span-1"
 							>
 								{NEARBY_CITIES.map((city) => (
 									<option key={city.id_ciudad} value={city.nombre}>
@@ -327,14 +418,24 @@ export default function AdminPropertyForm() {
 									</option>
 								))}
 							</FormField>
-						</div>
-						<div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_220px]">
+							<FormField
+								label="Moneda"
+								as="select"
+								name="moneda"
+								value={form.moneda}
+								onChange={handleChange}
+							>
+								<option value="USD">Dólares (US$)</option>
+								<option value="ARS">Pesos (AR$)</option>
+							</FormField>
+
 							<FormField
 								label="Calle"
 								name="calle"
 								value={form.calle}
 								onChange={handleChange}
 								placeholder="Ej: Colón"
+								className="col-span-2"
 							/>
 							<FormField
 								label="Altura"
@@ -344,23 +445,16 @@ export default function AdminPropertyForm() {
 								placeholder="4718"
 								type="number"
 							/>
-						</div>
-						<FormField
-							label="Precio"
-							name="precio"
-							value={form.precio}
-							onChange={handleChange}
-							placeholder="95000"
-							type="number"
-							required
-						/>
-					</Card>
+							<FormField
+								label="Precio"
+								name="precio"
+								value={form.precio}
+								onChange={handleChange}
+								placeholder="95000"
+								type="number"
+								required
+							/>
 
-					<Card padding="md" className="grid gap-4">
-						<h2 className="m-0 text-sm font-bold text-[var(--text)]">
-							Características
-						</h2>
-						<div className="grid gap-4 md:grid-cols-3">
 							<FormField
 								label="Ambientes"
 								name="ambientes"
@@ -393,6 +487,7 @@ export default function AdminPropertyForm() {
 								type="number"
 								required
 							/>
+
 							<FormField
 								label="Antigüedad (años)"
 								name="antiguedad"
@@ -402,7 +497,8 @@ export default function AdminPropertyForm() {
 								required
 							/>
 						</div>
-						<div className="flex flex-wrap gap-6 pt-1 text-sm text-[var(--text)]">
+
+						<div className="flex flex-wrap gap-x-5 gap-y-2 border-t border-[color:var(--line)] pt-3 text-sm text-[var(--text)]">
 							<label className="inline-flex cursor-pointer items-center gap-2">
 								<input
 									type="checkbox"
@@ -434,128 +530,142 @@ export default function AdminPropertyForm() {
 								Activa
 							</label>
 						</div>
-					</Card>
 
-					<Card padding="md" className="grid gap-4">
-						<h2 className="m-0 text-sm font-bold text-[var(--text)]">
-							Descripción
-						</h2>
 						<FormField
-							label="Texto descriptivo"
+							label="Descripción"
 							as="textarea"
 							name="descripcion"
 							value={form.descripcion}
 							onChange={handleChange}
-							className="min-h-[120px] resize-y"
+							className="h-full min-h-0 resize-none"
+							labelClassName="h-full grid-rows-[auto_1fr]"
 							placeholder="Descripción de la propiedad..."
 						/>
-					</Card>
+					</Panel>
 
-					<Card padding="md" className="grid gap-4">
-						<h2 className="m-0 text-sm font-bold text-[var(--text)]">
-							Imágenes
-						</h2>
+					<Panel className="grid min-h-0 grid-rows-[auto_auto_auto] content-start gap-2 self-start p-4">
+							<div className="flex items-center justify-between gap-3">
+								<h2 className="m-0 text-sm font-bold text-[var(--text)]">
+									Imágenes
+								</h2>
+								{images.length + newFilePreviews.length > 1 ? (
+									<span className="text-xs text-[var(--muted)]">
+										Arrastrá para reordenarlas
+									</span>
+								) : null}
+							</div>
 
-						{images.length > 0 ? (
-							<div className="flex flex-wrap gap-3">
-								{images.map((url) => (
-									<div key={url} className="relative">
+						<label
+								onDragOver={handleDragOver}
+								onDragLeave={handleDragLeave}
+								onDrop={handleDrop}
+								className={`flex min-h-[64px] cursor-pointer flex-col items-center justify-center gap-0.5 rounded-lg border-2 border-dashed px-3 py-3 text-center transition-colors ${
+									isDragging
+										? "border-[color:var(--accent)] bg-[color:var(--accent-soft)]"
+										: "border-[color:var(--line)]"
+								}`}
+							>
+								<span className="text-sm font-bold text-[var(--text)]">
+									Arrastrá imágenes acá
+								</span>
+								<span className="text-xs text-[var(--muted)]">
+									o hacé clic para elegirlas
+								</span>
+								<input
+									type="file"
+									accept="image/*"
+									multiple
+									onChange={handleFileChange}
+									className="sr-only"
+								/>
+							</label>
+
+							<div className="flex max-h-[180px] flex-wrap content-start items-start gap-3 overflow-y-auto pb-1">
+								{images.map((url, index) => (
+									<div
+										key={url}
+										draggable
+										onDragStart={existingImagesReorder.onDragStart(index)}
+										onDragEnter={existingImagesReorder.onDragEnter(index)}
+										onDragOver={existingImagesReorder.onDragOver}
+										onDrop={existingImagesReorder.onDrop(index)}
+										onDragEnd={existingImagesReorder.onDragEnd}
+										className={`relative shrink-0 cursor-grab rounded-lg transition-opacity active:cursor-grabbing ${
+											existingImagesReorder.draggedIndex === index
+												? "opacity-40"
+												: "opacity-100"
+										} ${
+											existingImagesReorder.dragOverIndex === index &&
+											existingImagesReorder.draggedIndex !== index
+												? "ring-2 ring-[color:var(--accent)]"
+												: ""
+										}`}
+									>
+										<span className="absolute left-1 top-1 z-10 rounded-full bg-black/60 px-1.5 py-0.5 text-[0.65rem] font-bold text-white">
+											{index + 1}
+										</span>
 										<img
 											src={url}
 											alt="Imagen cargada"
-											width={96}
-											height={96}
+											width={64}
+											height={64}
 											loading="lazy"
-											className="h-24 w-24 rounded-lg border border-[color:var(--line)] object-cover"
+											className="h-16 w-16 rounded-lg border border-[color:var(--line)] object-cover"
 										/>
-										<Button
+										<button
 											type="button"
 											onClick={() => removeExistingImage(url)}
-											variant="pill"
 											aria-label="Quitar esta imagen"
-											className="absolute -right-2 -top-2 flex h-11 w-11 items-center justify-center border border-[rgba(227,20,26,0.3)] bg-[color:var(--danger)] px-0 py-0 text-base text-white hover:bg-[#8f0e13]"
+											className={removeImageButtonClassName}
 										>
 											×
-										</Button>
+										</button>
+									</div>
+								))}
+								{newFilePreviews.map(({ file, url }, index) => (
+									<div
+										key={`${file.name}-${file.size}`}
+										draggable
+										onDragStart={newFilesReorder.onDragStart(index)}
+										onDragEnter={newFilesReorder.onDragEnter(index)}
+										onDragOver={newFilesReorder.onDragOver}
+										onDrop={newFilesReorder.onDrop(index)}
+										onDragEnd={newFilesReorder.onDragEnd}
+										className={`relative shrink-0 cursor-grab rounded-lg transition-opacity active:cursor-grabbing ${
+											newFilesReorder.draggedIndex === index
+												? "opacity-40"
+												: "opacity-100"
+										} ${
+											newFilesReorder.dragOverIndex === index &&
+											newFilesReorder.draggedIndex !== index
+												? "ring-2 ring-[color:var(--accent)]"
+												: ""
+										}`}
+									>
+										<span className="absolute left-1 top-1 z-10 rounded-full bg-[color:var(--accent)] px-1.5 py-0.5 text-[0.65rem] font-bold text-white">
+											{images.length + index + 1}
+										</span>
+										<img
+											src={url}
+											alt={file.name}
+											width={64}
+											height={64}
+											className="h-16 w-16 rounded-lg border border-[color:var(--line)] object-cover"
+										/>
+										<button
+											type="button"
+											onClick={() => removeNewFile(file)}
+											aria-label={`Quitar ${file.name}`}
+											className={removeImageButtonClassName}
+										>
+											×
+										</button>
 									</div>
 								))}
 							</div>
-						) : null}
-
-						<label
-							onDragOver={handleDragOver}
-							onDragLeave={handleDragLeave}
-							onDrop={handleDrop}
-							className={`grid cursor-pointer place-items-center rounded-[28px] border-2 border-dashed p-6 text-center transition-colors ${
-								isDragging
-									? "border-[color:var(--accent)] bg-[color:var(--accent-soft)]"
-									: "border-[color:var(--line)]"
-							}`}
-						>
-							<p className="m-0 font-bold text-[var(--text)]">
-								Arrastrá imágenes acá
-							</p>
-							<p className="m-0 text-sm text-[var(--muted)]">
-								o hacé clic para elegirlas desde tu equipo (jpg, png o webp)
-							</p>
-							<input
-								type="file"
-								accept="image/*"
-								multiple
-								onChange={handleFileChange}
-								className="sr-only"
-							/>
-						</label>
-
-						{newFilePreviews.length > 0 ? (
-							<div className="grid gap-2">
-								<p className="m-0 text-xs font-medium text-[color:var(--accent)]">
-									{newFilePreviews.length} imagen(es) seleccionada(s)
-								</p>
-								<div className="flex flex-wrap gap-3">
-									{newFilePreviews.map(({ file, url }) => (
-										<div key={`${file.name}-${file.size}`} className="relative">
-											<img
-												src={url}
-												alt={file.name}
-												width={96}
-												height={96}
-												className="h-24 w-24 rounded-lg border border-[color:var(--line)] object-cover"
-											/>
-											<Button
-												type="button"
-												onClick={() => removeNewFile(file)}
-												variant="pill"
-												aria-label={`Quitar ${file.name}`}
-												className="absolute -right-2 -top-2 flex h-11 w-11 items-center justify-center border border-[rgba(227,20,26,0.3)] bg-[color:var(--danger)] px-0 py-0 text-base text-white hover:bg-[#8f0e13]"
-											>
-												×
-											</Button>
-										</div>
-									))}
-								</div>
-							</div>
-						) : null}
-					</Card>
-
-					{saveError ? (
-						<p
-							role="alert"
-							className="m-0 text-sm font-medium text-[color:var(--danger)]"
-						>
-							{saveError}
-						</p>
-					) : null}
-
-					<Button type="submit" disabled={loading} className="w-full py-3">
-						{loading
-							? "Guardando..."
-							: isEditing
-								? "Guardar cambios"
-								: "Crear propiedad"}
-					</Button>
-				</form>
-			</Card>
-		</div>
+					</Panel>
+				</div>
+			</form>
+		</AdminShell>
 	);
 }

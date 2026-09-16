@@ -102,7 +102,7 @@ export default function SiteChrome({
 					<div className="grid gap-5">
 						<div className="grid gap-3">
 							<img
-								src="/images/icons/logocompleto-v2.png"
+								src="/images/icons/logocompleto.png"
 								alt="juliancabrerapropiedades"
 								className="w-[140px] max-w-full"
 								width="420"

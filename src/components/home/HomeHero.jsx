@@ -150,7 +150,7 @@ export default function HomeHero({
 						))}
 					</FormField>
 					<FormField
-						label="Tipo"
+						label="Tipo de Propiedad"
 						as="select"
 						value={form.tipo}
 						onChange={handleTypeChange}

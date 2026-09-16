@@ -9,10 +9,7 @@ import SectionHeader from "../components/ui/SectionHeader";
 import StatGrid from "../components/ui/StatGrid";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
 import { getPropertyById } from "../lib/api";
-
-function formatPrice(value) {
-	return new Intl.NumberFormat("es-AR").format(Number(value || 0));
-}
+import { formatPrice } from "../lib/utils";
 
 export default function PropertyDetailPage() {
 	const { id } = useParams();
@@ -57,6 +54,18 @@ export default function PropertyDetailPage() {
 		return property.altura
 			? `${property.ciudad}, ${property.calle} ${property.altura}`
 			: `${property.ciudad}, ${property.calle}`;
+	}, [property]);
+
+	// "Castelar Norte"/"Castelar Sur" etc. no son localidades reconocidas por
+	// Google Maps: para geocodificar bien usamos el nombre de la localidad
+	// real (sin Norte/Sur) más la calle y provincia.
+	const mapAddress = useMemo(() => {
+		if (!property) return "";
+		const cityBase = property.ciudad.replace(/\s+(Norte|Sur)$/i, "");
+		const street = property.altura
+			? `${property.calle} ${property.altura}`
+			: property.calle;
+		return `${street}, ${cityBase}, Buenos Aires`;
 	}, [property]);
 
 	if (loading) {
@@ -135,7 +144,7 @@ export default function PropertyDetailPage() {
 									: "Precio de venta"}
 							</span>
 							<strong className="text-[clamp(2rem,4vw,3rem)] font-black text-[var(--text)] font-['DM_Sans']">
-								US$ {formatPrice(property.precio)}
+								{formatPrice(property.precio, property.moneda)}
 							</strong>
 						</div>
 
@@ -163,7 +172,7 @@ export default function PropertyDetailPage() {
 							<h2 className="m-0 text-base font-extrabold">Ubicación</h2>
 							{/* Fix: link funcional a Google Maps */}
 							<a
-								href={`https://maps.google.com/?q=${encodeURIComponent(address)}`}
+								href={`https://maps.google.com/?q=${encodeURIComponent(mapAddress)}`}
 								target="_blank"
 								rel="noopener noreferrer"
 								className="text-sm text-[var(--accent)]"
@@ -171,7 +180,7 @@ export default function PropertyDetailPage() {
 								Abrir en Maps →
 							</a>
 						</div>
-						<PropertyMap address={address} />
+						<PropertyMap address={mapAddress} />
 					</Card>
 				</div>
 			</div>
