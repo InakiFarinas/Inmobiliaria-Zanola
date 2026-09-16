@@ -444,6 +444,7 @@ export default function AdminPropertyForm() {
 								onChange={handleChange}
 								placeholder="4718"
 								type="number"
+								min="0"
 							/>
 							<FormField
 								label="Precio"
@@ -452,6 +453,7 @@ export default function AdminPropertyForm() {
 								onChange={handleChange}
 								placeholder="95000"
 								type="number"
+								min="0"
 								required
 							/>
 
@@ -461,6 +463,7 @@ export default function AdminPropertyForm() {
 								value={form.ambientes}
 								onChange={handleChange}
 								type="number"
+								min="0"
 								required
 							/>
 							<FormField
@@ -469,6 +472,7 @@ export default function AdminPropertyForm() {
 								value={form.dormitorios}
 								onChange={handleChange}
 								type="number"
+								min="0"
 								required
 							/>
 							<FormField
@@ -477,6 +481,7 @@ export default function AdminPropertyForm() {
 								value={form.banos}
 								onChange={handleChange}
 								type="number"
+								min="0"
 								required
 							/>
 							<FormField
@@ -485,6 +490,7 @@ export default function AdminPropertyForm() {
 								value={form.superficie}
 								onChange={handleChange}
 								type="number"
+								min="0"
 								required
 							/>
 
@@ -494,6 +500,7 @@ export default function AdminPropertyForm() {
 								value={form.antiguedad}
 								onChange={handleChange}
 								type="number"
+								min="0"
 								required
 							/>
 						</div>

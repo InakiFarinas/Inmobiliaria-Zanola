@@ -49,10 +49,16 @@ export default function ContactPage() {
 		});
 	};
 
+	const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (!form.nombre || !form.email || !form.telefono || !form.descripcion) {
 			setStatus("Completá nombre, email, telefono y descripcion.");
+			return;
+		}
+		if (!EMAIL_PATTERN.test(form.email)) {
+			setStatus("Ingresá un email válido.");
 			return;
 		}
 
@@ -128,6 +134,8 @@ export default function ContactPage() {
 							placeholder="Tu nombre"
 							value={form.nombre}
 							onChange={handleChange}
+							maxLength={120}
+							required
 						/>
 						<FormField
 							label="Email"
@@ -136,6 +144,8 @@ export default function ContactPage() {
 							placeholder="tu@email.com"
 							value={form.email}
 							onChange={handleChange}
+							maxLength={180}
+							required
 						/>
 						<FormField
 							label="Telefono"
@@ -144,12 +154,16 @@ export default function ContactPage() {
 							placeholder="11 1234-5678"
 							value={form.telefono}
 							onChange={handleChange}
+							maxLength={30}
+							required
 						/>
 						<FormField
 							label="Descripcion del mensaje"
 							as="textarea"
 							name="descripcion"
 							rows={6}
+							maxLength={2000}
+							required
 							placeholder="Contanos en que podemos ayudarte..."
 							value={form.descripcion}
 							onChange={handleChange}

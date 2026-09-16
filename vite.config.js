@@ -1,9 +1,8 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { splitVendorChunkPlugin } from "vite";
 
 export default defineConfig({
-	plugins: [react(), splitVendorChunkPlugin()],
+	plugins: [react()],
 	server: {
 		host: "0.0.0.0",
 		port: 5173,
@@ -40,7 +39,7 @@ export default defineConfig({
 				pure_funcs: ["console.log", "console.info"],
 			},
 			mangle: true,
-			output: {
+			format: {
 				comments: false,
 			},
 		},
