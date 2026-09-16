@@ -12,8 +12,14 @@ import SectionHeader from "../components/ui/SectionHeader";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
 import { ADDRESS, EMAIL, LANDLINE_NUMBER } from "../config/contact";
 import { supabase } from "../lib/api";
+import { useDocumentMeta } from "../hooks/useDocumentMeta";
 
 export default function ContactPage() {
+	useDocumentMeta(
+		"Contacto | Julián Cabrera Propiedades",
+		`Escribinos por WhatsApp o dejanos tu consulta. ${ADDRESS}, Buenos Aires — ${LANDLINE_NUMBER}.`,
+	);
+
 	const [form, setForm] = useState({
 		nombre: "",
 		email: "",

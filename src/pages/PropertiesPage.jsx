@@ -8,6 +8,7 @@ import Reveal from "../components/ui/Reveal";
 import { getProperties } from "../lib/api";
 import { NEARBY_CITIES } from "../config/cities";
 import { PROPERTY_TYPES, OPERATION_STATES } from "../config/propertyOptions";
+import { useDocumentMeta } from "../hooks/useDocumentMeta";
 
 const defaultFilters = {
 	tipo: "",
@@ -65,6 +66,11 @@ export default function PropertiesPage() {
 	const [filters, setFilters] = useState(() => readFilters(searchParams));
 	const [filtersOpen, setFiltersOpen] = useState(false);
 	const [error, setError] = useState(null);
+
+	useDocumentMeta(
+		"Propiedades en venta y alquiler | Julián Cabrera Propiedades",
+		"Departamentos, casas, PH y locales en Castelar, Morón, Haedo, Ituzaingó y Merlo. Filtrá por tipo de operación, ciudad y presupuesto.",
+	);
 
 	const queryFilters = useMemo(() => readFilters(searchParams), [searchParams]);
 

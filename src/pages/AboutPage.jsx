@@ -1,8 +1,14 @@
 import Card from "../components/ui/Card";
 import SectionHeader from "../components/ui/SectionHeader";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
+import { useDocumentMeta } from "../hooks/useDocumentMeta";
 
 export default function AboutPage() {
+	useDocumentMeta(
+		"Nosotros | Julián Cabrera Propiedades",
+		"Conocé la historia de Julián Cabrera Propiedades: más de 30 años de trayectoria en Castelar, continuadores de Alberto J. Milano.",
+	);
+
 	return (
 		<section className="mx-auto w-[min(1180px,calc(100%_-_24px))] md:w-[min(1180px,calc(100%_-_32px))] pt-4 md:pt-6">
 			<SectionHeader

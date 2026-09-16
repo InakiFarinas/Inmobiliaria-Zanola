@@ -10,6 +10,7 @@ import EmptyState from "../components/ui/EmptyState";
 import { getLatestProperties, getPropertiesCount } from "../lib/api";
 import { NEARBY_CITIES } from "../config/cities";
 import { PROPERTY_TYPES } from "../config/propertyOptions";
+import { useDocumentMeta } from "../hooks/useDocumentMeta";
 
 const heroPoints = [
 	{
@@ -32,6 +33,11 @@ export default function HomePage() {
 	const [totalCount, setTotalCount] = useState(0);
 	const [form, setForm] = useState({ ciudad: "", estado: "", tipo: "" });
 	const [error, setError] = useState(null);
+
+	useDocumentMeta(
+		"Julián Cabrera Propiedades | Inmobiliaria en Castelar y Morón",
+		"Inmobiliaria familiar en Castelar con más de 30 años de trayectoria, continuadora de Alberto J. Milano. Departamentos, casas, PH y locales en venta y alquiler en Castelar, Morón, Haedo, Ituzaingó y Merlo.",
+	);
 
 	useEffect(() => {
 		let active = true;

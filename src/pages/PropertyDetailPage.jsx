@@ -10,6 +10,7 @@ import StatGrid from "../components/ui/StatGrid";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
 import { getPropertyById } from "../lib/api";
 import { formatPrice } from "../lib/utils";
+import { useDocumentMeta } from "../hooks/useDocumentMeta";
 
 export default function PropertyDetailPage() {
 	const { id } = useParams();
@@ -55,6 +56,15 @@ export default function PropertyDetailPage() {
 			? `${property.ciudad}, ${property.calle} ${property.altura}`
 			: `${property.ciudad}, ${property.calle}`;
 	}, [property]);
+
+	useDocumentMeta(
+		property
+			? `${property.tipo} en ${property.estado.toLowerCase()} en ${address} | Julián Cabrera Propiedades`
+			: undefined,
+		property
+			? `${property.tipo} en ${property.estado.toLowerCase()} en ${address}. ${property.ambientes} ambientes, ${property.superficie} m². ${formatPrice(property.precio, property.moneda)}.`
+			: undefined,
+	);
 
 	// "Castelar Norte"/"Castelar Sur" etc. no son localidades reconocidas por
 	// Google Maps: para geocodificar bien usamos el nombre de la localidad
